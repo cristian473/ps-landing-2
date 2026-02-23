@@ -1,6 +1,27 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@theme {
+  --color-primary: #38b6ff;
+  --color-background-light: #f5f7f8;
+  --color-background-dark: #000000;
+  --color-navy-dark: #070a29;
+  --color-navy-surface: #272a45;
+  
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Space Grotesk", sans-serif;
 
+  --animate-scroll: scroll 30s linear infinite;
+  --animate-code-scroll: code-scroll 20s linear infinite;
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes code-scroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+}
 /* Accessibility: Skip to content link */
 .sr-only {
   position: absolute;

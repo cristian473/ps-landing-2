@@ -1,23 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import Features from "../components/Features.astro";
-import CTA from "../components/CTA.astro";
-import Footer from "../components/Footer.astro";
+import Navbar from "../components/landing/Navbar";
+import Hero from "../components/landing/Hero";
+import LogoTicker from "../components/landing/LogoTicker";
+import Benefits from "../components/landing/Benefits";
+import CaseStudies from "../components/landing/CaseStudies";
+import Experience from "../components/landing/Experience";
+import Solutions from "../components/landing/Solutions";
+import Contact from "../components/landing/Contact";
+import Footer from "../components/landing/Footer";
 import { SITE } from "../config/site.mjs";
 ---
 
 <Layout
-  title={SITE.title}
-  description="A minimal, modern starter template for building fast websites with Astro. Includes React, Tailwind CSS, Framer Motion, and more."
+  title="Puro Software - Desarrollo de Software a Medida"
+  description="Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo."
   canonicalURL={SITE.url}
 >
-  <Header />
-  <main id="main-content" role="main">
-    <Hero />
-    <Features />
-    <CTA />
+  <Navbar client:load />
+  <main>
+    <Hero client:load />
+    <LogoTicker client:load />
+    <Benefits client:visible />
+    <CaseStudies client:visible />
+    <Experience client:visible />
+    <Solutions client:visible />
+    <Contact client:visible />
+    <Footer />
   </main>
-  <Footer />
 </Layout>
