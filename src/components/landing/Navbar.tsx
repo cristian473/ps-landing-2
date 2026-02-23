@@ -28,14 +28,13 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-navy-dark font-bold text-xl">
-              P
-            </div>
-            <span className="font-display font-bold text-xl tracking-tight text-white">
-              PURO SOFTWARE
-            </span>
-          </div>
+          <a href="/" className="flex items-center">
+            <img
+              src="/purosoftware-logo.png"
+              alt="Puro Software"
+              className="h-8 sm:h-10 w-auto"
+            />
+          </a>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 items-center">

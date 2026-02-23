@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import InmobiliariaCase from "../../components/case-studies/InmobiliariaCase";
+import { SITE } from "../../config/site.mjs";
+---
+
+<Layout
+  title="Caso Inmobiliaria: 400 propiedades sin duplicados | Puro Software"
+  description="De WhatsApp y fichas en papel a un sistema que gestiona 400 propiedades, visitas y contratos sin que nada se pierda. Caso de éxito de desarrollo a medida."
+  canonicalURL={new URL("/casos/inmobiliaria", SITE.url).href}
+>
+  <main>
+    <InmobiliariaCase client:load />
+  </main>
+</Layout>

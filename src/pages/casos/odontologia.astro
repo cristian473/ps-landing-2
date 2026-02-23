@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import OdontologiaCase from "../../components/case-studies/OdontologiaCase";
+import { SITE } from "../../config/site.mjs";
+---
+
+<Layout
+  title="Caso Clínica Odontológica: 3 sedes unificadas | Puro Software"
+  description="De agenda en papel y fichas clínicas dispersas a un sistema que gestiona 3 sedes, 800 pacientes y facturación a obras sociales. Caso de éxito de desarrollo a medida."
+  canonicalURL={new URL("/casos/odontologia", SITE.url).href}
+>
+  <main>
+    <OdontologiaCase client:load />
+  </main>
+</Layout>

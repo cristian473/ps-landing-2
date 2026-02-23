@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DistribuidoraB2BCase from "../../components/case-studies/DistribuidoraB2BCase";
+import { SITE } from "../../config/site.mjs";
+---
+
+<Layout
+  title="Caso Distribuidora B2B: 300 pedidos/semana sin intervención manual | Puro Software"
+  description="De pedidos por WhatsApp y Excel a un portal propio que procesa 300 órdenes por semana sin intervención manual. Caso de éxito de desarrollo a medida."
+  canonicalURL={new URL("/casos/distribuidora-b2b", SITE.url).href}
+>
+  <main>
+    <DistribuidoraB2BCase client:load />
+  </main>
+</Layout>

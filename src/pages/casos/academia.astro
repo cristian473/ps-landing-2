@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AcademiaCase from "../../components/case-studies/AcademiaCase";
+import { SITE } from "../../config/site.mjs";
+---
+
+<Layout
+  title="Caso Academia de Capacitación: 1.200 alumnos gestionados | Puro Software"
+  description="De inscripciones por Google Forms y cuotas en efectivo a un sistema que gestiona 1.200 alumnos, pagos y cursadas. Caso de éxito de desarrollo a medida."
+  canonicalURL={new URL("/casos/academia", SITE.url).href}
+>
+  <main>
+    <AcademiaCase client:load />
+  </main>
+</Layout>

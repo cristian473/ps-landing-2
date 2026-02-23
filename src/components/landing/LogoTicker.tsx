@@ -1,13 +1,11 @@
-export default function LogoTicker() {
-  const logos = [
-    { name: 'FinCorp', icon: 'savings' },
-    { name: 'TechBoost', icon: 'rocket_launch' },
-    { name: 'NetScale', icon: 'hub' },
-    { name: 'PowerSys', icon: 'bolt' },
-    { name: 'Infinita', icon: 'all_inclusive' },
-    { name: 'StackFlow', icon: 'layers' },
-  ];
+const clientLogos = [
+  { name: 'Dental Center', src: '/clients/DentalCenter.png', url: 'https://dentalcenter.com.ar/' },
+  { name: 'Maklab', src: '/clients/maklab.png', url: 'https://maklab.com.ar/' },
+  { name: 'Paul Deco', src: '/clients/pauldeco.png', url: 'https://pauldeco.com/' },
+  { name: 'RAZ', src: '/clients/raz.png', url: 'https://razycia.ar/' },
+];
 
+export default function LogoTicker() {
   return (
     <section className="bg-navy-dark py-12 border-b border-white/5 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
@@ -15,45 +13,63 @@ export default function LogoTicker() {
           Empresas que ya escalan con nuestra tecnología
         </p>
       </div>
-      
+
       <div className="relative w-full">
         {/* Fog Fade Effect */}
         <div className="absolute left-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-r from-navy-dark to-transparent" />
         <div className="absolute right-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-l from-navy-dark to-transparent" />
-        
+
         <div className="flex w-full overflow-hidden select-none">
           <div className="flex animate-scroll gap-16 min-w-full items-center pl-16">
             {/* Original Set */}
-            {logos.map((logo, index) => (
-              <div 
+            {clientLogos.map((logo, index) => (
+              <a
                 key={`${logo.name}-${index}`}
-                className="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 flex items-center gap-2"
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 w-28 h-12 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 flex items-center justify-center"
               >
-                <span className="material-icons text-4xl text-white">{logo.icon}</span>
-                <span className="text-xl font-bold text-white">{logo.name}</span>
-              </div>
-            ))}
-            
-            {/* Duplicated Set for Seamless Loop */}
-            {logos.map((logo, index) => (
-              <div 
-                key={`${logo.name}-duplicate-${index}`}
-                className="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 flex items-center gap-2"
-              >
-                <span className="material-icons text-4xl text-white">{logo.icon}</span>
-                <span className="text-xl font-bold text-white">{logo.name}</span>
-              </div>
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain"
+                />
+              </a>
             ))}
 
-             {/* Triplicated Set for Seamless Loop on large screens */}
-             {logos.map((logo, index) => (
-              <div 
-                key={`${logo.name}-triplicate-${index}`}
-                className="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 flex items-center gap-2"
+            {/* Duplicated Set for Seamless Loop */}
+            {clientLogos.map((logo, index) => (
+              <a
+                key={`${logo.name}-duplicate-${index}`}
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 w-28 h-12 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 flex items-center justify-center"
               >
-                <span className="material-icons text-4xl text-white">{logo.icon}</span>
-                <span className="text-xl font-bold text-white">{logo.name}</span>
-              </div>
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain"
+                />
+              </a>
+            ))}
+
+            {/* Triplicated Set for Seamless Loop on large screens */}
+            {clientLogos.map((logo, index) => (
+              <a
+                key={`${logo.name}-triplicate-${index}`}
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 w-28 h-12 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 flex items-center justify-center"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain"
+                />
+              </a>
             ))}
           </div>
         </div>

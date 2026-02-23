@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MayoristaCase from "../../components/case-studies/MayoristaCase";
+import { SITE } from "../../config/site.mjs";
+---
+
+<Layout
+  title="Caso Mayorista: 200 clientes haciendo pedidos solos | Puro Software"
+  description="De listas de precio en Excel y pedidos por WhatsApp a un portal B2B donde 200 clientes hacen sus pedidos solos. +30% ticket promedio y -15hs semanales de administración."
+  canonicalURL={new URL("/casos/mayorista", SITE.url).href}
+>
+  <main>
+    <MayoristaCase client:load />
+  </main>
+</Layout>

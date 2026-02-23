@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CorralonCase from "../../components/case-studies/CorralonCase";
+import { SITE } from "../../config/site.mjs";
+---
+
+<Layout
+  title="Herramienta para Corralones: Presupuestos automáticos por WhatsApp | Puro Software"
+  description="Tu corralón responde presupuestos por WhatsApp al instante, aunque estés en el mostrador. Sin chatbots molestos. Sin reemplazar tu atención."
+  canonicalURL={new URL("/casos/corralon", SITE.url).href}
+>
+  <main>
+    <CorralonCase client:load />
+  </main>
+</Layout>

@@ -65,10 +65,10 @@ export default function Hero() {
             Agendar mi consultoría gratuita
           </a>
           <a 
-            href="#soluciones"
+            href="#casos"
             className="px-8 py-4 rounded border border-white/20 hover:border-primary/50 text-white font-medium transition-all hover:bg-white/5"
           >
-            Ver soluciones
+            Ver casos de éxito
           </a>
         </motion.div>
       </div>
