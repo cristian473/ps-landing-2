@@ -6,8 +6,8 @@ export default function InmobiliariaCase() {
       {/* Simple Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <a href="/" className="text-white font-bold text-lg hover:text-primary transition-colors">
-            Puro Software
+          <a href="/" className="flex items-center">
+            <img src="/purosoftware-logo.png" alt="Puro Software" className="h-8 w-auto" />
           </a>
           <a
             href="/#contacto"
@@ -89,19 +89,18 @@ function HeroSection() {
           Cómo una inmobiliaria con 15 asesores dejó de operar con herramientas genéricas y armó su propio sistema de gestión: propiedades, clientes, visitas, contratos y comisiones en un solo lugar.
         </motion.p>
 
-        {/* Screenshot Placeholder */}
+        {/* Screenshot */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden"
         >
-          <div className="aspect-video bg-navy-surface flex items-center justify-center">
-            <div className="text-center p-4 sm:p-8">
-              <span className="material-icons text-5xl sm:text-6xl text-primary/40 mb-4 block">real_estate_agent</span>
-              <p className="text-gray-500 text-xs sm:text-sm">Sistema de gestión - Propiedades, visitas y contratos</p>
-            </div>
-          </div>
+          <img
+            src="/casos/inmobiliaria/panel-administrativo.png"
+            alt="Panel administrativo - Gestión de propiedades y contratos"
+            className="w-full h-auto"
+          />
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 blur-xl -z-10 scale-105" />
         </motion.div>

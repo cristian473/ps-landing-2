@@ -14,10 +14,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Beneficios', href: '#beneficios' },
     { name: 'Casos de Éxito', href: '#casos' },
+    { name: 'Beneficios', href: '#beneficios' },
     { name: 'Soluciones', href: '#soluciones' },
-    { name: 'Experiencia', href: '#experiencia' },
+    { name: 'Cómo trabajamos', href: '#proceso' },
   ];
 
   return (
@@ -49,9 +49,10 @@ export default function Navbar() {
             ))}
             <a
               href="#contacto"
-              className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105"
+              className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105 flex items-center gap-1"
             >
-              Agendar Consultoría
+              Hablar con un especialista
+              <span className="material-icons text-lg">arrow_forward</span>
             </a>
           </div>
 
@@ -92,9 +93,10 @@ export default function Navbar() {
               <a
                 href="#contacto"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-center bg-primary text-navy-dark px-5 py-3 rounded font-bold mt-4 hover:bg-primary/90 transition-colors"
+                className="flex items-center justify-center gap-1 w-full bg-primary text-navy-dark px-5 py-3 rounded font-bold mt-4 hover:bg-primary/90 transition-colors"
               >
-                Agendar Consultoría
+                Hablar con un especialista
+                <span className="material-icons text-lg">arrow_forward</span>
               </a>
             </div>
           </motion.div>

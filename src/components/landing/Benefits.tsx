@@ -3,26 +3,26 @@ import { motion } from 'framer-motion';
 export default function Benefits() {
   const benefits = [
     {
-      title: 'Ahorro Inteligente',
-      description: 'Deja de pagar licencias mensuales por usuario. Tu software es tuyo para siempre; solo pagas el mantenimiento del servidor (ej. $20/mes).',
+      title: 'Dejás de alquilar, empezás a tener',
+      description: 'Las suscripciones mensuales te cobran por crecer. Con tu propio sistema, pagás el desarrollo una vez y el servidor el resto. En la mayoría de los casos: $20/mes.',
       icon: 'savings',
       delay: 0
     },
     {
-      title: 'Escalabilidad Real',
-      description: 'Infraestructura diseñada para crecer. Duplica tus usuarios o transacciones sin que tu sistema colapse ni tus costos se disparen.',
+      title: 'Tu plataforma crece con vos',
+      description: 'No hay plan "Enterprise" que desbloquear. No hay límite de usuarios. No hay funcionalidad que pagar extra. Tu plataforma es tuya, se adapta a vos.',
       icon: 'trending_up',
       delay: 0.1
     },
     {
-      title: 'Control Total',
-      description: 'Dashboards centralizados que eliminan los puntos ciegos. Toma decisiones basadas en datos en tiempo real.',
+      title: 'Sabés qué pasa en tu negocio en tiempo real',
+      description: 'Un panel con todo: pedidos, stock, equipo, clientes. Sin exportar a Excel. Sin llamar a alguien para que te cuente. La información donde la necesitás.',
       icon: 'dashboard',
       delay: 0.2
     },
     {
-      title: 'Cero Improvisación',
-      description: 'Estandariza tus procesos. Reduce el error humano al mínimo con flujos de trabajo validados por código.',
+      title: 'Tus procesos dejan de depender de personas clave',
+      description: 'Cuando el sistema hace el trabajo, el negocio no se frena si alguien falta. Los flujos quedan documentados en código, no en la cabeza de nadie.',
       icon: 'verified',
       delay: 0.3
     }

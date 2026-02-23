@@ -69,10 +69,10 @@ export default function CaseStudiesCards() {
           className="mb-12 text-center"
         >
           <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            Resultados Reales
+            Resultados reales
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Casos de Éxito
+            Lo que lograron empresas como la tuya
           </h2>
           <div className="h-1 w-20 bg-primary rounded mx-auto" />
         </motion.div>

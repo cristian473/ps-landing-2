@@ -10,7 +10,7 @@ export default function LogoTicker() {
     <section className="bg-navy-dark py-12 border-b border-white/5 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
         <p className="text-sm font-medium text-gray-400 uppercase tracking-widest">
-          Empresas que ya escalan con nuestra tecnología
+          Empresas que ya operan con su propio sistema
         </p>
       </div>
 

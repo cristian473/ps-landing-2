@@ -6,8 +6,8 @@ export default function DistribuidoraB2BCase() {
       {/* Simple Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <a href="/" className="text-white font-bold text-lg hover:text-primary transition-colors">
-            Puro Software
+          <a href="/" className="flex items-center">
+            <img src="/purosoftware-logo.png" alt="Puro Software" className="h-8 w-auto" />
           </a>
           <a
             href="/#contacto"
@@ -89,19 +89,18 @@ function HeroSection() {
           Cómo una distribuidora con 180 clientes empresariales dejó de perder pedidos, errores de precio y horas de administración — con un sistema hecho exactamente para su operación.
         </motion.p>
 
-        {/* Screenshot Placeholder */}
+        {/* Screenshot */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden"
         >
-          <div className="aspect-video bg-navy-surface flex items-center justify-center">
-            <div className="text-center p-4 sm:p-8">
-              <span className="material-icons text-5xl sm:text-6xl text-primary/40 mb-4 block">storefront</span>
-              <p className="text-gray-500 text-xs sm:text-sm">Portal B2B - Lista de pedidos, precios y estados</p>
-            </div>
-          </div>
+          <img
+            src="/casos/distribuidora-b2b/store-page.png"
+            alt="Portal B2B - Vista del cliente"
+            className="w-full h-auto"
+          />
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 blur-xl -z-10 scale-105" />
         </motion.div>
@@ -282,7 +281,7 @@ function SolutionSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-navy-surface rounded-xl p-6 border border-white/10"
+          className="bg-navy-surface rounded-xl p-6 border border-white/10 mb-12"
         >
           <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
             <span className="material-icons text-primary">schedule</span>
@@ -304,6 +303,29 @@ function SolutionSection() {
               </div>
             ))}
           </div>
+        </motion.div>
+
+        {/* Backoffice Screenshot */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <span className="material-icons text-primary">admin_panel_settings</span>
+            Panel de administración interno
+          </h3>
+          <div className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+            <img
+              src="/casos/distribuidora-b2b/backoffice.png"
+              alt="Panel de administración - Backoffice"
+              className="w-full h-auto"
+            />
+          </div>
+          <p className="text-gray-500 text-sm mt-3 text-center">
+            Vista del backoffice donde el equipo interno gestiona pedidos, clientes y precios
+          </p>
         </motion.div>
       </div>
     </section>

@@ -18,14 +18,14 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {/* Badge */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Software a medida para líderes
+          Para empresas que ya crecieron y el sistema se quedó atrás
         </motion.div>
 
         {/* Heading */}
@@ -42,29 +42,30 @@ export default function Hero() {
         </motion.h1>
 
         {/* Subtitle */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          Automatización inteligente y desarrollo a medida. Elimina las costosas suscripciones mensuales y escala sin límites con una solución que es 100% de tu propiedad.
+          Dejás de pagar suscripciones que no se adaptan. Construimos el sistema exacto que necesitás — y queda tuyo para siempre.
         </motion.p>
 
         {/* CTA Buttons */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row justify-center gap-4"
         >
-          <a 
+          <a
             href="#contacto"
-            className="bg-primary text-navy-dark px-8 py-4 rounded font-bold text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105"
+            className="bg-primary text-navy-dark px-8 py-4 rounded font-bold text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105 inline-flex items-center justify-center gap-2"
           >
-            Agendar mi consultoría gratuita
+            Quiero una consultoría gratuita
+            <span className="material-icons">arrow_forward</span>
           </a>
-          <a 
+          <a
             href="#casos"
             className="px-8 py-4 rounded border border-white/20 hover:border-primary/50 text-white font-medium transition-all hover:bg-white/5"
           >

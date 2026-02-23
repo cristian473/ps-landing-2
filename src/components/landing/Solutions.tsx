@@ -3,26 +3,38 @@ import { motion } from 'framer-motion';
 export default function Solutions() {
   const solutions = [
     {
-      title: 'SaaS Development',
-      description: 'Desarrollamos plataformas Software as a Service escalables y seguras. Desde la arquitectura multi-tenant hasta la pasarela de pagos, construimos el activo digital de tu empresa.',
+      title: 'Tu plataforma propia en la nube',
+      description: 'Construimos plataformas digitales que escalan. Desde el primer usuario hasta miles, sin que el sistema se caiga ni los costos exploten.',
       icon: 'cloud_queue',
-      features: ['Arquitectura Microservicios', 'AWS / Azure Cloud', 'Alta Disponibilidad'],
+      features: [
+        'Tu plataforma aguanta el crecimiento sin romperse',
+        'Infraestructura en AWS o Azure con alta disponibilidad',
+        'Pagos, accesos y multi-empresa incluidos si los necesitás',
+      ],
       popular: false,
       delay: 0
     },
     {
-      title: 'AI Agents & Automatización',
-      description: 'Integra Inteligencia Artificial en tus flujos de trabajo. Chatbots que realmente resuelven, análisis predictivo de ventas y procesamiento automático de documentos.',
+      title: 'Automatizá lo que hoy hacen personas a mano',
+      description: 'Integramos inteligencia artificial donde realmente suma: atención al cliente, procesamiento de documentos, análisis de datos. Sin hype, con resultados.',
       icon: 'smart_toy',
-      features: ['LLM Integration (GPT-4)', 'Flujos RPA', 'Data Mining'],
+      features: [
+        'Agentes que responden, procesan y deciden sin intervención humana',
+        'Automatización de flujos repetitivos que hoy consumen tiempo de tu equipo',
+        'Decisiones basadas en tus propios datos, no en intuición',
+      ],
       popular: true,
       delay: 0.1
     },
     {
-      title: 'Custom CRM & ERP',
-      description: 'Los CRMs comerciales se quedan cortos. Creamos el sistema nervioso central de tu operación, adaptado al 100% a tus reglas de negocio, sin funciones inútiles.',
+      title: 'El sistema nervioso central de tu operación',
+      description: 'Los CRMs genéricos te obligan a adaptarte a ellos. El tuyo se adapta a vos: tu lógica de negocio, tus reglas, tus flujos.',
       icon: 'dataset',
-      features: ['Dashboards a medida', 'Integración Legacy', 'Control de Roles'],
+      features: [
+        'Panel unificado con todo lo que necesitás ver, nada que no uses',
+        'Se conecta con las herramientas que ya tenés',
+        'Tus procesos quedan en el sistema, no en la cabeza de nadie',
+      ],
       popular: false,
       delay: 0.2
     }

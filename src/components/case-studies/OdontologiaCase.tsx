@@ -6,8 +6,8 @@ export default function OdontologiaCase() {
       {/* Simple Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <a href="/" className="text-white font-bold text-lg hover:text-primary transition-colors">
-            Puro Software
+          <a href="/" className="flex items-center">
+            <img src="/purosoftware-logo.png" alt="Puro Software" className="h-8 w-auto" />
           </a>
           <a
             href="/#contacto"
@@ -89,19 +89,18 @@ function HeroSection() {
           Cómo una clínica odontológica dejó de operar cada sede como una isla y unificó todo en un sistema hecho a medida.
         </motion.p>
 
-        {/* Screenshot Placeholder */}
+        {/* Screenshot */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden"
         >
-          <div className="aspect-video bg-navy-surface flex items-center justify-center">
-            <div className="text-center p-4 sm:p-8">
-              <span className="material-icons text-5xl sm:text-6xl text-primary/40 mb-4 block">medical_services</span>
-              <p className="text-gray-500 text-xs sm:text-sm">Sistema de gestión - Agenda, fichas clínicas y facturación</p>
-            </div>
-          </div>
+          <img
+            src="/casos/odontologia/panel-administrativo.png"
+            alt="Panel administrativo - Vista general del sistema"
+            className="w-full h-auto"
+          />
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 blur-xl -z-10 scale-105" />
         </motion.div>
@@ -273,7 +272,7 @@ function SolutionSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-navy-surface rounded-xl p-6 border border-white/10"
+          className="bg-navy-surface rounded-xl p-6 border border-white/10 mb-12"
         >
           <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
             <span className="material-icons text-primary">schedule</span>
@@ -295,6 +294,29 @@ function SolutionSection() {
               </div>
             ))}
           </div>
+        </motion.div>
+
+        {/* Patient Record Screenshot */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <span className="material-icons text-primary">assignment_ind</span>
+            Ficha clínica digital del paciente
+          </h3>
+          <div className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+            <img
+              src="/casos/odontologia/ficha-paciente.png"
+              alt="Ficha clínica digital del paciente"
+              className="w-full h-auto"
+            />
+          </div>
+          <p className="text-gray-500 text-sm mt-3 text-center">
+            Historial clínico, odontograma y tratamientos accesibles desde cualquier sede
+          </p>
         </motion.div>
       </div>
     </section>
