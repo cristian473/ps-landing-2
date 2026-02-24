@@ -1,0 +1,106 @@
+---
+// Google Analytics 4 Component
+// Measurement ID: G-WV5VFSRK57
+
+interface Props {
+  measurementId?: string;
+}
+
+const { measurementId = 'G-WV5VFSRK57' } = Astro.props;
+---
+
+<!-- Google Analytics -->
+<script is:inline define:vars={{ measurementId }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', measurementId, {
+    page_path: window.location.pathname,
+    send_page_view: true
+  });
+
+  // Make gtag available globally for custom events
+  window.gtag = gtag;
+</script>
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+
+<!-- Analytics Helper Functions -->
+<script is:inline>
+  // Wait for gtag to be available
+  window.trackEvent = function(eventName, eventParams) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, eventParams);
+    }
+  };
+
+  // Track CTA clicks
+  window.trackCTAClick = function(ctaName, ctaLocation) {
+    window.trackEvent('cta_click', {
+      cta_name: ctaName,
+      cta_location: ctaLocation || window.location.pathname
+    });
+  };
+
+  // Track case study views
+  window.trackCaseStudyView = function(caseStudyName) {
+    window.trackEvent('case_study_view', {
+      case_study_name: caseStudyName,
+      page_path: window.location.pathname
+    });
+  };
+
+  // Track form submissions
+  window.trackFormSubmit = function(formName, formData) {
+    window.trackEvent('generate_lead', {
+      form_name: formName,
+      ...formData
+    });
+  };
+
+  // Track external link clicks
+  window.trackExternalLink = function(url) {
+    window.trackEvent('click', {
+      event_category: 'outbound',
+      event_label: url,
+      transport_type: 'beacon'
+    });
+  };
+
+  // Track scroll depth
+  window.trackScrollDepth = function(percentage) {
+    window.trackEvent('scroll', {
+      percent_scrolled: percentage
+    });
+  };
+
+  // Auto-track external links
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="http"]').forEach(function(link) {
+      if (!link.href.includes(window.location.hostname)) {
+        link.addEventListener('click', function() {
+          window.trackExternalLink(link.href);
+        });
+      }
+    });
+
+    // Track scroll depth at 25%, 50%, 75%, 100%
+    let scrollMarks = { 25: false, 50: false, 75: false, 100: false };
+
+    function checkScrollDepth() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+      [25, 50, 75, 100].forEach(function(mark) {
+        if (scrollPercent >= mark && !scrollMarks[mark]) {
+          scrollMarks[mark] = true;
+          window.trackScrollDepth(mark);
+        }
+      });
+    }
+
+    window.addEventListener('scroll', checkScrollDepth, { passive: true });
+  });
+</script>

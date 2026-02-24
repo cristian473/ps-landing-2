@@ -16,6 +16,7 @@ import { Icon } from "astro-icon/components";
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-2 px-8 py-3 bg-white text-black rounded-lg hover:bg-gray-100 transition-colors font-medium"
+        data-track-cta="download_button"
       >
         <Icon name="tabler:download" class="w-5 h-5" aria-hidden="true" />
         Download
@@ -23,3 +24,15 @@ import { Icon } from "astro-icon/components";
     </div>
   </ScrollReveal>
 </section>
+
+<script>
+  // Track CTA clicks
+  document.querySelectorAll('[data-track-cta]').forEach((element) => {
+    element.addEventListener('click', () => {
+      const ctaName = element.getAttribute('data-track-cta') || 'unknown_cta';
+      if (typeof window.trackCTAClick === 'function') {
+        window.trackCTAClick(ctaName, 'cta_section');
+      }
+    });
+  });
+</script>

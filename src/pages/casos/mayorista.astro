@@ -2,6 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import MayoristaCase from "../../components/case-studies/MayoristaCase";
 import { SITE } from "../../config/site.mjs";
+
+const caseStudyName = "mayorista";
 ---
 
 <Layout
@@ -13,3 +15,12 @@ import { SITE } from "../../config/site.mjs";
     <MayoristaCase client:load />
   </main>
 </Layout>
+
+<script define:vars={{ caseStudyName }}>
+  // Track case study view
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof window.trackCaseStudyView === 'function') {
+      window.trackCaseStudyView(caseStudyName);
+    }
+  });
+</script>

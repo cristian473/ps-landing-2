@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { SITE } from '../config/site.mjs';
 import type { SEOProps } from '../types/seo';
+import Analytics from '../components/Analytics.astro';
 
 interface Props extends SEOProps {
   lang?: string;
@@ -62,6 +63,8 @@ const robotsContent = [
 		<!-- Resource Hints -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://www.googletagmanager.com" />
+		<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -89,6 +92,9 @@ const robotsContent = [
 		<meta name="twitter:title" content={twitterTitle} />
 		<meta name="twitter:description" content={twitterDescription} />
 		<meta name="twitter:image" content={fullTwitterImage} />
+
+		<!-- Google Analytics -->
+		<Analytics />
 	</head>
 	<body class="min-h-screen bg-background-dark text-white selection:bg-primary selection:text-white">
 		<slot />

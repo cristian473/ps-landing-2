@@ -440,7 +440,9 @@ function CTASection() {
             Tomamos 2 proyectos por trimestre. Si esto resuena, tiene sentido hablarlo.
           </p>
           <a
-            href="/#contacto"
+            href="https://wa.me/5491164039597?text=Hola%2C%20vi%20el%20caso%20de%20la%20cl%C3%ADnica%20odontol%C3%B3gica%20y%20me%20interesa%20un%20sistema%20similar%20para%20gestionar%20mis%20sedes."
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-primary text-navy-dark px-8 py-4 rounded font-bold text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105"
           >
             Hablemos

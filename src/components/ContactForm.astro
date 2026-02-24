@@ -298,6 +298,13 @@ const web3formsAccessKey = SITE.web3formsAccessKey || "";
         form.reset();
         // Scroll to success message
         successMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+        // Track form submission in Google Analytics
+        if (typeof window.trackFormSubmit === 'function') {
+          window.trackFormSubmit('contact_form', {
+            form_location: window.location.pathname
+          });
+        }
       } else {
         errorText.textContent = data.message || "Failed to send message. Please try again.";
         errorMessage.classList.remove("hidden");

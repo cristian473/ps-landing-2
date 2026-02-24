@@ -94,15 +94,26 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden"
+          className="relative"
         >
-          <img
-            src="/casos/distribuidora-b2b/store-page.png"
-            alt="Portal B2B - Vista del cliente"
-            className="w-full h-auto"
-          />
+          <div className="browser-frame">
+            <div className="browser-bar">
+              <div className="browser-dots">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="browser-url">app.puro-software.com</div>
+            </div>
+            <div className="browser-content">
+              <img
+                src="/casos/distribuidora-b2b/store-page.png"
+                alt="Portal B2B - Vista del cliente"
+              />
+            </div>
+          </div>
           {/* Glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 blur-xl -z-10 scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 blur-xl -z-10 scale-105 pointer-events-none" />
         </motion.div>
       </div>
     </section>
@@ -316,12 +327,21 @@ function SolutionSection() {
             <span className="material-icons text-primary">admin_panel_settings</span>
             Panel de administración interno
           </h3>
-          <div className="relative rounded-xl border border-white/10 shadow-2xl overflow-hidden">
-            <img
-              src="/casos/distribuidora-b2b/backoffice.png"
-              alt="Panel de administración - Backoffice"
-              className="w-full h-auto"
-            />
+          <div className="browser-frame">
+            <div className="browser-bar">
+              <div className="browser-dots">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="browser-url">admin.puro-software.com</div>
+            </div>
+            <div className="browser-content">
+              <img
+                src="/casos/distribuidora-b2b/backoffice.png"
+                alt="Panel de administración - Backoffice"
+              />
+            </div>
           </div>
           <p className="text-gray-500 text-sm mt-3 text-center">
             Vista del backoffice donde el equipo interno gestiona pedidos, clientes y precios
@@ -449,7 +469,9 @@ function CTASection() {
             Tomamos 2 proyectos por trimestre. Si esto resuena, tiene sentido hablarlo.
           </p>
           <a
-            href="/#contacto"
+            href="https://wa.me/5491164039597?text=Hola%2C%20vi%20el%20caso%20de%20la%20distribuidora%20B2B%20y%20me%20interesa%20un%20portal%20similar%20para%20mi%20negocio."
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-primary text-navy-dark px-8 py-4 rounded font-bold text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105"
           >
             Hablemos
