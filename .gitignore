@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 
+# prisma
+generated/prisma/
+
 # dependencies
 node_modules/
 

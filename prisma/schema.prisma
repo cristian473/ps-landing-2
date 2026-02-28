@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model DiagnosticLead {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  email      String
+  q1         String
+  q2         String
+  q3         String
+  q4         String
+  q5         String
+  q6         String
+  q7         String
+  totalScore Int
+  archetype  String
+}

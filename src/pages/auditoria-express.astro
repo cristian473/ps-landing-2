@@ -1,0 +1,59 @@
+---
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+import DigitalDiagnostic from "../components/diagnostico/DigitalDiagnostic";
+
+const title = "Diagnóstico Digital para PyMEs: descubrí qué frena tu crecimiento";
+const description =
+  "Diagnóstico digital gratuito para PyMEs en 2 minutos. 7 preguntas sobre tu operación real para detectar cuellos de botella y calcular cuántas horas perdés por semana.";
+const keywords =
+  "diagnóstico digital para pymes, automatización de procesos, software para pymes, transformación digital empresas, optimización operativa, consultoría digital pyme";
+const canonicalURL = "/auditoria-express";
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  inLanguage: "es",
+  datePublished: "2026-02-27",
+  dateModified: "2026-02-27",
+  author: {
+    "@type": "Organization",
+    name: "Puro Software",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Puro Software",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURL,
+  },
+  about: [
+    "Diagnóstico digital",
+    "Automatización de procesos para PyMEs",
+    "Software a medida para empresas",
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  keywords={keywords}
+  canonicalURL={canonicalURL}
+  ogType="article"
+  ogTitle={title}
+  ogDescription={description}
+  twitterTitle={title}
+  twitterDescription={description}
+  lang="es"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleSchema)} />
+
+  <main>
+    <DigitalDiagnostic client:load />
+  </main>
+</Layout>

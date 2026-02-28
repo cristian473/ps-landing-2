@@ -17,15 +17,19 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/node": "^9.5.4",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.3.2",
     "@iconify-json/tabler": "^1.2.26",
+    "@prisma/adapter-libsql": "^7.4.2",
+    "@prisma/client": "^7.4.2",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
     "astro-icon": "^1.1.5",
     "framer-motion": "^12.24.7",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "resend": "^6.9.3",
     "sass": "^1.97.2",
     "shiki": "^3.22.0",
     "tailwindcss": "^4.1.18"
@@ -40,6 +44,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
+    "prisma": "^7.4.2",
     "terser": "^5.46.0"
   }
 }

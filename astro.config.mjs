@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import node from "@astrojs/node";
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -10,6 +11,8 @@ import { SITE } from "./src/config/site.mjs";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.url,
+  output: "server",
+  adapter: node({ mode: "standalone" }),
   integrations: [
     react(),
     icon(),

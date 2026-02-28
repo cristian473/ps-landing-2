@@ -1,6 +1,7 @@
 export interface SEOProps {
   title?: string;
   description?: string;
+  keywords?: string;
   canonicalURL?: string;
   ogTitle?: string;
   ogDescription?: string;
