@@ -12,13 +12,49 @@ import Solutions from "../components/landing/Solutions";
 import Contact from "../components/landing/Contact";
 import Footer from "../components/landing/Footer";
 import { SITE } from "../config/site.mjs";
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Puro Software",
+  url: SITE.url,
+  logo: new URL("/purosoftware-logo.png", SITE.url).href,
+  description: "Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo.",
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    url: `${SITE.url}/#contacto`,
+    availableLanguage: "es",
+  },
+  sameAs: [
+    "https://www.linkedin.com/company/puro-software",
+  ],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Puro Software",
+  url: SITE.url,
+  description: "Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo.",
+  inLanguage: "es",
+  publisher: {
+    "@type": "Organization",
+    name: "Puro Software",
+    logo: new URL("/purosoftware-logo.png", SITE.url).href,
+  },
+};
 ---
 
 <Layout
   title="Puro Software - Desarrollo de Software a Medida"
   description="Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo."
   canonicalURL={SITE.url}
+  keywords="software a medida, desarrollo de software, automatización de procesos, software para empresas, desarrollo web, aplicaciones a medida, software para PyMEs"
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(organizationSchema)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(websiteSchema)} />
+
   <Navbar client:load />
   <main>
     <Hero client:load />

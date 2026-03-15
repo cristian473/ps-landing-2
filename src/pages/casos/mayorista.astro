@@ -6,13 +6,35 @@ import MayoristaCase from "../../components/case-studies/MayoristaCase";
 import { SITE } from "../../config/site.mjs";
 
 const caseStudyName = "mayorista";
+const title = "Caso Mayorista: 200 clientes haciendo pedidos solos | Puro Software";
+const description = "De listas de precio en Excel y pedidos por WhatsApp a un portal B2B donde 200 clientes hacen sus pedidos solos. +30% ticket promedio y -15hs semanales de administración.";
+const canonicalURL = new URL("/casos/mayorista", SITE.url).href;
+
+const caseStudySchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  inLanguage: "es",
+  author: { "@type": "Organization", name: "Puro Software", url: SITE.url },
+  publisher: {
+    "@type": "Organization",
+    name: "Puro Software",
+    logo: { "@type": "ImageObject", url: new URL("/purosoftware-logo.png", SITE.url).href },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonicalURL },
+  about: ["Portal B2B mayorista", "Software para distribuidoras", "E-commerce B2B"],
+};
 ---
 
 <Layout
-  title="Caso Mayorista: 200 clientes haciendo pedidos solos | Puro Software"
-  description="De listas de precio en Excel y pedidos por WhatsApp a un portal B2B donde 200 clientes hacen sus pedidos solos. +30% ticket promedio y -15hs semanales de administración."
-  canonicalURL={new URL("/casos/mayorista", SITE.url).href}
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+  keywords="portal B2B mayorista, software distribuidora, e-commerce mayorista, sistema pedidos B2B"
+  lang="es"
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(caseStudySchema)} />
   <main>
     <MayoristaCase client:load />
   </main>

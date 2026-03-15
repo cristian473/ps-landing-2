@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="es"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="generator" content="Astro v5.17.1"><!-- Resource Hints --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://www.google.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><!-- Preload Critical Resources --><!-- Primary Meta Tags --><title>About | Puro Software</title><meta name="title" content="About | Puro Software"><meta name="description" content="Learn more about Astro Base - a minimal, modern starter template for building fast websites with Astro, React, Tailwind CSS, and Framer Motion."><meta name="robots" content="noindex, nofollow"><link rel="canonical" href="https://puro.software/about"><!-- Open Graph / Facebook --><meta property="og:locale" content="es_AR"><meta property="og:type" content="website"><meta property="og:url" content="https://puro.software/about"><meta property="og:title" content="About | Puro Software"><meta property="og:description" content="Learn more about Astro Base - a minimal, modern starter template for building fast websites with Astro, React, Tailwind CSS, and Framer Motion."><meta property="og:image" content="https://puro.software/og-image.png"><meta property="og:site_name" content="Puro Software"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://puro.software/about"><meta name="twitter:title" content="About | Puro Software"><meta name="twitter:description" content="Learn more about Astro Base - a minimal, modern starter template for building fast websites with Astro, React, Tailwind CSS, and Framer Motion."><meta name="twitter:image" content="https://puro.software/og-image.png"><!-- Google Analytics --><!-- Google Analytics --><script>(function(){const measurementId = "G-WV5VFSRK57";
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', measurementId, {
+    page_path: window.location.pathname,
+    send_page_view: true
+  });
+
+  // Make gtag available globally for custom events
+  window.gtag = gtag;
+})();</script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-WV5VFSRK57"></script> <!-- Analytics Helper Functions --><script>
+  // Wait for gtag to be available
+  window.trackEvent = function(eventName, eventParams) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, eventParams);
+    }
+  };
+
+  // Track CTA clicks
+  window.trackCTAClick = function(ctaName, ctaLocation) {
+    window.trackEvent('cta_click', {
+      cta_name: ctaName,
+      cta_location: ctaLocation || window.location.pathname
+    });
+  };
+
+  // Track case study views
+  window.trackCaseStudyView = function(caseStudyName) {
+    window.trackEvent('case_study_view', {
+      case_study_name: caseStudyName,
+      page_path: window.location.pathname
+    });
+  };
+
+  // Track form submissions
+  window.trackFormSubmit = function(formName, formData) {
+    window.trackEvent('generate_lead', {
+      form_name: formName,
+      ...formData
+    });
+  };
+
+  // Track external link clicks
+  window.trackExternalLink = function(url) {
+    window.trackEvent('click', {
+      event_category: 'outbound',
+      event_label: url,
+      transport_type: 'beacon'
+    });
+  };
+
+  // Track scroll depth
+  window.trackScrollDepth = function(percentage) {
+    window.trackEvent('scroll', {
+      percent_scrolled: percentage
+    });
+  };
+
+  // Auto-track external links
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="http"]').forEach(function(link) {
+      if (!link.href.includes(window.location.hostname)) {
+        link.addEventListener('click', function() {
+          window.trackExternalLink(link.href);
+        });
+      }
+    });
+
+    // Track scroll depth at 25%, 50%, 75%, 100%
+    let scrollMarks = { 25: false, 50: false, 75: false, 100: false };
+
+    function checkScrollDepth() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+      [25, 50, 75, 100].forEach(function(mark) {
+        if (scrollPercent >= mark && !scrollMarks[mark]) {
+          scrollMarks[mark] = true;
+          window.trackScrollDepth(mark);
+        }
+      });
+    }
+
+    window.addEventListener('scroll', checkScrollDepth, { passive: true });
+  });
+</script><!-- reCAPTCHA v3 --><script src="https://www.google.com/recaptcha/api.js?render=6Lc7qIssAAAAAPyUuyTGPS-WJ9DyCqkiJa5R4CXZ"></script><link rel="stylesheet" href="/_assets/about.XedkNzyQ.css"></head> <body class="min-h-screen bg-background-dark text-white selection:bg-primary selection:text-white">  <header class="w-full py-4 px-4 border-b border-gray-200 bg-white sticky top-0 z-50" role="banner"> <nav class="max-w-6xl mx-auto flex items-center justify-between" aria-label="Main navigation"> <a href="/" class="text-2xl font-bold text-gray-900 hover:text-gray-700 transition-colors" aria-label="Astro Base - Home">
+Astro Base
+</a> <!-- Mobile menu button --> <button type="button" class="md:hidden p-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu" id="mobile-menu-button"> <svg width="1em" height="1em" class="w-6 h-6" aria-hidden="true" data-icon="tabler:menu-2">   <symbol id="ai:tabler:menu-2" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></symbol><use href="#ai:tabler:menu-2"></use>  </svg> </button> <!-- Desktop navigation --> <ul class="hidden md:flex items-center gap-6" role="list"> <li> <a href="/features" class="text-gray-600 hover:text-gray-900 transition-colors">
+Features
+</a> </li> <li> <a href="/about" class="text-gray-600 hover:text-gray-900 transition-colors">
+About
+</a> </li> <li> <a href="/#contacto" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+Contact
+</a> </li> </ul> </nav> <!-- Mobile menu --> <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 bg-white" role="menu" aria-labelledby="mobile-menu-button"> <ul class="flex flex-col py-4" role="list"> <li> <a href="/features" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors" role="menuitem">
+Features
+</a> </li> <li> <a href="/about" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors" role="menuitem">
+About
+</a> </li> <li> <a href="/#contacto" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors" role="menuitem">
+Contact
+</a> </li> </ul> </div> </header> <script type="module">const e=document.getElementById("mobile-menu-button"),t=document.getElementById("mobile-menu");e&&t&&(e.addEventListener("click",()=>{const n="true"===e.getAttribute("aria-expanded");e.setAttribute("aria-expanded",String(!n)),t.classList.toggle("hidden")}),document.addEventListener("click",n=>{e.contains(n.target)||t.contains(n.target)||t.classList.contains("hidden")||(e.setAttribute("aria-expanded","false"),t.classList.add("hidden"))}),document.addEventListener("keydown",n=>{"Escape"!==n.key||t.classList.contains("hidden")||(e.setAttribute("aria-expanded","false"),t.classList.add("hidden"),e.focus())}));</script> <main id="main-content" role="main"> <section class="max-w-4xl mx-auto px-4 py-20"> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value=="object"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};"requestIdleCallback"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event("astro:idle"));})();</script><script>(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="VuAqp" prefix="r7" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{}" ssr client="idle" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <h1 class="text-5xl font-bold text-gray-900 mb-4">Astro Base</h1> </astro-slot></div><!--astro:end--></astro-island> <script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();</script><astro-island uid="Zmdhss" prefix="r8" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{&quot;delay&quot;:[0,0.1]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <p class="text-xl text-gray-600 mb-12">
+A minimal, modern starter template for building fast websites with
+          Astro. This template includes everything you need to get started with
+          a beautiful landing page, complete with animations, icons, and content
+          management capabilities.
+</p> </astro-slot></div><!--astro:end--></astro-island> <div class="prose prose-lg max-w-none"> <astro-island uid="fULO4" prefix="r9" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{&quot;delay&quot;:[0,0.2]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <h2>Features</h2> <ul> <li> <strong>Astro</strong> - Lightning-fast static site generation
+</li> <li> <strong>React</strong> - Component-based UI library for interactive
+              components
+</li> <li> <strong>Tailwind CSS v4</strong> - Utility-first CSS framework for rapid
+              styling
+</li> <li> <strong>Framer Motion</strong> - Smooth scroll reveal animations with
+              spring physics
+</li> <li> <strong>Astro Icons</strong> - Beautiful icon component library with
+              Tabler icon set
+</li> <li><strong>MDX</strong> - Write JSX in your Markdown documents</li> <li> <strong>Sass</strong> - CSS preprocessor with variables, mixins, and
+              nesting
+</li> <li> <strong>Tailwind Typography</strong> - Beautiful typography styles for
+              markdown content
+</li> </ul> </astro-slot></div><!--astro:end--></astro-island> <astro-island uid="2hmRSm" prefix="r10" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{&quot;delay&quot;:[0,0.4]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <h2>Getting Started</h2> <h3>Installation</h3> <ol> <li> <strong>Clone the repository</strong> <pre><code>git clone https://github.com/jonnysmillie/astro-base.git
+cd astro-base</code></pre> </li> <li> <strong>Install dependencies</strong> <pre><code>npm install</code></pre> </li> <li> <strong>Start the development server</strong> <pre><code>npm run dev</code></pre> </li> <li> <strong>Open your browser</strong> - Navigate to <code>http://localhost:4321</code> </li> </ol> </astro-slot></div><!--astro:end--></astro-island> <astro-island uid="Z2sHLpX" prefix="r11" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{&quot;delay&quot;:[0,0.5]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <h2>Available Scripts</h2> <ul> <li><code>npm install</code> - Installs dependencies</li> <li> <code>npm run dev</code> - Starts local dev server at <code>localhost:4321</code> </li> <li> <code>npm run build</code> - Build your production site to <code>./dist/</code> </li> <li><code>npm run preview</code> - Preview your build locally</li> <li> <code>npm run astro</code> - Run CLI commands like <code>astro add</code>, <code>astro check</code> </li> </ul> </astro-slot></div><!--astro:end--></astro-island> <astro-island uid="ZWr8aa" prefix="r12" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{&quot;delay&quot;:[0,0.6]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <h2>Styling</h2> <h3>Tailwind CSS</h3> <p>
+This project uses Tailwind CSS v4 for styling. All components use
+            Tailwind utility classes.
+</p> <p><strong>Global Styles:</strong></p> <ul> <li>Located in <code>src/styles/global.css</code></li> <li>Imports Tailwind CSS</li> <li>Includes Tailwind Typography plugin for markdown styling</li> </ul> <p><strong>Configuration:</strong></p> <ul> <li> <code>tailwind.config.mjs</code> - Tailwind configuration with Typography
+              plugin
+</li> </ul> <h3>Sass</h3> <p>
+Sass is installed and ready to use. You can use Sass in component <code>&lt;style&gt;</code> blocks. See <code>src/components/SassExample.astro</code> for a complete
+            example.
+</p> </astro-slot></div><!--astro:end--></astro-island> <astro-island uid="LU6AW" prefix="r13" component-url="/_assets/ScrollReveal.BAWw1RHU.js" component-export="default" renderer-url="/_assets/client.D3boSjtv.js" props="{&quot;delay&quot;:[0,0.7]}" ssr client="load" opts="{&quot;name&quot;:&quot;ScrollReveal&quot;,&quot;value&quot;:true}" await-children><div style="opacity:0;transform:translateY(50px)"><astro-slot> <h2>Components</h2> <h3>ScrollReveal</h3> <p>
+A React component using Framer Motion for scroll-triggered
+            animations with the following props:
+</p> <ul> <li> <code>delay</code> - Animation delay in seconds (default: 0)
+</li> <li> <code>direction</code> - Animation direction: "up" | "down" | "left"
+              | "right" (default: "up")
+</li> <li> <code>distance</code> - Distance to travel in pixels (default: 50)
+</li> <li> <code>scale</code> - Enable scale animation (default: false)
+</li> </ul> <h3>Icons</h3> <p>
+Use Tabler icons with astro-icon. Browse available icons at <a href="https://tabler.io/icons" target="_blank" rel="noopener noreferrer">Tabler Icons</a>.
+</p> </astro-slot></div><!--astro:end--></astro-island> </div> </section> </main> <footer id="contact" class="w-full py-12 px-4 border-t border-gray-200 bg-white" role="contentinfo"> <div class="max-w-6xl mx-auto"> <div class="grid md:grid-cols-3 gap-8 mb-8"> <div> <h2 class="text-lg font-semibold text-gray-900 mb-4">Astro Base</h2> <p class="text-gray-600">
+A basic minimal starter template built for Astro with React, Framer
+          Motion and Tailwind.
+</p> </div> <div> <h2 class="text-lg font-semibold text-gray-900 mb-4">Links</h2> <ul class="space-y-2"> <li> <a href="/features" class="text-gray-600 hover:text-gray-900 transition-colors">Features</a> </li> <li> <a href="/about" class="text-gray-600 hover:text-gray-900 transition-colors">About</a> </li> <li> <a href="/#contacto" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a> </li> </ul> </div> <div> <h2 class="text-lg font-semibold text-gray-900 mb-4">Connect</h2> <ul class="space-y-2"> <li> <a href="https://github.com" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Visit our GitHub (opens in new tab)"> <svg width="1em" height="1em" class="w-5 h-5" aria-hidden="true" data-icon="tabler:brand-github">   <symbol id="ai:tabler:brand-github" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21"/></symbol><use href="#ai:tabler:brand-github"></use>  </svg> <span>GitHub</span></a> </li> <li> <a href="https://twitter.com" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Twitter (opens in new tab)"> <svg width="1em" height="1em" class="w-5 h-5" aria-hidden="true" data-icon="tabler:brand-twitter">   <symbol id="ai:tabler:brand-twitter" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 4.01c-1 .49-1.98.689-3 .99c-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4c0 0-4.182 7.433 4 11c-1.872 1.247-3.739 2.088-6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58-1.04 6.522-3.723 7.651-7.742a13.8 13.8 0 0 0 .497-3.753c0-.249 1.51-2.772 1.818-4.013z"/></symbol><use href="#ai:tabler:brand-twitter"></use>  </svg> <span>Twitter</span></a> </li> <li> <a href="/#contacto" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"> <svg width="1em" height="1em" class="w-5 h-5" aria-hidden="true" data-icon="tabler:mail">   <symbol id="ai:tabler:mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m3 7l9 6l9-6"/></g></symbol><use href="#ai:tabler:mail"></use>  </svg> <span>Email</span></a> </li> </ul> </div> </div> <div class="pt-8 border-t border-gray-200 text-center text-gray-600"> <p>&copy; 2026 Astro Base. All rights reserved.</p> </div> </div> </footer>  </body></html>

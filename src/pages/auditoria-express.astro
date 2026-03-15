@@ -3,6 +3,7 @@ export const prerender = true;
 
 import Layout from "../layouts/Layout.astro";
 import DigitalDiagnostic from "../components/diagnostico/DigitalDiagnostic";
+import { SITE } from "../config/site.mjs";
 
 const title = "Diagnóstico Digital para PyMEs: descubrí qué frena tu crecimiento";
 const description =
@@ -22,14 +23,19 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Puro Software",
+    url: SITE.url,
   },
   publisher: {
     "@type": "Organization",
     name: "Puro Software",
+    logo: {
+      "@type": "ImageObject",
+      url: new URL("/purosoftware-logo.png", SITE.url).href,
+    },
   },
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": canonicalURL,
+    "@id": new URL(canonicalURL, SITE.url).href,
   },
   about: [
     "Diagnóstico digital",

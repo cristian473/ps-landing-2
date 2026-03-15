@@ -1,6 +1,6 @@
 ---
-
 ---
+
 export const prerender = true;
 
 import Layout from "../layouts/Layout.astro";
@@ -12,6 +12,8 @@ import { SITE } from "../config/site.mjs";
   title={`MDX Example | ${SITE.title}`}
   description="See MDX in action with Astro Base. Learn how to write JSX in your Markdown documents for blog posts, documentation, and content-rich pages."
   canonicalURL={`${SITE.url}/example`}
+  noindex={true}
+  nofollow={true}
 >
   <Header />
   
@@ -35,7 +37,7 @@ import { SITE } from "../config/site.mjs";
 
       ```jsx
       import MyComponent from '../components/MyComponent.astro';
-      
+
       <MyComponent />
       ```
 
@@ -61,8 +63,8 @@ import { SITE } from "../config/site.mjs";
       - List item three
 
     </article>
+
   </main>
   
   <Footer />
 </Layout>
-

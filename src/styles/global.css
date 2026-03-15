@@ -1,97 +1,116 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @theme {
-  --color-primary: #38b6ff;
-  --color-background-light: #f5f7f8;
-  --color-background-dark: #000000;
-  --color-navy-dark: #070a29;
-  --color-navy-surface: #272a45;
-  
-  --font-display: "Space Grotesk", sans-serif;
-  --font-sans: "Space Grotesk", sans-serif;
+	--color-primary: #38b6ff;
+	--color-background-light: #f5f7f8;
+	--color-background-dark: #000000;
+	--color-navy-dark: #070a29;
+	--color-navy-surface: #272a45;
 
-  --animate-scroll: scroll 30s linear infinite;
-  --animate-code-scroll: code-scroll 20s linear infinite;
+	--font-display: "Space Grotesk", sans-serif;
+	--font-sans: "Space Grotesk", sans-serif;
 
-  @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  @keyframes code-scroll {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
-  }
+	--animate-scroll: scroll 30s linear infinite;
+	--animate-code-scroll: code-scroll 20s linear infinite;
+
+	@keyframes scroll {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+	@keyframes code-scroll {
+		0% {
+			transform: translateY(0);
+		}
+		100% {
+			transform: translateY(-50%);
+		}
+	}
 }
 /* Accessibility: Skip to content link */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
 }
 
 .sr-only:focus {
-  position: fixed;
-  width: auto;
-  height: auto;
-  padding: 0.5rem 1rem;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
+	position: fixed;
+	width: auto;
+	height: auto;
+	padding: 0.5rem 1rem;
+	margin: 0;
+	overflow: visible;
+	clip: auto;
+	white-space: normal;
 }
 
 /* Browser frame for case study screenshots */
 .browser-frame {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .browser-bar {
-  background: #1e1e2e;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	background: #1e1e2e;
+	padding: 10px 16px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .browser-dots {
-  display: flex;
-  gap: 6px;
+	display: flex;
+	gap: 6px;
 }
 
 .browser-dots span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
 }
 
-.browser-dots span:nth-child(1) { background: #ff5f57; }
-.browser-dots span:nth-child(2) { background: #febc2e; }
-.browser-dots span:nth-child(3) { background: #28c840; }
+.browser-dots span:nth-child(1) {
+	background: #ff5f57;
+}
+.browser-dots span:nth-child(2) {
+	background: #febc2e;
+}
+.browser-dots span:nth-child(3) {
+	background: #28c840;
+}
 
 .browser-url {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  padding: 4px 12px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
-  font-family: monospace;
-  text-align: center;
-  max-width: 280px;
-  margin: 0 auto;
+	flex: 1;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 6px;
+	padding: 4px 12px;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.4);
+	font-family: monospace;
+	text-align: center;
+	max-width: 280px;
+	margin: 0 auto;
 }
 
 .browser-content img {
-  width: 100%;
-  display: block;
+	width: 100%;
+	display: block;
+}
+
+/* Hide reCAPTCHA v3 badge (attribution is included in form text per Google's TOS) */
+.grecaptcha-badge {
+	visibility: hidden !important;
 }
