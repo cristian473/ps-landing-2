@@ -10,39 +10,55 @@ import { SITE } from "./src/config/site.mjs";
 
 // https://astro.build/config
 export default defineConfig({
-  site: SITE.url,
-  output: "server",
-  adapter: vercel(),
-  integrations: [
-    react(),
-    icon(),
-    mdx(),
-    sitemap({
-      changefreq: "weekly",
-      priority: 0.7,
-      lastmod: new Date(),
-    }),
-  ],
-  vite: {
-    plugins: [tailwindcss()],
-    build: {
-      cssMinify: "lightningcss",
-      minify: "terser",
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        },
-      },
-    },
-  },
-  build: {
-    inlineStylesheets: "auto",
-    assets: "_assets",
-  },
-  compressHTML: true,
-  image: {
-    domains: [],
-    remotePatterns: [],
-  },
+	site: SITE.url,
+	output: "server",
+	adapter: vercel(),
+	integrations: [
+		react(),
+		icon(),
+		mdx(),
+		sitemap({
+			changefreq: "weekly",
+			priority: 0.7,
+			lastmod: new Date(),
+		}),
+	],
+	vite: {
+		plugins: [tailwindcss()],
+		ssr: {
+			external: [
+				"@prisma/client",
+				"@prisma/client/runtime/library",
+				"@prisma/adapter-libsql",
+				"@libsql/client",
+			],
+		},
+		build: {
+			cssMinify: "lightningcss",
+			minify: "terser",
+			terserOptions: {
+				compress: {
+					drop_console: true,
+					drop_debugger: true,
+				},
+			},
+			rollupOptions: {
+				external: [
+					"@prisma/client",
+					"@prisma/client/runtime/library",
+					"@prisma/adapter-libsql",
+					"@libsql/client",
+				],
+			},
+		},
+	},
+	build: {
+		inlineStylesheets: "auto",
+		assets: "_assets",
+	},
+	compressHTML: true,
+	image: {
+		domains: [],
+		remotePatterns: [],
+	},
 });

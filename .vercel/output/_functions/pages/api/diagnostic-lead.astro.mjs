@@ -1,62 +1,90 @@
 import { Resend } from 'resend';
-import * as nodePath from 'node:path';
+import * as process from 'node:process';
+import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import * as runtime from '@prisma/client/runtime/client';
+import * as runtime from '@prisma/client/runtime/library';
 import { PrismaLibSql } from '@prisma/adapter-libsql';
 import { v as verifyRecaptcha } from '../../chunks/recaptcha_2MduZRbA.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const config = {
-  "previewFeatures": [],
-  "clientVersion": "7.4.2",
-  "engineVersion": "94a226be1cf2967af2541cca5529f0f7ba866919",
+  "generator": {
+    "name": "client",
+    "provider": {
+      "fromEnvVar": null,
+      "value": "prisma-client"
+    },
+    "output": {
+      "value": "/Users/macpro/Documents/work/purosoftware/ps-landing-4/generated/prisma",
+      "fromEnvVar": null
+    },
+    "config": {
+      "engineType": "library"
+    },
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "darwin-arm64",
+        "native": true
+      }
+    ],
+    "previewFeatures": [],
+    "sourceFilePath": "/Users/macpro/Documents/work/purosoftware/ps-landing-4/prisma/schema.prisma",
+    "isCustomOutput": true
+  },
+  "relativePath": "../../prisma",
+  "clientVersion": "6.10.1",
+  "engineVersion": "9b628578b3b7cae625e8c927178f15a170e74a9c",
+  "datasourceNames": [
+    "db"
+  ],
   "activeProvider": "sqlite",
-  "inlineSchema": 'generator client {\n  provider = "prisma-client"\n  output   = "../generated/prisma"\n}\n\ndatasource db {\n  provider = "sqlite"\n}\n\nmodel DiagnosticLead {\n  id         String   @id @default(cuid())\n  createdAt  DateTime @default(now())\n  email      String\n  q1         String\n  q2         String\n  q3         String\n  q4         String\n  q5         String\n  q6         String\n  q7         String\n  totalScore Int\n  archetype  String\n}\n',
+  "postinstall": false,
+  "inlineDatasources": {
+    "db": {
+      "url": {
+        "fromEnvVar": "TURSO_DATABASE_URL",
+        "value": null
+      }
+    }
+  },
+  "inlineSchema": 'generator client {\n  provider = "prisma-client"\n  output   = "../generated/prisma"\n}\n\ndatasource db {\n  provider = "sqlite"\n  url      = env("TURSO_DATABASE_URL")\n}\n\nmodel DiagnosticLead {\n  id         String   @id @default(cuid())\n  createdAt  DateTime @default(now())\n  email      String\n  q1         String\n  q2         String\n  q3         String\n  q4         String\n  q5         String\n  q6         String\n  q7         String\n  totalScore Int\n  archetype  String\n}\n',
+  "inlineSchemaHash": "4ae4889747ee6234f89169242231f3a7329bf7bb964080809eb4d7f810bc7483",
+  "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
     "enums": {},
     "types": {}
   },
-  "parameterizationSchema": {
-    "strings": [],
-    "graph": ""
-  }
+  "dirname": ""
 };
-config.runtimeDataModel = JSON.parse('{"models":{"DiagnosticLead":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"email","kind":"scalar","type":"String"},{"name":"q1","kind":"scalar","type":"String"},{"name":"q2","kind":"scalar","type":"String"},{"name":"q3","kind":"scalar","type":"String"},{"name":"q4","kind":"scalar","type":"String"},{"name":"q5","kind":"scalar","type":"String"},{"name":"q6","kind":"scalar","type":"String"},{"name":"q7","kind":"scalar","type":"String"},{"name":"totalScore","kind":"scalar","type":"Int"},{"name":"archetype","kind":"scalar","type":"String"}],"dbName":null}},"enums":{},"types":{}}');
-config.parameterizationSchema = {
-  strings: JSON.parse('["where","DiagnosticLead.findUnique","DiagnosticLead.findUniqueOrThrow","orderBy","cursor","DiagnosticLead.findFirst","DiagnosticLead.findFirstOrThrow","DiagnosticLead.findMany","data","DiagnosticLead.createOne","DiagnosticLead.createMany","DiagnosticLead.createManyAndReturn","DiagnosticLead.updateOne","DiagnosticLead.updateMany","DiagnosticLead.updateManyAndReturn","create","update","DiagnosticLead.upsertOne","DiagnosticLead.deleteOne","DiagnosticLead.deleteMany","having","_count","_avg","_sum","_min","_max","DiagnosticLead.groupBy","DiagnosticLead.aggregate","AND","OR","NOT","id","createdAt","email","q1","q2","q3","q4","q5","q6","q7","totalScore","archetype","equals","in","notIn","lt","lte","gt","gte","not","contains","startsWith","endsWith","set","increment","decrement","multiply","divide"]'),
-  graph: "MAsQDxwAACUAMB0AAAQAEB4AACUAMB8BAAAAASBAACcAISEBACYAISIBACYAISMBACYAISQBACYAISUBACYAISYBACYAIScBACYAISgBACYAISkCACgAISoBACYAIQEAAAABACABAAAAAQAgDxwAACUAMB0AAAQAEB4AACUAMB8BACYAISBAACcAISEBACYAISIBACYAISMBACYAISQBACYAISUBACYAISYBACYAIScBACYAISgBACYAISkCACgAISoBACYAIQADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACAMHwEAAAABIEAAAAABIQEAAAABIgEAAAABIwEAAAABJAEAAAABJQEAAAABJgEAAAABJwEAAAABKAEAAAABKQIAAAABKgEAAAABAQgAAAkAIAwfAQAAAAEgQAAAAAEhAQAAAAEiAQAAAAEjAQAAAAEkAQAAAAElAQAAAAEmAQAAAAEnAQAAAAEoAQAAAAEpAgAAAAEqAQAAAAEBCAAACwAwAQgAAAsAMAwfAQAuACEgQAAvACEhAQAuACEiAQAuACEjAQAuACEkAQAuACElAQAuACEmAQAuACEnAQAuACEoAQAuACEpAgAwACEqAQAuACECAAAAAQAgCAAADgAgDB8BAC4AISBAAC8AISEBAC4AISIBAC4AISMBAC4AISQBAC4AISUBAC4AISYBAC4AIScBAC4AISgBAC4AISkCADAAISoBAC4AIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgBRUAACkAIBYAACoAIBcAAC0AIBgAACwAIBkAACsAIA8cAAAaADAdAAAXABAeAAAaADAfAQAbACEgQAAcACEhAQAbACEiAQAbACEjAQAbACEkAQAbACElAQAbACEmAQAbACEnAQAbACEoAQAbACEpAgAdACEqAQAbACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIA8cAAAaADAdAAAXABAeAAAaADAfAQAbACEgQAAcACEhAQAbACEiAQAbACEjAQAbACEkAQAbACElAQAbACEmAQAbACEnAQAbACEoAQAbACEpAgAdACEqAQAbACEOFQAAHwAgGAAAJAAgGQAAJAAgKwEAAAABLAEAAAAELQEAAAAELgEAAAABLwEAAAABMAEAAAABMQEAAAABMgEAIwAhMwEAAAABNAEAAAABNQEAAAABCxUAAB8AIBgAACIAIBkAACIAICtAAAAAASxAAAAABC1AAAAABC5AAAAAAS9AAAAAATBAAAAAATFAAAAAATJAACEAIQ0VAAAfACAWAAAgACAXAAAfACAYAAAfACAZAAAfACArAgAAAAEsAgAAAAQtAgAAAAQuAgAAAAEvAgAAAAEwAgAAAAExAgAAAAEyAgAeACENFQAAHwAgFgAAIAAgFwAAHwAgGAAAHwAgGQAAHwAgKwIAAAABLAIAAAAELQIAAAAELgIAAAABLwIAAAABMAIAAAABMQIAAAABMgIAHgAhCCsCAAAAASwCAAAABC0CAAAABC4CAAAAAS8CAAAAATACAAAAATECAAAAATICAB8AIQgrCAAAAAEsCAAAAAQtCAAAAAQuCAAAAAEvCAAAAAEwCAAAAAExCAAAAAEyCAAgACELFQAAHwAgGAAAIgAgGQAAIgAgK0AAAAABLEAAAAAELUAAAAAELkAAAAABL0AAAAABMEAAAAABMUAAAAABMkAAIQAhCCtAAAAAASxAAAAABC1AAAAABC5AAAAAAS9AAAAAATBAAAAAATFAAAAAATJAACIAIQ4VAAAfACAYAAAkACAZAAAkACArAQAAAAEsAQAAAAQtAQAAAAQuAQAAAAEvAQAAAAEwAQAAAAExAQAAAAEyAQAjACEzAQAAAAE0AQAAAAE1AQAAAAELKwEAAAABLAEAAAAELQEAAAAELgEAAAABLwEAAAABMAEAAAABMQEAAAABMgEAJAAhMwEAAAABNAEAAAABNQEAAAABDxwAACUAMB0AAAQAEB4AACUAMB8BACYAISBAACcAISEBACYAISIBACYAISMBACYAISQBACYAISUBACYAISYBACYAIScBACYAISgBACYAISkCACgAISoBACYAIQsrAQAAAAEsAQAAAAQtAQAAAAQuAQAAAAEvAQAAAAEwAQAAAAExAQAAAAEyAQAkACEzAQAAAAE0AQAAAAE1AQAAAAEIK0AAAAABLEAAAAAELUAAAAAELkAAAAABL0AAAAABMEAAAAABMUAAAAABMkAAIgAhCCsCAAAAASwCAAAABC0CAAAABC4CAAAAAS8CAAAAATACAAAAATECAAAAATICAB8AIQAAAAAAATYBAAAAAQE2QAAAAAEFNgIAAAABNwIAAAABOAIAAAABOQIAAAABOgIAAAABAAAAAAUVAAYWAAcXAAgYAAkZAAoAAAAAAAUVAAYWAAcXAAgYAAkZAAoBAgECAwEFBgEGBwEHCAEJCgEKDAILDQMMDwENEQIOEgQREwESFAETFQIaGAUbGQs"
-};
-async function decodeBase64AsWasm(wasmBase64) {
-  const { Buffer } = await import('node:buffer');
-  const wasmArray = Buffer.from(wasmBase64, "base64");
-  return new WebAssembly.Module(wasmArray);
-}
-config.compilerWasm = {
-  getRuntime: async () => await import('@prisma/client/runtime/query_compiler_fast_bg.sqlite.mjs'),
-  getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import('@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.mjs');
-    return await decodeBase64AsWasm(wasm);
-  },
-  importName: "./query_compiler_fast_bg.js"
-};
-function getPrismaClientClass() {
+config.runtimeDataModel = JSON.parse('{"models":{"DiagnosticLead":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"cuid","args":[1]},"isGenerated":false,"isUpdatedAt":false},{"name":"createdAt","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"DateTime","nativeType":null,"default":{"name":"now","args":[]},"isGenerated":false,"isUpdatedAt":false},{"name":"email","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q1","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q2","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q3","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q4","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q5","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q6","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"q7","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"totalScore","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Int","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"archetype","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false}},"enums":{},"types":{}}');
+config.engineWasm = void 0;
+config.compilerWasm = void 0;
+function getPrismaClientClass(dirname) {
+  config.dirname = dirname;
   return runtime.getPrismaClient(config);
 }
 
+runtime.Public.validator;
 runtime.Extensions.getExtensionContext;
 ({
-  DbNull: runtime.NullTypes.DbNull,
-  JsonNull: runtime.NullTypes.JsonNull,
-  AnyNull: runtime.NullTypes.AnyNull
+  DbNull: runtime.objectEnumValues.classes.DbNull,
+  JsonNull: runtime.objectEnumValues.classes.JsonNull,
+  AnyNull: runtime.objectEnumValues.classes.AnyNull
 });
+runtime.objectEnumValues.instances.DbNull;
+runtime.objectEnumValues.instances.JsonNull;
+runtime.objectEnumValues.instances.AnyNull;
 runtime.makeStrictEnum({
   Serializable: "Serializable"
 });
 runtime.Extensions.defineExtension;
 
-globalThis["__dirname"] = nodePath.dirname(fileURLToPath(import.meta.url));
-const PrismaClient = getPrismaClientClass();
+const __dirname$1 = path.dirname(fileURLToPath(import.meta.url));
+const PrismaClient = getPrismaClientClass(__dirname$1);
+path.join(__dirname$1, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-darwin-arm64.dylib.node");
 
 const adapter = new PrismaLibSql({
   url: "libsql://purosoftwarediagnosticleads-cristian-purosoftware.aws-us-east-1.turso.io",
