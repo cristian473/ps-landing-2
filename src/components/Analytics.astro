@@ -21,6 +21,9 @@ const { measurementId = 'G-WV5VFSRK57' } = Astro.props;
     send_page_view: true
   });
 
+  // Google Ads
+  gtag('config', 'AW-18014070783');
+
   // Make gtag available globally for custom events
   window.gtag = gtag;
 </script>

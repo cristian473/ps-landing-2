@@ -79,6 +79,7 @@ export default function Contact() {
 			setEmail("");
 			setPhone("");
 			setMessage("");
+			window.history.pushState(null, "", "/?contact=true");
 		} catch {
 			setStatus("error");
 			setErrorMsg("Error de conexión. Por favor intentá de nuevo.");
