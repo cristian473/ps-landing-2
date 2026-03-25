@@ -82,6 +82,43 @@ export function validatePhone(phone: string): ValidationResult {
 }
 
 /**
+ * Validates a city field
+ */
+export function validateCity(city: string): ValidationResult {
+	if (!city || city.trim() === "") {
+		return { isValid: false, error: "La ciudad es obligatoria" };
+	}
+
+	if (city.trim().length < 2) {
+		return { isValid: false, error: "La ciudad debe tener al menos 2 caracteres" };
+	}
+
+	if (city.trim().length > 100) {
+		return { isValid: false, error: "La ciudad debe tener menos de 100 caracteres" };
+	}
+
+	return { isValid: true };
+}
+
+/**
+ * Validates a country code against an allowlist
+ */
+export function validateCountryCode(
+	countryCode: string,
+	allowedCountryCodes: ReadonlySet<string>
+): ValidationResult {
+	if (!countryCode || countryCode.trim() === "") {
+		return { isValid: false, error: "El país es obligatorio" };
+	}
+
+	if (!allowedCountryCodes.has(countryCode.trim().toUpperCase())) {
+		return { isValid: false, error: "El país seleccionado no es válido" };
+	}
+
+	return { isValid: true };
+}
+
+/**
  * Sanitizes input to prevent XSS attacks
  */
 export function sanitizeInput(input: string): string {

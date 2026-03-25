@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { measurementId = 'G-WV5VFSRK57' } = Astro.props;
+const metaPixelId = import.meta.env.META_PIXEL_ID;
 ---
 
 <!-- Google Analytics -->
@@ -29,8 +30,49 @@ const { measurementId = 'G-WV5VFSRK57' } = Astro.props;
 </script>
 <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
 
+<script is:inline define:vars={{ metaPixelId }}>
+  if (metaPixelId) {
+    !(function(f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function() {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = true;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+    window.fbq('init', metaPixelId);
+    window.fbq('track', 'PageView');
+  }
+</script>
+
 <!-- Analytics Helper Functions -->
 <script is:inline>
+  window.generateEventId = function(prefix) {
+    const eventPrefix = prefix || 'lead';
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return `${eventPrefix}-${window.crypto.randomUUID()}`;
+    }
+
+    const randomPart = Math.random().toString(36).slice(2, 10);
+    return `${eventPrefix}-${Date.now()}-${randomPart}`;
+  };
+
+  window.trackMetaLead = function(eventId) {
+    if (!eventId) return;
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', {}, { eventID: eventId });
+    }
+  };
+
   // Wait for gtag to be available
   window.trackEvent = function(eventName, eventParams) {
     if (typeof window.gtag === 'function') {

@@ -30,7 +30,19 @@ export interface ContactFormData {
 	name: string;
 	email: string;
 	phone: string;
+	city: string;
+	country: string;
 	message: string;
+	recaptchaToken?: string;
+	eventId?: string;
+	eventSourceUrl?: string;
+}
+
+export interface DiagnosticLeadFormData {
+	email: string;
+	recaptchaToken?: string;
+	eventId?: string;
+	eventSourceUrl?: string;
 }
 
 export interface APIResponse<T = unknown> {

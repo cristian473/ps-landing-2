@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, type FormEvent } from "react";
+import { CONTACT_COUNTRY_OPTIONS } from "../../constants/contactCountries";
 
 declare global {
 	interface Window {
@@ -10,6 +11,8 @@ declare global {
 				options: { action: string }
 			) => Promise<string>;
 		};
+		generateEventId?: (prefix?: string) => string;
+		trackMetaLead?: (eventId: string) => void;
 	}
 }
 
@@ -21,6 +24,8 @@ export default function Contact() {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
+	const [city, setCity] = useState("");
+	const [country, setCountry] = useState("");
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState<FormStatus>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
@@ -54,6 +59,10 @@ export default function Contact() {
 				return;
 			}
 
+			const eventId =
+				window.generateEventId?.("contact-lead") ||
+				`contact-lead-${Date.now()}`;
+
 			const res = await fetch("/api/contact", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -61,8 +70,12 @@ export default function Contact() {
 					name: name.trim(),
 					email: email.trim(),
 					phone: phone.trim(),
+					city: city.trim(),
+					country: country.trim(),
 					message: message.trim(),
 					recaptchaToken,
+					eventId,
+					eventSourceUrl: window.location.href,
 				}),
 			});
 
@@ -78,7 +91,10 @@ export default function Contact() {
 			setName("");
 			setEmail("");
 			setPhone("");
+			setCity("");
+			setCountry("");
 			setMessage("");
+			window.trackMetaLead?.(eventId);
 			window.history.pushState(null, "", "/?contact=true");
 		} catch {
 			setStatus("error");
@@ -232,6 +248,53 @@ export default function Contact() {
 									placeholder="Ej. +54 11 1234-5678"
 									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
 								/>
+							</div>
+
+							<div>
+								<label
+									htmlFor="city"
+									className="block text-sm font-medium text-gray-400 mb-2"
+								>
+									Tu ciudad
+								</label>
+								<input
+									type="text"
+									id="city"
+									name="city"
+									autoComplete="address-level2"
+									required
+									value={city}
+									onChange={(e) => setCity(e.target.value)}
+									placeholder="Ej. Buenos Aires"
+									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+								/>
+							</div>
+
+							<div>
+								<label
+									htmlFor="country"
+									className="block text-sm font-medium text-gray-400 mb-2"
+								>
+									Tu país
+								</label>
+								<select
+									id="country"
+									name="country"
+									autoComplete="country"
+									required
+									value={country}
+									onChange={(e) => setCountry(e.target.value)}
+									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+								>
+									<option value="" disabled>
+										Seleccioná tu país
+									</option>
+									{CONTACT_COUNTRY_OPTIONS.map((option) => (
+										<option key={option.code} value={option.code}>
+											{option.label}
+										</option>
+									))}
+								</select>
 							</div>
 
 							<div>

@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { Resend } from "resend";
 import prisma from "../../lib/prisma";
 import { verifyRecaptcha } from "../../lib/recaptcha";
+import { sendMetaLeadEvent } from "../../lib/meta-conversions";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -21,11 +22,16 @@ function getArchetype(totalScore: number): string {
 export const POST: APIRoute = async ({ request }) => {
 	try {
 		const body = await request.json();
-		const { email, answers, recaptchaToken } = body as {
+		const { email, answers, recaptchaToken, eventId, eventSourceUrl } = body as {
 			email?: string;
 			answers?: AnswerPayload[];
 			recaptchaToken?: string;
+			eventId?: string;
+			eventSourceUrl?: string;
 		};
+		const safeEventId = typeof eventId === "string" ? eventId : undefined;
+		const safeEventSourceUrl =
+			typeof eventSourceUrl === "string" ? eventSourceUrl : undefined;
 
 		// Verify reCAPTCHA token
 		const recaptchaResult = await verifyRecaptcha(
@@ -131,6 +137,15 @@ export const POST: APIRoute = async ({ request }) => {
 				})
 				.catch((err) => console.error("Resend error:", err));
 		}
+
+		await sendMetaLeadEvent({
+			request,
+			eventId: safeEventId,
+			eventSourceUrl: safeEventSourceUrl,
+			email: email.trim(),
+		}).catch((error) =>
+			console.warn("Meta CAPI diagnostic lead event failed", { error })
+		);
 
 		return new Response(
 			JSON.stringify({ success: true, data: { id: lead.id } }),

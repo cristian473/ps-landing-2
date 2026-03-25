@@ -16,6 +16,8 @@ declare global {
 				options: { action: string }
 			) => Promise<string>;
 		};
+		generateEventId?: (prefix?: string) => string;
+		trackMetaLead?: (eventId: string) => void;
 	}
 }
 
@@ -310,6 +312,11 @@ export default function DigitalDiagnostic() {
 				{ length: 7 },
 				(_, i) => answers[i + 1]
 			);
+			const eventId =
+				window.generateEventId?.("diagnostic-lead") ||
+				`diagnostic-lead-${Date.now()}`;
+
+			window.trackMetaLead?.(eventId);
 
 			// Fire-and-forget: save lead to DB, don't block UX
 			fetch("/api/diagnostic-lead", {
@@ -319,6 +326,8 @@ export default function DigitalDiagnostic() {
 					email: trimmed,
 					answers: orderedAnswers,
 					recaptchaToken,
+					eventId,
+					eventSourceUrl: window.location.href,
 				}),
 			})
 				.catch(() => {})

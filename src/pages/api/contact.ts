@@ -4,10 +4,14 @@ import {
 	validateEmail,
 	validateName,
 	validatePhone,
+	validateCity,
+	validateCountryCode,
 	validateMessage,
 	sanitizeInput,
 } from "../../utils/validation";
 import { verifyRecaptcha } from "../../lib/recaptcha";
+import { CONTACT_COUNTRY_CODE_SET } from "../../constants/contactCountries";
+import { sendMetaLeadEvent } from "../../lib/meta-conversions";
 
 export const POST: APIRoute = async ({ request }) => {
 	try {
@@ -28,7 +32,16 @@ export const POST: APIRoute = async ({ request }) => {
 		const name = sanitizeInput(body.name || "");
 		const email = sanitizeInput(body.email || "");
 		const phone = sanitizeInput(body.phone || "");
+		const city = sanitizeInput(typeof body.city === "string" ? body.city : "");
+		const country = sanitizeInput(
+			typeof body.country === "string" ? body.country : ""
+		).toUpperCase();
 		const message = sanitizeInput(body.message || "");
+		const eventId = sanitizeInput(
+			typeof body.eventId === "string" ? body.eventId : ""
+		);
+		const eventSourceUrl =
+			typeof body.eventSourceUrl === "string" ? body.eventSourceUrl.trim() : "";
 
 		// Validate all fields
 		const nameResult = validateName(name);
@@ -44,6 +57,16 @@ export const POST: APIRoute = async ({ request }) => {
 		const phoneResult = validatePhone(phone);
 		if (!phoneResult.isValid) {
 			return jsonResponse(400, { success: false, error: phoneResult.error });
+		}
+
+		const cityResult = validateCity(city);
+		if (!cityResult.isValid) {
+			return jsonResponse(400, { success: false, error: cityResult.error });
+		}
+
+		const countryResult = validateCountryCode(country, CONTACT_COUNTRY_CODE_SET);
+		if (!countryResult.isValid) {
+			return jsonResponse(400, { success: false, error: countryResult.error });
 		}
 
 		const messageResult = validateMessage(message);
@@ -90,6 +113,14 @@ export const POST: APIRoute = async ({ request }) => {
               <td style="padding: 10px 12px; border: 1px solid #e0e0e0;">
                 <a href="tel:${phone}" style="color: #0066cc;">${phone}</a>
               </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Ciudad</td>
+              <td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${city}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">País</td>
+              <td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${country}</td>
             </tr>
             <tr>
               <td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9; vertical-align: top;">Mensaje</td>
@@ -139,6 +170,19 @@ export const POST: APIRoute = async ({ request }) => {
         </div>
       `,
 		});
+
+		await sendMetaLeadEvent({
+			request,
+			eventId,
+			eventSourceUrl,
+			email,
+			phone,
+			fullName: name,
+			city,
+			country,
+		}).catch((error) =>
+			console.warn("Meta CAPI contact lead event failed", { error })
+		);
 
 		return jsonResponse(200, {
 			success: true,
