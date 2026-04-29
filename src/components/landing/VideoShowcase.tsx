@@ -35,6 +35,11 @@ export default function VideoShowcase({
 
 	const sectionBg = bg === 'black' ? 'bg-black' : 'bg-navy-dark';
 
+	// En mobile el título va arriba del video (orden invertido al JSX).
+	// En desktop respetamos el `align` que decide de qué lado va el video.
+	const videoOrderClass = align === 'right' ? 'order-2 md:order-2' : 'order-2 md:order-1';
+	const textOrderClass = align === 'right' ? 'order-1 md:order-1' : 'order-1 md:order-2';
+
 	return (
 		<section
 			className={`${sectionBg} py-16 md:py-24 border-y border-white/5 relative overflow-hidden`}
@@ -51,7 +56,7 @@ export default function VideoShowcase({
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ duration: 0.6 }}
-						className={align === 'right' ? 'md:order-2' : ''}
+						className={videoOrderClass}
 					>
 						<div className="relative mx-auto max-w-[280px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,182,255,0.15)] bg-black">
 							{loaded ? (
@@ -97,6 +102,7 @@ export default function VideoShowcase({
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ duration: 0.6, delay: 0.15 }}
+						className={textOrderClass}
 					>
 						<span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
 							{eyebrow}
