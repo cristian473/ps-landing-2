@@ -13,10 +13,27 @@ declare global {
 		};
 		generateEventId?: (prefix?: string) => string;
 		trackMetaLead?: (eventId: string) => void;
+		trackFormSubmit?: (formName: string, formData?: Record<string, string>) => void;
+		trackCTAClick?: (ctaName: string, ctaLocation?: string) => void;
+		trackCaseStudyView?: (caseStudyName: string) => void;
 	}
 }
 
 const RECAPTCHA_SITE_KEY = "6Lc7qIssAAAAAPyUuyTGPS-WJ9DyCqkiJa5R4CXZ";
+
+const TEAM_SIZE_OPTIONS = [
+	{ value: "1-5", label: "1 a 5 personas" },
+	{ value: "5-15", label: "5 a 15 personas" },
+	{ value: "15-50", label: "15 a 50 personas" },
+	{ value: "50+", label: "Más de 50 personas" },
+] as const;
+
+const TIMELINE_OPTIONS = [
+	{ value: "1-3m", label: "Ya, en los próximos 1-3 meses" },
+	{ value: "3-6m", label: "En 3 a 6 meses" },
+	{ value: "6m+", label: "Más de 6 meses" },
+	{ value: "exploring", label: "Solo estoy explorando" },
+] as const;
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -26,6 +43,8 @@ export default function Contact() {
 	const [phone, setPhone] = useState("");
 	const [city, setCity] = useState("");
 	const [country, setCountry] = useState("");
+	const [teamSize, setTeamSize] = useState("");
+	const [timeline, setTimeline] = useState("");
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState<FormStatus>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
@@ -72,6 +91,8 @@ export default function Contact() {
 					phone: phone.trim(),
 					city: city.trim(),
 					country: country.trim(),
+					teamSize: teamSize.trim(),
+					timeline: timeline.trim(),
 					message: message.trim(),
 					recaptchaToken,
 					eventId,
@@ -93,8 +114,16 @@ export default function Contact() {
 			setPhone("");
 			setCity("");
 			setCountry("");
+			setTeamSize("");
+			setTimeline("");
 			setMessage("");
 			window.trackMetaLead?.(eventId);
+			window.trackFormSubmit?.("contact", {
+				country: country.trim(),
+				city: city.trim(),
+				team_size: teamSize.trim(),
+				timeline: timeline.trim(),
+			});
 			window.history.pushState(null, "", "/?contact=true");
 		} catch {
 			setStatus("error");
@@ -302,6 +331,60 @@ export default function Contact() {
 										</option>
 									))}
 								</select>
+							</div>
+
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+								<div>
+									<label
+										htmlFor="teamSize"
+										className="block text-sm font-medium text-gray-400 mb-1.5"
+									>
+										Tamaño de tu equipo
+									</label>
+									<select
+										id="teamSize"
+										name="teamSize"
+										required
+										value={teamSize}
+										onChange={(e) => setTeamSize(e.target.value)}
+										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+									>
+										<option value="" disabled>
+											Seleccioná un rango
+										</option>
+										{TEAM_SIZE_OPTIONS.map((option) => (
+											<option key={option.value} value={option.value}>
+												{option.label}
+											</option>
+										))}
+									</select>
+								</div>
+
+								<div>
+									<label
+										htmlFor="timeline"
+										className="block text-sm font-medium text-gray-400 mb-1.5"
+									>
+										¿Cuándo necesitás resolver esto?
+									</label>
+									<select
+										id="timeline"
+										name="timeline"
+										required
+										value={timeline}
+										onChange={(e) => setTimeline(e.target.value)}
+										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+									>
+										<option value="" disabled>
+											Seleccioná un plazo
+										</option>
+										{TIMELINE_OPTIONS.map((option) => (
+											<option key={option.value} value={option.value}>
+												{option.label}
+											</option>
+										))}
+									</select>
+								</div>
 							</div>
 
 							<div>

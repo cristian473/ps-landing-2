@@ -4,24 +4,24 @@ export default function Solutions() {
   const solutions = [
     {
       title: 'Tu plataforma propia en la nube',
-      description: 'Construimos plataformas digitales que escalan. Desde el primer usuario hasta miles, sin que el sistema se caiga ni los costos exploten.',
+      description: 'Construimos plataformas digitales que escalan con tu negocio. Desde el primer usuario hasta miles, sin que el sistema se caiga ni los costos exploten.',
       icon: 'cloud_queue',
       features: [
-        'Tu plataforma aguanta el crecimiento sin romperse',
-        'Infraestructura en AWS o Azure con alta disponibilidad',
-        'Pagos, accesos y multi-empresa incluidos si los necesitás',
+        'Crece de 1 a miles de usuarios sin cambiar el sistema',
+        'Servidores en AWS o Azure con respaldo automático',
+        'Listo para conectar pagos, usuarios y reportes desde el día uno',
       ],
       popular: false,
       delay: 0
     },
     {
       title: 'Automatizá lo que hoy hacen personas a mano',
-      description: 'Integramos inteligencia artificial donde realmente suma: atención al cliente, procesamiento de documentos, análisis de datos. Sin hype, con resultados.',
+      description: 'Asistentes automáticos que procesan pedidos, responden consultas frecuentes y generan reportes sin que nadie los toque. Funcionan 24/7 sin pausas.',
       icon: 'smart_toy',
       features: [
-        'Agentes que responden, procesan y deciden sin intervención humana',
-        'Automatización de flujos repetitivos que hoy consumen tiempo de tu equipo',
-        'Decisiones basadas en tus propios datos, no en intuición',
+        'Procesamiento automático de pedidos, facturas y documentos',
+        'Respuestas instantáneas a las consultas que más se repiten',
+        'Reportes que se generan solos con la info de tu operación',
       ],
       popular: true,
       delay: 0.1

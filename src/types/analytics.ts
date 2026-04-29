@@ -36,16 +36,16 @@ export interface ExternalLinkEvent {
 declare global {
   interface Window {
     dataLayer: unknown[];
-    gtag: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
     fbq?: (...args: unknown[]) => void;
-    trackEvent: (eventName: string, eventParams?: Record<string, unknown>) => void;
-    trackCTAClick: (ctaName: string, ctaLocation?: string) => void;
-    trackCaseStudyView: (caseStudyName: string) => void;
-    trackFormSubmit: (formName: string, formData?: Record<string, string>) => void;
-    trackExternalLink: (url: string) => void;
-    trackScrollDepth: (percentage: number) => void;
-    generateEventId: (prefix?: string) => string;
-    trackMetaLead: (eventId: string) => void;
+    trackEvent?: (eventName: string, eventParams?: Record<string, unknown>) => void;
+    trackCTAClick?: (ctaName: string, ctaLocation?: string) => void;
+    trackCaseStudyView?: (caseStudyName: string) => void;
+    trackFormSubmit?: (formName: string, formData?: Record<string, string>) => void;
+    trackExternalLink?: (url: string) => void;
+    trackScrollDepth?: (percentage: number) => void;
+    generateEventId?: (prefix?: string) => string;
+    trackMetaLead?: (eventId: string) => void;
   }
 }
 
