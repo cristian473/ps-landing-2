@@ -47,9 +47,9 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6 leading-tight max-w-5xl mx-auto text-white"
         >
-          Tu negocio tiene un límite. <br />
+          Excel y WhatsApp ya no alcanzan. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">
-            Nuestro software lo elimina.
+            Te damos el sistema que sí.
           </span>
         </motion.h1>
 

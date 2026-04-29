@@ -17,7 +17,7 @@ import { sendMetaLeadEvent } from "../../lib/meta-conversions";
 import { submitLeadToPanel } from "../../lib/panel-api";
 
 const TEAM_SIZE_VALUES = new Set(["1-5", "5-15", "15-50", "50+"]);
-const TIMELINE_VALUES = new Set(["1-3m", "3-6m", "6m+", "exploring"]);
+const TIMELINE_VALUES = new Set(["4w", "1-3m", "3m+", "exploring"]);
 const BUDGET_VALUES = new Set(["<3k", "4-8k", "8-20k", "20k+", "not_sure"]);
 const PAIN_VALUES = new Set([
 	"sistema_no_se_adapta",
@@ -35,9 +35,9 @@ const TEAM_SIZE_LABELS: Record<string, string> = {
 };
 
 const TIMELINE_LABELS: Record<string, string> = {
-	"1-3m": "Ya, en los próximos 1-3 meses",
-	"3-6m": "En 3 a 6 meses",
-	"6m+": "Más de 6 meses",
+	"4w": "Necesita el primer módulo en 4 semanas",
+	"1-3m": "En 1 a 3 meses",
+	"3m+": "Más de 3 meses / sin urgencia",
 	exploring: "Solo está explorando",
 };
 

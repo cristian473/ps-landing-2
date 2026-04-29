@@ -29,9 +29,9 @@ const TEAM_SIZE_OPTIONS = [
 ] as const;
 
 const TIMELINE_OPTIONS = [
-	{ value: "1-3m", label: "Ya, en los próximos 1-3 meses" },
-	{ value: "3-6m", label: "En 3 a 6 meses" },
-	{ value: "6m+", label: "Más de 6 meses" },
+	{ value: "4w", label: "Necesito el primer módulo en 4 semanas" },
+	{ value: "1-3m", label: "En 1 a 3 meses" },
+	{ value: "3m+", label: "Más de 3 meses / sin urgencia" },
 	{ value: "exploring", label: "Solo estoy explorando" },
 ] as const;
 
@@ -92,7 +92,7 @@ export default function Contact() {
 		}
 		if (s === 2) {
 			if (!teamSize) return "Seleccioná el tamaño de tu equipo";
-			if (!timeline) return "Seleccioná cuándo necesitás resolver esto";
+			if (!timeline) return "Seleccioná para cuándo lo necesitás";
 			if (!budget) return "Seleccioná tu inversión esperada";
 			return null;
 		}
@@ -497,7 +497,7 @@ export default function Contact() {
 											htmlFor="timeline"
 											className="block text-sm font-medium text-gray-400 mb-1.5"
 										>
-											¿Cuándo necesitás resolver esto?
+											¿Para cuándo lo necesitás?
 										</label>
 										<select
 											id="timeline"
