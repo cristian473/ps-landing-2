@@ -1,0 +1,311 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777491028458,
+  "projectRoot": "/Users/macpro/Documents/work/purosoftware/purosoftware-ecosystem/landing",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "astro",
+        "version": "5.16.6",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.3",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.3",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "bun build",
+    "testCommand": null,
+    "lintCommand": "bun lint",
+    "devCommand": "bun dev",
+    "scripts": {
+      "dev": "astro dev",
+      "postinstall": "prisma generate",
+      "build": "astro build",
+      "preview": "astro preview",
+      "astro": "astro",
+      "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
+      "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
+      "format": "prettier --write .",
+      "format:check": "prettier --check .",
+      "type-check": "astro check",
+      "check": "npm run type-check && npm run lint && npm run format:check"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public",
+      "src"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 0,
+      "lastAccessed": 1777491028409,
+      "keyFiles": []
+    },
+    "generated": {
+      "path": "generated",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1777491028435,
+      "keyFiles": []
+    },
+    "prisma": {
+      "path": "prisma",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777491028437,
+      "keyFiles": [
+        "schema.prisma"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 13,
+      "lastAccessed": 1777491028438,
+      "keyFiles": [
+        "android-chrome-192x192.png",
+        "android-chrome-512x512.png",
+        "apple-touch-icon.png",
+        "favicon-16x16.png",
+        "favicon-32x32.png"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 1,
+      "lastAccessed": 1777491028438,
+      "keyFiles": []
+    },
+    "src/assets": {
+      "path": "src/assets",
+      "purpose": "Static assets",
+      "fileCount": 2,
+      "lastAccessed": 1777491028439,
+      "keyFiles": [
+        "astro.svg",
+        "background.svg"
+      ]
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 10,
+      "lastAccessed": 1777491028440,
+      "keyFiles": [
+        "Analytics.astro",
+        "CTA.astro",
+        "Features.astro"
+      ]
+    },
+    "src/config": {
+      "path": "src/config",
+      "purpose": "Configuration files",
+      "fileCount": 2,
+      "lastAccessed": 1777491028440,
+      "keyFiles": [
+        "site.d.ts",
+        "site.mjs"
+      ]
+    },
+    "src/lib": {
+      "path": "src/lib",
+      "purpose": "Library code",
+      "fileCount": 4,
+      "lastAccessed": 1777491028440,
+      "keyFiles": [
+        "meta-conversions.ts",
+        "panel-api.ts",
+        "prisma.ts"
+      ]
+    },
+    "src/pages": {
+      "path": "src/pages",
+      "purpose": "Page components",
+      "fileCount": 8,
+      "lastAccessed": 1777491028441,
+      "keyFiles": [
+        "about.astro",
+        "auditoria-express.astro",
+        "example.mdx"
+      ]
+    },
+    "src/types": {
+      "path": "src/types",
+      "purpose": "Type definitions",
+      "fileCount": 3,
+      "lastAccessed": 1777491028441,
+      "keyFiles": [
+        "analytics.ts",
+        "astro.d.ts",
+        "seo.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/pages/api/contact.ts",
+      "accessCount": 8,
+      "lastAccessed": 1777492436144,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Hero.tsx",
+      "accessCount": 7,
+      "lastAccessed": 1777498432781,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/index.astro",
+      "accessCount": 7,
+      "lastAccessed": 1777498446662,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Contact.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1777492364514,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/CaseStudiesCards.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1777498309307,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Navbar.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1777492514299,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Pricing.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1777498461294,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/FAQ.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1777498466267,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Solutions.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1777492452696,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Experience.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1777492466742,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/LogoTicker.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1777498311556,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Benefits.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777492280066,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/panel-api.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777492372995,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/CaseStudies.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777491524316,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/auditoria-express.astro",
+      "accessCount": 1,
+      "lastAccessed": 1777491525339,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/Footer.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777491526335,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/PreBuiltERP.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777492625123,
+      "type": "file"
+    },
+    {
+      "path": "vercel.json",
+      "accessCount": 1,
+      "lastAccessed": 1777498322096,
+      "type": "file"
+    },
+    {
+      "path": "src/components/landing/StickyCTA.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777498442435,
+      "type": "file"
+    },
+    {
+      "path": "docs/ab-tests.md",
+      "accessCount": 1,
+      "lastAccessed": 1777498478812,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

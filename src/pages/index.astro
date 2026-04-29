@@ -13,6 +13,7 @@ import Solutions from "../components/landing/Solutions";
 import Pricing from "../components/landing/Pricing";
 import FAQ from "../components/landing/FAQ";
 import Contact from "../components/landing/Contact";
+import StickyCTA from "../components/landing/StickyCTA";
 import Footer from "../components/landing/Footer";
 import { SITE } from "../config/site.mjs";
 
@@ -72,4 +73,5 @@ const websiteSchema = {
     <Contact client:visible />
     <Footer />
   </main>
+  <StickyCTA client:idle />
 </Layout>

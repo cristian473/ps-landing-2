@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
@@ -25,7 +25,15 @@ const faqs = [
 ];
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  // En desktop arrancamos con la primera pregunta abierta como demo. En mobile
+  // (≤768px) arrancamos todas cerradas para no empujar contenido fuera del fold.
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    if (isDesktop) setOpenIndex(0);
+  }, []);
 
   return (
     <section className="bg-black py-24 relative" id="faq">
