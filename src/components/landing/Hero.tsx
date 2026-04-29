@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import HeroTestimonial from './HeroTestimonial';
 
 export default function Hero() {
   return (
@@ -125,6 +126,16 @@ export default function Hero() {
             Ver casos de éxito
             <span className="material-icons text-sm">arrow_downward</span>
           </a>
+        </motion.div>
+
+        {/* Testimoniales reales (RAZ + DentalCenter, autorizados). Va debajo
+            del CTA para reforzar trust antes del primer scroll. */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.0 }}
+        >
+          <HeroTestimonial />
         </motion.div>
       </div>
     </section>
