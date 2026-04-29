@@ -6,13 +6,23 @@ export default function Hero() {
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy-dark to-black" />
       
-      {/* Abstract Background Image */}
+      {/* Abstract Background Image — local AVIF/WebP en vez de Google CDN externo.
+          AVIF 18K vs PNG remoto 394K. Decorativo: aria-hidden y sin alt. */}
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none select-none">
-        <img 
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmLzlp0LicHWFcenodYVElI8Ee6BgwjxGfX8bQUhPHLGSHiPDSwbkryk5aWRk-cSY2Zq23aYW5SRzsBtHYQzGYeekMlv5ucLS4NktU1asEWTju9S7Zx3wOKjV159yMq8HD12OBmuTDKETHpKJWjrMeiUDmCJT2Y1ChKLlV73qEAOwEWBFe1PTuZjLL58LXVkiNsRvcw8QrkAznhFZfd9oDsZRDaXtVjzsLEE2cJThn1ge8rJ1T0VWDCvtO0NAICxb3Wz7_qOFfYjSh" 
-          alt="Abstract Data Pattern" 
-          className="w-full h-full object-cover mix-blend-screen"
-        />
+        <picture>
+          <source type="image/avif" srcSet="/hero/abstract-data.avif" />
+          <source type="image/webp" srcSet="/hero/abstract-data.webp" />
+          <img
+            src="/hero/abstract-data.webp"
+            alt=""
+            aria-hidden="true"
+            width={512}
+            height={512}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover mix-blend-screen"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-navy-dark to-transparent" />
       </div>
 
