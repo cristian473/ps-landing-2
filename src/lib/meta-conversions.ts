@@ -9,6 +9,11 @@ interface MetaLeadEventInput {
 	fullName?: string;
 	city?: string;
 	country?: string;
+	/**
+	 * Datos no-PII a pasar como custom_data del evento. Sirven para optimización
+	 * de audiencias y reportes en Meta sin tocar matching (que va por user_data).
+	 */
+	customData?: Record<string, string | undefined>;
 }
 
 interface MetaUserData {
@@ -166,17 +171,29 @@ export async function sendMetaLeadEvent(
 		return { ok: false, skipped: true };
 	}
 
+	const eventData: Record<string, unknown> = {
+		event_name: "Lead",
+		event_time: Math.floor(Date.now() / 1000),
+		action_source: "website",
+		event_source_url: resolveEventSourceUrl(input),
+		event_id: sanitizeEventId(input.eventId),
+		user_data: buildMetaUserData(input),
+	};
+
+	if (input.customData) {
+		const customData: Record<string, string> = {};
+		for (const [key, value] of Object.entries(input.customData)) {
+			if (typeof value === "string" && value.trim()) {
+				customData[key] = value.trim();
+			}
+		}
+		if (Object.keys(customData).length > 0) {
+			eventData.custom_data = customData;
+		}
+	}
+
 	const payload: Record<string, unknown> = {
-		data: [
-			{
-				event_name: "Lead",
-				event_time: Math.floor(Date.now() / 1000),
-				action_source: "website",
-				event_source_url: resolveEventSourceUrl(input),
-				event_id: sanitizeEventId(input.eventId),
-				user_data: buildMetaUserData(input),
-			},
-		],
+		data: [eventData],
 	};
 
 	if (testEventCode?.trim()) {

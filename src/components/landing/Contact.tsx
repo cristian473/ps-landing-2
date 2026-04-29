@@ -35,6 +35,22 @@ const TIMELINE_OPTIONS = [
 	{ value: "exploring", label: "Solo estoy explorando" },
 ] as const;
 
+const BUDGET_OPTIONS = [
+	{ value: "<3k", label: "Menos de USD 3.000" },
+	{ value: "4-8k", label: "USD 4.000 – 8.000" },
+	{ value: "8-20k", label: "USD 8.000 – 20.000" },
+	{ value: "20k+", label: "Más de USD 20.000" },
+	{ value: "not_sure", label: "Todavía no tengo claro" },
+] as const;
+
+const PAIN_OPTIONS = [
+	{ value: "sistema_no_se_adapta", label: "Mi sistema actual no se adapta más" },
+	{ value: "planillas", label: "Estoy con planillas y necesito profesionalizar" },
+	{ value: "multiple_saas", label: "Pago varios SaaS y no se hablan entre sí" },
+	{ value: "desde_cero", label: "Quiero un sistema único de cero" },
+	{ value: "otro", label: "Otro" },
+] as const;
+
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export default function Contact() {
@@ -45,6 +61,8 @@ export default function Contact() {
 	const [country, setCountry] = useState("");
 	const [teamSize, setTeamSize] = useState("");
 	const [timeline, setTimeline] = useState("");
+	const [budget, setBudget] = useState("");
+	const [pain, setPain] = useState("");
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState<FormStatus>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
@@ -93,6 +111,8 @@ export default function Contact() {
 					country: country.trim(),
 					teamSize: teamSize.trim(),
 					timeline: timeline.trim(),
+					budget: budget.trim(),
+					pain: pain.trim(),
 					message: message.trim(),
 					recaptchaToken,
 					eventId,
@@ -116,6 +136,8 @@ export default function Contact() {
 			setCountry("");
 			setTeamSize("");
 			setTimeline("");
+			setBudget("");
+			setPain("");
 			setMessage("");
 			window.trackMetaLead?.(eventId);
 			window.trackFormSubmit?.("contact", {
@@ -123,6 +145,8 @@ export default function Contact() {
 				city: city.trim(),
 				team_size: teamSize.trim(),
 				timeline: timeline.trim(),
+				budget: budget.trim(),
+				pain: pain.trim(),
 			});
 			window.history.pushState(null, "", "/?contact=true");
 		} catch {
@@ -389,19 +413,71 @@ export default function Contact() {
 
 							<div>
 								<label
+									htmlFor="budget"
+									className="block text-sm font-medium text-gray-400 mb-1.5"
+								>
+									Inversión que estás considerando
+								</label>
+								<select
+									id="budget"
+									name="budget"
+									required
+									value={budget}
+									onChange={(e) => setBudget(e.target.value)}
+									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+								>
+									<option value="" disabled>
+										Seleccioná un rango
+									</option>
+									{BUDGET_OPTIONS.map((option) => (
+										<option key={option.value} value={option.value}>
+											{option.label}
+										</option>
+									))}
+								</select>
+							</div>
+
+							<div>
+								<label
+									htmlFor="pain"
+									className="block text-sm font-medium text-gray-400 mb-1.5"
+								>
+									¿Qué problema te urge resolver?
+								</label>
+								<select
+									id="pain"
+									name="pain"
+									required
+									value={pain}
+									onChange={(e) => setPain(e.target.value)}
+									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+								>
+									<option value="" disabled>
+										Seleccioná el principal
+									</option>
+									{PAIN_OPTIONS.map((option) => (
+										<option key={option.value} value={option.value}>
+											{option.label}
+										</option>
+									))}
+								</select>
+							</div>
+
+							<div>
+								<label
 									htmlFor="process"
 									className="block text-sm font-medium text-gray-400 mb-1.5"
 								>
-									¿Qué proceso necesitás automatizar o mejorar?
+									Detalles del proyecto{" "}
+									<span className="text-gray-600 font-normal">(opcional)</span>
 								</label>
 								<textarea
 									id="process"
 									name="message"
 									rows={3}
-									required
 									value={message}
 									onChange={(e) => setMessage(e.target.value)}
-									placeholder="Ej. Necesito un sistema para gestionar inventario y conectar con mi tienda online..."
+									placeholder="Opcional. Contanos qué planillas o sistemas usás hoy o qué te traba puntualmente."
 									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
 								/>
 							</div>

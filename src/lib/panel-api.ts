@@ -15,6 +15,8 @@ export interface PanelLeadPayload {
   country?: string;
   teamSize?: string;
   timeline?: string;
+  budget?: string;
+  pain?: string;
   message?: string;
   eventSourceUrl?: string;
   eventId?: string;
