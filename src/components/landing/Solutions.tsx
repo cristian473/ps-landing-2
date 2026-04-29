@@ -15,13 +15,13 @@ export default function Solutions() {
       delay: 0
     },
     {
-      title: 'Automatizá lo que hoy hacen personas a mano',
-      description: 'Asistentes automáticos que procesan pedidos, responden consultas frecuentes y generan reportes sin que nadie los toque. Funcionan 24/7 sin pausas.',
+      title: 'Asistentes con IA que trabajan 24/7',
+      description: 'IA conectada a tu operación: procesa pedidos por WhatsApp, asigna facturas a proveedores, alerta de stock bajo y responde consultas de clientes sobre saldos y estados. Sin que nadie la toque.',
       icon: 'smart_toy',
       features: [
-        'Procesamiento automático de pedidos, facturas y documentos',
-        'Respuestas instantáneas a las consultas que más se repiten',
-        'Reportes que se generan solos con la info de tu operación',
+        'Pedidos y facturas procesados automáticamente desde WhatsApp y email',
+        'Respuestas instantáneas a clientes sobre deudas, saldos y estados',
+        'Alertas y reportes que se generan solos con la info de tu operación',
       ],
       popular: true,
       delay: 0.1

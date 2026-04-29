@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
   {
+    q: '¿Cómo entregan en 4 semanas si es a medida?',
+    a: 'Porque no empezamos de cero. Tenemos una base de ERP probada que ya cubre el 80% de la operación común: pedidos, stock, clientes, facturación, reportes, integraciones. Las 4 semanas las usamos para adaptarla a tu lógica de negocio, no para construir lo que ya está hecho.',
+  },
+  {
     q: '¿En cuánto tiempo lo tengo funcionando?',
     a: 'El primer módulo en producción a las 4 semanas. El sistema completo entre 2 y 3 meses según el alcance. Si no cumplimos con la entrega del primer módulo, esa fase no se cobra.',
   },

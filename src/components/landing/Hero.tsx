@@ -37,7 +37,7 @@ export default function Hero() {
           className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Para equipos de 5+ personas con operación de volumen real
+          Base ERP con IA · Adaptada a tu operación · Equipos 5+
         </motion.div>
 
         {/* Heading */}
@@ -61,10 +61,10 @@ export default function Hero() {
           className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
         >
           <span className="md:hidden">
-            Pago único. Construido en 4 semanas. 100% tuyo, sin suscripción.
+            ERP con IA, adaptado a tu operación en 4 semanas. 100% tuyo, sin suscripción.
           </span>
           <span className="hidden md:inline">
-            Dejás de pagar suscripciones que no se adaptan. Construimos el sistema exacto que necesitás — y queda tuyo para siempre.
+            Tenemos una base ERP con IA lista. La adaptamos a tu operación en 4 semanas — no la construimos desde cero. Sin suscripción mensual, el sistema queda 100% tuyo.
           </span>
         </motion.p>
 
