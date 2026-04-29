@@ -1,283 +1,179 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 
-const caseStudies = [
+/**
+ * Casos en curso. Estos no son clientes implementados todavía — son
+ * cotizaciones reales (David, Jorgelina, Walter, Facundo, Jorge) que
+ * arrancaron en las últimas semanas. La sección dice eso explícitamente
+ * y los cards llevan badge "En cotización" o "En diseño" para no
+ * pretender lo que no es. Cuando alguno entre a producción, se mueve a
+ * una banda separada de "Clientes operando" con quote autorizado.
+ */
+const projectsInProgress = [
 	{
 		id: 1,
-		title: "Distribuidora B2B",
-		subtitle: "300 pedidos/semana procesados sin tocar Excel",
-		metric: "300/sem",
-		tag: "Distribución",
-		href: "/casos/distribuidora-b2b",
+		shortName: "David",
+		industry: "Imprenta",
+		location: "Mendoza",
+		problem:
+			"Antes: pedidos en planillas, sin trazabilidad de proveedores ni cuentas corrientes.",
+		building:
+			"Construyendo: gestión multi-sucursal con catálogo, tesorería e IA por WhatsApp.",
+		statusLabel: "Cotización aceptada",
+		icon: "print",
+		gradient: "from-amber-500/30 via-orange-700/20 to-navy-dark",
+	},
+	{
+		id: 2,
+		shortName: "Jorgelina",
+		industry: "Estudio Contable",
+		location: "Buenos Aires",
+		problem:
+			"Antes: caja, honorarios mensuales y dinero en tránsito mezclados en planillas.",
+		building:
+			"Construyendo: balance unificado con remitos no fiscales y separación de fondos del estudio.",
+		statusLabel: "Cotización aceptada",
+		icon: "calculate",
+		gradient: "from-cyan-500/30 via-sky-700/20 to-navy-dark",
+	},
+	{
+		id: 3,
+		shortName: "Walter",
+		industry: "Distribuidora",
+		location: "Corrientes",
+		problem:
+			"Antes: pedidos por WhatsApp dispersos, sin portal B2B ni control de stock.",
+		building:
+			"Construyendo: portal B2B con catálogo, autoservicio de pedidos y stock en tiempo real.",
+		statusLabel: "En diseño",
 		icon: "local_shipping",
 		gradient: "from-sky-500/30 via-blue-700/20 to-navy-dark",
 	},
 	{
-		id: 2,
-		title: "Inmobiliaria",
-		subtitle: "400 propiedades centralizadas que antes vivían en 3 sistemas",
-		metric: "400",
-		tag: "Real Estate",
-		href: "/casos/inmobiliaria",
-		icon: "apartment",
-		gradient: "from-emerald-500/30 via-teal-700/20 to-navy-dark",
-	},
-	{
-		id: 3,
-		title: "Clínica Odontológica",
-		subtitle: "3 sedes que ahora ven los mismos turnos en tiempo real",
-		metric: "3 sedes",
-		tag: "Salud",
-		href: "/casos/odontologia",
-		icon: "medical_services",
-		gradient: "from-cyan-500/30 via-sky-700/20 to-navy-dark",
-	},
-	{
 		id: 4,
-		title: "Mayorista",
-		subtitle: "200 clientes hacen sus pedidos solos, sin pasar por ventas",
-		metric: "200",
-		tag: "Comercio",
-		href: "/casos/mayorista",
-		icon: "shopping_cart",
-		gradient: "from-amber-500/30 via-orange-700/20 to-navy-dark",
-	},
-	{
-		id: 5,
-		title: "Academia",
-		subtitle: "1.200 alumnos con pagos y cursadas en piloto automático",
-		metric: "1.2K",
-		tag: "Educación",
-		href: "/casos/academia",
-		icon: "school",
+		shortName: "Facundo",
+		industry: "ERP a medida",
+		location: "Buenos Aires",
+		problem:
+			"Antes: operación distribuida en herramientas que no se hablan entre sí.",
+		building:
+			"Construyendo: ERP completo a medida con módulos integrados y dashboards ejecutivos.",
+		statusLabel: "En cotización",
+		icon: "workspaces",
 		gradient: "from-fuchsia-500/30 via-purple-700/20 to-navy-dark",
 	},
 	{
-		id: 6,
-		title: "Corralón",
-		subtitle: "Presupuestos al instante desde el mostrador, sin volver a la PC",
-		metric: "0 espera",
-		tag: "Materiales",
-		href: "/casos/corralon",
-		icon: "construction",
-		gradient: "from-rose-500/30 via-red-700/20 to-navy-dark",
+		id: 5,
+		shortName: "Jorge",
+		industry: "Librería",
+		location: "Misiones",
+		problem:
+			"Antes: ~20.000 artículos en un sistema gratuito que no soporta facturación con AFIP.",
+		building:
+			"Construyendo: POS con integración AFIP, scanner, alertas de stock bajo y exportación contable.",
+		statusLabel: "En cotización",
+		icon: "menu_book",
+		gradient: "from-emerald-500/30 via-teal-700/20 to-navy-dark",
 	},
-];
+] as const;
 
 export default function CaseStudiesCards() {
-	const [expandedCard, setExpandedCard] = useState(3);
-
 	return (
 		<section className="bg-navy-dark py-24" id="casos">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				{/* Header */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.6 }}
-					className="mb-12 text-center"
+					className="mb-10 text-center"
 				>
-					<span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-						Resultados reales
+					<span className="text-primary font-bold tracking-wider uppercase text-xs sm:text-sm mb-2 block">
+						Proyectos en curso
 					</span>
 					<h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-						Lo que lograron empresas como la tuya
+						Lo que estamos construyendo ahora
 					</h2>
-					<div className="h-1 w-20 bg-primary rounded mx-auto" />
+					<p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+						Estos son proyectos reales que arrancamos en las últimas semanas.
+						Compartimos qué problema vinieron a resolver — los resultados los
+						verás cuando estén en producción.
+					</p>
 				</motion.div>
 
-				{/* Cards Container */}
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.6, delay: 0.2 }}
-					className="relative"
+					className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
 				>
-					{/* Desktop View */}
-					<div className="hidden lg:flex w-full items-center justify-center gap-1.5 h-[28rem] overflow-hidden">
-						{caseStudies.map((caseStudy, idx) => (
-							<a
-								key={caseStudy.id}
-								href={caseStudy.href}
-								className="relative cursor-pointer overflow-hidden rounded-2xl transition-all duration-500 ease-in-out group flex-shrink-0 border border-white/10"
+					{projectsInProgress.map((project) => (
+						<a
+							key={project.id}
+							href="#contacto"
+							onClick={() =>
+								window.trackCaseStudyView?.(`${project.shortName}-${project.industry}`)
+							}
+							className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-primary/40 transition-colors"
+						>
+							{/* Gradient + grid pattern */}
+							<div
+								className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`}
+							/>
+							<div
+								className="absolute inset-0 opacity-[0.06]"
 								style={{
-									width: idx + 1 === expandedCard ? "35%" : "60px",
-									height: "100%",
-									flexGrow: idx + 1 === expandedCard ? 1 : 0,
+									backgroundImage:
+										"linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+									backgroundSize: "28px 28px",
 								}}
-								onMouseEnter={() => setExpandedCard(idx + 1)}
-								onClick={() => window.trackCaseStudyView?.(caseStudy.title)}
-							>
-								{/* Gradient Background */}
-								<div
-									className={`absolute inset-0 bg-gradient-to-br ${caseStudy.gradient}`}
-								/>
+							/>
+							<div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-primary/15 blur-3xl pointer-events-none" />
+							<div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
-								{/* Decorative grid pattern */}
-								<div
-									className="absolute inset-0 opacity-[0.07]"
-									style={{
-										backgroundImage:
-											"linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
-										backgroundSize: "32px 32px",
-									}}
-								/>
-
-								{/* Glow accent */}
-								<div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
-
-								{/* Big metric (only visible when expanded) */}
-								<div
-									className={`absolute top-12 right-6 transition-all duration-500 ${
-										idx + 1 === expandedCard
-											? "opacity-100 scale-100"
-											: "opacity-0 scale-90"
-									}`}
-								>
-									<span className="text-6xl xl:text-7xl font-black text-white/10 tabular-nums tracking-tight">
-										{caseStudy.metric}
+							{/* Content */}
+							<div className="relative p-5 sm:p-6 flex flex-col h-full min-h-[18rem]">
+								{/* Status badge */}
+								<div className="flex items-center justify-between mb-4">
+									<span className="px-2.5 py-1 rounded-full bg-primary/15 border border-primary/30 text-primary text-[11px] font-semibold uppercase tracking-wider backdrop-blur-sm">
+										{project.statusLabel}
 									</span>
-								</div>
-
-								{/* Industry icon */}
-								<div
-									className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
-										idx + 1 === expandedCard
-											? "opacity-30 scale-150"
-											: "opacity-60 scale-100"
-									}`}
-								>
-									<span className="material-icons text-white" style={{ fontSize: "5rem" }}>
-										{caseStudy.icon}
-									</span>
-								</div>
-
-								{/* Bottom gradient overlay for legibility */}
-								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-								{/* Tag - Only visible when expanded */}
-								<div
-									className={`absolute top-4 left-4 z-10 transition-opacity duration-300 ${
-										idx + 1 === expandedCard ? "opacity-100" : "opacity-0"
-									}`}
-								>
-									<span className="px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">
-										{caseStudy.tag}
-									</span>
-								</div>
-
-								{/* Content - Expanded */}
-								<div
-									className={`absolute bottom-0 left-0 right-0 p-6 transition-all duration-500 ${
-										idx + 1 === expandedCard ? "opacity-100" : "opacity-0"
-									}`}
-								>
-									<h3 className="text-2xl font-bold text-white mb-2">
-										{caseStudy.title}
-									</h3>
-									<p className="text-gray-300 text-sm mb-4">
-										{caseStudy.subtitle}
-									</p>
-									<span className="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
-										Ver caso completo
-										<span className="material-icons text-lg">
-											arrow_forward
-										</span>
-									</span>
-								</div>
-
-								{/* Content - Collapsed (vertical text) */}
-								<div
-									className={`absolute bottom-6 left-1/2 -translate-x-1/2 transition-all duration-500 ${
-										idx + 1 === expandedCard ? "opacity-0" : "opacity-100"
-									}`}
-								>
 									<span
-										className="text-white font-bold text-base whitespace-nowrap tracking-wide"
-										style={{
-											writingMode: "vertical-rl",
-											textOrientation: "mixed",
-										}}
+										className="material-icons text-white/30 text-2xl"
+										aria-hidden="true"
 									>
-										{caseStudy.title}
-									</span>
-								</div>
-							</a>
-						))}
-					</div>
-
-					{/* Mobile View */}
-					<div className="lg:hidden flex flex-col gap-4">
-						{caseStudies.map((caseStudy) => (
-							<a
-								key={caseStudy.id}
-								href={caseStudy.href}
-								onClick={() => window.trackCaseStudyView?.(caseStudy.title)}
-								className="relative cursor-pointer overflow-hidden rounded-2xl group w-full h-64 border border-white/10"
-							>
-								{/* Gradient Background */}
-								<div
-									className={`absolute inset-0 bg-gradient-to-br ${caseStudy.gradient}`}
-								/>
-
-								{/* Decorative grid pattern */}
-								<div
-									className="absolute inset-0 opacity-[0.07]"
-									style={{
-										backgroundImage:
-											"linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
-										backgroundSize: "28px 28px",
-									}}
-								/>
-
-								{/* Glow accent */}
-								<div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
-
-								{/* Big metric */}
-								<span className="absolute top-6 right-5 text-5xl font-black text-white/10 tabular-nums tracking-tight">
-									{caseStudy.metric}
-								</span>
-
-								{/* Industry icon */}
-								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30">
-									<span className="material-icons text-white" style={{ fontSize: "4rem" }}>
-										{caseStudy.icon}
+										{project.icon}
 									</span>
 								</div>
 
-								{/* Bottom gradient overlay */}
-								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+								<h3 className="text-lg sm:text-xl font-bold text-white mb-1">
+									{project.shortName} — {project.industry}
+								</h3>
+								<p className="text-gray-400 text-xs sm:text-sm mb-4">
+									{project.location}
+								</p>
 
-								{/* Tag */}
-								<div className="absolute top-4 left-4 z-10">
-									<span className="px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">
-										{caseStudy.tag}
-									</span>
+								<div className="space-y-2 text-sm text-gray-300 leading-relaxed mt-auto">
+									<p>{project.problem}</p>
+									<p className="text-white/90">{project.building}</p>
 								</div>
-
-								{/* Content */}
-								<div className="absolute bottom-0 left-0 right-0 p-6">
-									<h3 className="text-xl font-bold text-white mb-1">
-										{caseStudy.title}
-									</h3>
-									<p className="text-gray-300 text-sm mb-3">
-										{caseStudy.subtitle}
-									</p>
-									<span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">
-										Ver caso completo
-										<span className="material-icons text-lg">
-											arrow_forward
-										</span>
-									</span>
-								</div>
-							</a>
-						))}
-					</div>
+							</div>
+						</a>
+					))}
 				</motion.div>
+
+				<motion.p
+					initial={{ opacity: 0 }}
+					whileInView={{ opacity: 1 }}
+					viewport={{ once: true }}
+					transition={{ duration: 0.6, delay: 0.4 }}
+					className="text-center text-gray-500 text-xs sm:text-sm mt-8 max-w-xl mx-auto"
+				>
+					¿Tu situación se parece a alguno de estos? La consultoría inicial es
+					gratuita.
+				</motion.p>
 			</div>
 		</section>
 	);
