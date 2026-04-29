@@ -10,6 +10,7 @@ import PreBuiltERP from "../components/landing/PreBuiltERP";
 import CaseStudiesCards from "../components/landing/CaseStudiesCards";
 import Experience from "../components/landing/Experience";
 import Solutions from "../components/landing/Solutions";
+import VideoShowcase from "../components/landing/VideoShowcase";
 import Pricing from "../components/landing/Pricing";
 import FAQ from "../components/landing/FAQ";
 import Contact from "../components/landing/Contact";
@@ -65,9 +66,29 @@ const websiteSchema = {
     <LogoTicker client:load />
     <Benefits client:visible />
     <PreBuiltERP client:visible />
+    <VideoShowcase
+      client:visible
+      youtubeId="MRjUQdJKYFc"
+      eyebrow="El producto"
+      title="Mirá la plataforma funcionando"
+      description="Tour por los módulos principales de la base ERP — clientes, pedidos, stock, facturación, dashboards. Es el sistema real que adaptamos a tu operación, no una maqueta."
+      align="left"
+      bg="navy"
+      id="demo-plataforma"
+    />
     <CaseStudiesCards client:visible />
     <Experience client:visible />
     <Solutions client:visible />
+    <VideoShowcase
+      client:visible
+      youtubeId="DkeLTPPICg0"
+      eyebrow="IA en acción"
+      title="El agente operando, no una promesa"
+      description="Mirá la IA conectada al sistema: procesa pedidos, responde sobre saldos y deudas, y se conecta con WhatsApp. Es la misma IA que se entrega con tu plataforma — no es un mockup."
+      align="right"
+      bg="black"
+      id="demo-ia"
+    />
     <Pricing client:visible />
     <FAQ client:visible />
     <Contact client:visible />
