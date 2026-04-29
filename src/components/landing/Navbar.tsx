@@ -48,14 +48,6 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="/auditoria-express"
-              onClick={() => window.trackCTAClick?.('navbar_diagnostico', 'navbar_desktop')}
-              className="text-primary hover:text-primary/80 transition-colors text-sm font-semibold inline-flex items-center gap-1"
-            >
-              <span className="material-icons text-base">quiz</span>
-              Diagnóstico 2min
-            </a>
-            <a
               href="#contacto"
               onClick={() => window.trackCTAClick?.('navbar_hablar_especialista', 'navbar_desktop')}
               className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105 flex items-center gap-1"
@@ -99,17 +91,6 @@ export default function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <a
-                href="/auditoria-express"
-                onClick={() => {
-                  window.trackCTAClick?.('navbar_diagnostico', 'navbar_mobile');
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center gap-2 text-primary hover:bg-white/5 px-3 py-2 rounded-md text-base font-semibold transition-colors"
-              >
-                <span className="material-icons text-base">quiz</span>
-                Diagnóstico gratuito (2 min)
-              </a>
               <a
                 href="#contacto"
                 onClick={() => {

@@ -68,7 +68,7 @@ export default function Hero() {
           </span>
         </motion.p>
 
-        {/* CTA Buttons — primario full-width en mobile, secundario degradado a link */}
+        {/* CTA único — primario full-width en mobile, centrado en desktop */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,32 +82,6 @@ export default function Hero() {
           >
             Quiero una consultoría gratuita
             <span className="material-icons">arrow_forward</span>
-          </a>
-          {/* Secundario: en mobile va text-only debajo, en desktop botón al lado */}
-          <a
-            href="/auditoria-express"
-            onClick={() => window.trackCTAClick?.('hero_diagnostico_gratuito', 'hero')}
-            className="hidden sm:inline-flex px-8 py-4 rounded border border-white/20 hover:border-primary/50 text-white font-medium transition-all hover:bg-white/5 items-center justify-center gap-2"
-          >
-            <span className="material-icons text-base">quiz</span>
-            Hacé el diagnóstico gratuito (2 min)
-          </a>
-        </motion.div>
-
-        {/* Mobile-only secondary link — más liviano que un botón */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="sm:hidden mt-3"
-        >
-          <a
-            href="/auditoria-express"
-            onClick={() => window.trackCTAClick?.('hero_diagnostico_gratuito', 'hero_mobile_link')}
-            className="text-gray-300 hover:text-primary text-sm transition-colors inline-flex items-center gap-1"
-          >
-            ¿Querés evaluar primero? Diagnóstico de 2 min
-            <span className="material-icons text-sm">arrow_forward</span>
           </a>
         </motion.div>
 
