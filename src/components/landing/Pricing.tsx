@@ -13,6 +13,8 @@ const tiers = [
     icon: 'rocket_launch',
     popular: false,
     delay: 0,
+    // En mobile bajamos al puesto 2 — el "popular" sube primero para que el ojo lo vea
+    mobileOrder: 'order-2',
   },
   {
     title: 'Mid-market',
@@ -26,6 +28,7 @@ const tiers = [
     icon: 'workspaces',
     popular: true,
     delay: 0.1,
+    mobileOrder: 'order-1',
   },
   {
     title: 'Enterprise',
@@ -39,6 +42,7 @@ const tiers = [
     icon: 'corporate_fare',
     popular: false,
     delay: 0.2,
+    mobileOrder: 'order-3',
   },
 ];
 
@@ -73,7 +77,7 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: tier.delay }}
-              className={`relative flex flex-col p-6 sm:p-8 rounded-2xl border transition-all ${
+              className={`relative flex flex-col p-6 sm:p-8 rounded-2xl border transition-all ${tier.mobileOrder} md:order-none ${
                 tier.popular
                   ? 'border-primary/40 bg-primary/5 hover:bg-primary/10 shadow-[0_0_40px_rgba(56,182,255,0.15)]'
                   : 'border-white/10 bg-navy-surface hover:border-primary/30'
