@@ -43,26 +43,57 @@ const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID || '';
 </script>
 
 <script is:inline define:vars={{ metaPixelId }}>
+  // Meta Pixel — diferido. La conversión real (Lead) la dispara CAPI server-side
+  // desde /api/contact, así que el Pixel client-side sólo cubre PageView/matching.
+  // Bootea fbq en queue para que window.fbq esté disponible inmediatamente, pero
+  // el script de Meta (fbevents.js) se carga en idle/scroll/interacción para no
+  // pelear con el render del Hero.
   if (metaPixelId) {
-    !(function(f, b, e, v, n, t, s) {
-      if (f.fbq) return;
-      n = f.fbq = function() {
-        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    (function() {
+      window.fbq = window.fbq || function() {
+        (window.fbq.q = window.fbq.q || []).push(arguments);
       };
-      if (!f._fbq) f._fbq = n;
-      n.push = n;
-      n.loaded = true;
-      n.version = '2.0';
-      n.queue = [];
-      t = b.createElement(e);
-      t.async = true;
-      t.src = v;
-      s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s);
-    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      window.fbq.queue = window.fbq.queue || [];
+      window.fbq.loaded = false;
+      window.fbq.version = '2.0';
 
-    window.fbq('init', metaPixelId);
-    window.fbq('track', 'PageView');
+      var loaded = false;
+      function loadFbevents() {
+        if (loaded) return;
+        loaded = true;
+        var t = document.createElement('script');
+        t.async = true;
+        t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+        t.onload = function() {
+          // El SDK real reemplaza window.fbq y drena la queue automáticamente.
+          window.fbq('init', metaPixelId);
+          window.fbq('track', 'PageView');
+        };
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      }
+
+      var trigger = function() {
+        loadFbevents();
+        window.removeEventListener('scroll', trigger);
+        window.removeEventListener('mousemove', trigger);
+        window.removeEventListener('touchstart', trigger);
+        window.removeEventListener('keydown', trigger);
+      };
+
+      // Carga al primer signal de interacción real…
+      window.addEventListener('scroll', trigger, { passive: true, once: true });
+      window.addEventListener('mousemove', trigger, { once: true });
+      window.addEventListener('touchstart', trigger, { passive: true, once: true });
+      window.addEventListener('keydown', trigger, { once: true });
+
+      // …o, como fallback, cuando el navegador esté idle.
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(trigger, { timeout: 4000 });
+      } else {
+        setTimeout(trigger, 3000);
+      }
+    })();
   }
 </script>
 
