@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { CONTACT_COUNTRY_OPTIONS } from "../../constants/contactCountries";
 
 declare global {
@@ -74,6 +74,7 @@ export default function Contact() {
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState<FormStatus>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
+	const submittingRef = useRef(false);
 	// Wizard state — sólo se usa en mobile (md:hidden), en desktop el form
 	// se renderiza completo (md:block sobre cada grupo). step nunca llega a 4
 	// en mobile; el "submit" del paso 3 dispara el fetch.
@@ -122,6 +123,7 @@ export default function Contact() {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if (submittingRef.current || status === "submitting") return;
 
 		// En mobile el submit del form sólo cuenta cuando estamos en el último
 		// paso. En desktop step queda en 1 pero todos los grupos están visibles
@@ -145,6 +147,7 @@ export default function Contact() {
 			}
 		}
 
+		submittingRef.current = true;
 		setStatus("submitting");
 		setErrorMsg("");
 
@@ -231,6 +234,8 @@ export default function Contact() {
 		} catch {
 			setStatus("error");
 			setErrorMsg("Error de conexión. Por favor intentá de nuevo.");
+		} finally {
+			submittingRef.current = false;
 		}
 	};
 
@@ -355,8 +360,9 @@ export default function Contact() {
 								</div>
 							</div>
 
-							{/* Paso 1 — contacto */}
-							<div className={`${stepClass(1)} space-y-4`}>
+							<div className="min-h-[30rem] sm:min-h-[22rem] md:min-h-0">
+								{/* Paso 1 — contacto */}
+								<div className={`${stepClass(1)} space-y-4`}>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 									<div>
 										<label
@@ -465,10 +471,10 @@ export default function Contact() {
 										))}
 									</select>
 								</div>
-							</div>
+								</div>
 
-							{/* Paso 2 — empresa */}
-							<div className={`${stepClass(2)} space-y-4`}>
+								{/* Paso 2 — empresa */}
+								<div className={`${stepClass(2)} space-y-4`}>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 									<div>
 										<label
@@ -548,10 +554,10 @@ export default function Contact() {
 										))}
 									</select>
 								</div>
-							</div>
+								</div>
 
-							{/* Paso 3 — proyecto */}
-							<div className={`${stepClass(3)} space-y-4`}>
+								{/* Paso 3 — proyecto */}
+								<div className={`${stepClass(3)} space-y-4`}>
 								<div>
 									<label
 										htmlFor="pain"
@@ -595,6 +601,7 @@ export default function Contact() {
 										placeholder="Opcional. Contanos qué planillas o sistemas usás hoy o qué te traba puntualmente."
 										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
 									/>
+								</div>
 								</div>
 							</div>
 
