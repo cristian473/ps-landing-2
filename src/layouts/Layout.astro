@@ -102,8 +102,50 @@ const robotsContent = [
 		<!-- Google Analytics -->
 		<Analytics />
 
-		<!-- reCAPTCHA v3 -->
-		<script is:inline src="https://www.google.com/recaptcha/api.js?render=6Lc7qIssAAAAAPyUuyTGPS-WJ9DyCqkiJa5R4CXZ"></script>
+		<!--
+			reCAPTCHA v3 — diferido. El script no se carga en pageload (~80KB
+			parse + render-blocking). Se inyecta on-demand: la primera vez que
+			el usuario hace focus en cualquier <form> del documento, o cuando
+			pasa el mouse por cima de un botón submit. Como fallback, idle
+			callback dispara el load tras 4s para que `window.grecaptcha` esté
+			disponible si el usuario tarda menos en submitir.
+		-->
+		<script is:inline>
+			(function () {
+				var loaded = false;
+				function loadRecaptcha() {
+					if (loaded) return;
+					loaded = true;
+					var s = document.createElement('script');
+					s.src = 'https://www.google.com/recaptcha/api.js?render=6Lc7qIssAAAAAPyUuyTGPS-WJ9DyCqkiJa5R4CXZ';
+					s.async = true;
+					s.defer = true;
+					document.head.appendChild(s);
+					off();
+				}
+				function trigger(e) {
+					var t = e && e.target;
+					if (!t) return loadRecaptcha();
+					var tag = t.tagName;
+					if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON' || (t.closest && t.closest('form'))) {
+						loadRecaptcha();
+					}
+				}
+				function off() {
+					document.removeEventListener('focusin', trigger, true);
+					document.removeEventListener('mouseover', trigger, true);
+					document.removeEventListener('touchstart', trigger, true);
+				}
+				document.addEventListener('focusin', trigger, true);
+				document.addEventListener('mouseover', trigger, true);
+				document.addEventListener('touchstart', trigger, { capture: true, passive: true });
+				if ('requestIdleCallback' in window) {
+					window.requestIdleCallback(loadRecaptcha, { timeout: 5000 });
+				} else {
+					setTimeout(loadRecaptcha, 4000);
+				}
+			})();
+		</script>
 	</head>
 	<body class="min-h-screen bg-background-dark text-white selection:bg-primary selection:text-white">
 		<slot />

@@ -4,24 +4,24 @@ export default function Solutions() {
   const solutions = [
     {
       title: 'Tu plataforma propia en la nube',
-      description: 'Construimos plataformas digitales que escalan. Desde el primer usuario hasta miles, sin que el sistema se caiga ni los costos exploten.',
+      description: 'Construimos plataformas digitales que escalan con tu negocio. Desde el primer usuario hasta miles, sin que el sistema se caiga ni los costos exploten.',
       icon: 'cloud_queue',
       features: [
-        'Tu plataforma aguanta el crecimiento sin romperse',
-        'Infraestructura en AWS o Azure con alta disponibilidad',
-        'Pagos, accesos y multi-empresa incluidos si los necesitás',
+        'Crece de 1 a miles de usuarios sin cambiar el sistema',
+        'Servidores en AWS o Azure con respaldo automático',
+        'Listo para conectar pagos, usuarios y reportes desde el día uno',
       ],
       popular: false,
       delay: 0
     },
     {
-      title: 'Automatizá lo que hoy hacen personas a mano',
-      description: 'Integramos inteligencia artificial donde realmente suma: atención al cliente, procesamiento de documentos, análisis de datos. Sin hype, con resultados.',
+      title: 'Asistentes con IA que trabajan 24/7',
+      description: 'IA conectada a tu operación: procesa pedidos por WhatsApp, asigna facturas a proveedores, alerta de stock bajo y responde consultas de clientes sobre saldos y estados. Sin que nadie la toque.',
       icon: 'smart_toy',
       features: [
-        'Agentes que responden, procesan y deciden sin intervención humana',
-        'Automatización de flujos repetitivos que hoy consumen tiempo de tu equipo',
-        'Decisiones basadas en tus propios datos, no en intuición',
+        'Pedidos y facturas procesados automáticamente desde WhatsApp y email',
+        'Respuestas instantáneas a clientes sobre deudas, saldos y estados',
+        'Alertas y reportes que se generan solos con la info de tu operación',
       ],
       popular: true,
       delay: 0.1

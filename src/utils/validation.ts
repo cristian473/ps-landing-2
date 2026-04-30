@@ -43,24 +43,56 @@ export function validateName(name: string): ValidationResult {
 }
 
 /**
- * Validates a message field
+ * Validates a message field. Optional — string vacío es válido. Si trae contenido,
+ * exige longitud mínima útil para que no sea spam de un caracter.
  */
 export function validateMessage(message: string): ValidationResult {
-	if (!message || message.trim() === "") {
-		return { isValid: false, error: "Message is required" };
+	const trimmed = (message ?? "").trim();
+	if (trimmed === "") return { isValid: true };
+
+	if (trimmed.length < 10) {
+		return { isValid: false, error: "Si dejás un mensaje, escribí al menos 10 caracteres" };
 	}
 
-	if (message.trim().length < 10) {
-		return { isValid: false, error: "Message must be at least 10 characters" };
-	}
-
-	if (message.trim().length > 5000) {
+	if (trimmed.length > 5000) {
 		return {
 			isValid: false,
-			error: "Message must be less than 5000 characters",
+			error: "El mensaje debe tener menos de 5000 caracteres",
 		};
 	}
 
+	return { isValid: true };
+}
+
+/**
+ * Validates the lead's expected investment range (allowlist).
+ */
+export function validateBudget(
+	budget: string,
+	allowedValues: ReadonlySet<string>
+): ValidationResult {
+	if (!budget || budget.trim() === "") {
+		return { isValid: false, error: "Seleccioná tu inversión esperada" };
+	}
+	if (!allowedValues.has(budget.trim())) {
+		return { isValid: false, error: "El rango de inversión seleccionado no es válido" };
+	}
+	return { isValid: true };
+}
+
+/**
+ * Validates the lead's pain category (allowlist).
+ */
+export function validatePain(
+	pain: string,
+	allowedValues: ReadonlySet<string>
+): ValidationResult {
+	if (!pain || pain.trim() === "") {
+		return { isValid: false, error: "Seleccioná qué problema querés resolver" };
+	}
+	if (!allowedValues.has(pain.trim())) {
+		return { isValid: false, error: "La opción seleccionada no es válida" };
+	}
 	return { isValid: true };
 }
 

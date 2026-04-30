@@ -37,7 +37,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 items-center">
+          <div className="hidden md:flex space-x-6 items-center">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -49,6 +49,7 @@ export default function Navbar() {
             ))}
             <a
               href="#contacto"
+              onClick={() => window.trackCTAClick?.('navbar_hablar_especialista', 'navbar_desktop')}
               className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105 flex items-center gap-1"
             >
               Hablar con un especialista
@@ -92,7 +93,10 @@ export default function Navbar() {
               ))}
               <a
                 href="#contacto"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  window.trackCTAClick?.('navbar_hablar_especialista', 'navbar_mobile');
+                  setIsMobileMenuOpen(false);
+                }}
                 className="flex items-center justify-center gap-1 w-full bg-primary text-navy-dark px-5 py-3 rounded font-bold mt-4 hover:bg-primary/90 transition-colors"
               >
                 Hablar con un especialista

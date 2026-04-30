@@ -1,0 +1,44 @@
+{
+  "redirects": [
+    {
+      "source": "/auditoria-express",
+      "destination": "/#contacto",
+      "permanent": true
+    },
+    {
+      "source": "/casos/distribuidora-b2b",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/casos/inmobiliaria",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/casos/odontologia",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/casos/mayorista",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/casos/academia",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/casos/corralon",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/casos/:slug*",
+      "destination": "/#casos",
+      "permanent": true
+    }
+  ]
+}

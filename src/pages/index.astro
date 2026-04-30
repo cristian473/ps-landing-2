@@ -6,11 +6,17 @@ import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
 import LogoTicker from "../components/landing/LogoTicker";
 import Benefits from "../components/landing/Benefits";
+// import PreBuiltERP from "../components/landing/PreBuiltERP";
 import CaseStudiesCards from "../components/landing/CaseStudiesCards";
-import Experience from "../components/landing/Experience";
-import Solutions from "../components/landing/Solutions";
+// import Experience from "../components/landing/Experience";
+// import Solutions from "../components/landing/Solutions";
+import VideoShowcase from "../components/landing/VideoShowcase";
+import Pricing from "../components/landing/Pricing";
+import FAQ from "../components/landing/FAQ";
 import Contact from "../components/landing/Contact";
+import StickyCTA from "../components/landing/StickyCTA";
 import Footer from "../components/landing/Footer";
+import HeroTestimonial from '../components/landing/HeroTestimonial';
 import { SITE } from "../config/site.mjs";
 
 const organizationSchema = {
@@ -58,12 +64,39 @@ const websiteSchema = {
   <Navbar client:load />
   <main>
     <Hero client:load />
+    {/* <PreBuiltERP client:visible /> */}
+    <VideoShowcase
+      client:visible
+      youtubeId="MRjUQdJKYFc"
+      eyebrow="El producto"
+      title="Mirá la plataforma funcionando"
+      description="Tour por los módulos principales de la base ERP — clientes, pedidos, stock, facturación, dashboards. Es el sistema real que adaptamos a tu operación, no una maqueta."
+      align="left"
+      bg="navy"
+      id="demo-plataforma"
+    />
     <LogoTicker client:load />
-    <Benefits client:visible />
+    {/* Testimoniales reales (RAZ + DentalCenter, autorizados).
+        Refuerza trust antes del primer scroll. */}
+    <HeroTestimonial client:load />
     <CaseStudiesCards client:visible />
-    <Experience client:visible />
-    <Solutions client:visible />
+    {/* <Experience client:visible /> */}
+    {/* <Solutions client:visible /> */}
+    <VideoShowcase
+      client:visible
+      youtubeId="DkeLTPPICg0"
+      eyebrow="IA en acción"
+      title="El agente operando, no una promesa"
+      description="Mirá la IA conectada al sistema: procesa pedidos, responde sobre saldos y deudas, y se conecta con WhatsApp. Es la misma IA que se entrega con tu plataforma — no es un mockup."
+      align="right"
+      bg="black"
+      id="demo-ia"
+    />
+    <Pricing client:visible />
+    <Benefits client:visible />
+    <FAQ client:visible />
     <Contact client:visible />
     <Footer />
   </main>
+  <StickyCTA client:idle />
 </Layout>

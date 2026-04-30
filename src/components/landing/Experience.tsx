@@ -49,6 +49,27 @@ export default function Experience() {
           <div className="h-1 w-20 bg-primary rounded mx-auto" />
         </motion.div>
 
+        {/* Guarantee callout */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto mb-16 bg-primary/5 border border-primary/30 rounded-2xl p-6 md:p-8 flex items-start gap-4"
+        >
+          <div className="shrink-0 w-12 h-12 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center">
+            <span className="material-icons text-primary text-2xl">verified</span>
+          </div>
+          <div>
+            <h3 className="text-lg md:text-xl font-bold text-white mb-1">
+              Garantía de entrega
+            </h3>
+            <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+              Si en 4 semanas no tenés el primer módulo funcionando en producción, esa fase no se cobra. Punto.
+            </p>
+          </div>
+        </motion.div>
+
         {/* Timeline */}
         <div className="relative">
           {/* Vertical Line - Desktop */}

@@ -13,12 +13,53 @@ declare global {
 		};
 		generateEventId?: (prefix?: string) => string;
 		trackMetaLead?: (eventId: string) => void;
+		trackMetaCustomLead?: (eventId: string) => void;
+		trackFormSubmit?: (formName: string, formData?: Record<string, string>) => void;
+		trackCTAClick?: (ctaName: string, ctaLocation?: string) => void;
+		trackCaseStudyView?: (caseStudyName: string) => void;
 	}
 }
 
 const RECAPTCHA_SITE_KEY = "6Lc7qIssAAAAAPyUuyTGPS-WJ9DyCqkiJa5R4CXZ";
 
+const TEAM_SIZE_OPTIONS = [
+	{ value: "1-5", label: "1 a 5 personas" },
+	{ value: "5-15", label: "5 a 15 personas" },
+	{ value: "15-50", label: "15 a 50 personas" },
+	{ value: "50+", label: "Más de 50 personas" },
+] as const;
+
+const TIMELINE_OPTIONS = [
+	{ value: "4w", label: "Necesito el primer módulo en 4 semanas" },
+	{ value: "1-3m", label: "En 1 a 3 meses" },
+	{ value: "3m+", label: "Más de 3 meses / sin urgencia" },
+	{ value: "exploring", label: "Solo estoy explorando" },
+] as const;
+
+const BUDGET_OPTIONS = [
+	{ value: "<3k", label: "Menos de USD 3.000" },
+	{ value: "4-8k", label: "USD 4.000 – 8.000" },
+	{ value: "8-20k", label: "USD 8.000 – 20.000" },
+	{ value: "20k+", label: "Más de USD 20.000" },
+	{ value: "not_sure", label: "Todavía no tengo claro" },
+] as const;
+
+const PAIN_OPTIONS = [
+	{ value: "sistema_no_se_adapta", label: "Mi sistema actual no se adapta más" },
+	{ value: "planillas", label: "Estoy con planillas y necesito profesionalizar" },
+	{ value: "multiple_saas", label: "Pago varios SaaS y no se hablan entre sí" },
+	{ value: "desde_cero", label: "Quiero un sistema único de cero" },
+	{ value: "otro", label: "Otro" },
+] as const;
+
 type FormStatus = "idle" | "submitting" | "success" | "error";
+type Step = 1 | 2 | 3;
+const TOTAL_STEPS = 3;
+const STEP_TITLES: Record<Step, string> = {
+	1: "Tu contacto",
+	2: "Tu empresa",
+	3: "Tu proyecto",
+};
 
 export default function Contact() {
 	const [name, setName] = useState("");
@@ -26,17 +67,88 @@ export default function Contact() {
 	const [phone, setPhone] = useState("");
 	const [city, setCity] = useState("");
 	const [country, setCountry] = useState("");
+	const [teamSize, setTeamSize] = useState("");
+	const [timeline, setTimeline] = useState("");
+	const [budget, setBudget] = useState("");
+	const [pain, setPain] = useState("");
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState<FormStatus>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
+	// Wizard state — sólo se usa en mobile (md:hidden), en desktop el form
+	// se renderiza completo (md:block sobre cada grupo). step nunca llega a 4
+	// en mobile; el "submit" del paso 3 dispara el fetch.
+	const [step, setStep] = useState<Step>(1);
+
+	// Valida los campos del paso actual antes de avanzar. Devuelve mensaje
+	// de error o null si todo OK.
+	function validateStep(s: Step): string | null {
+		if (s === 1) {
+			if (!name.trim()) return "Ingresá tu nombre";
+			if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+				return "Ingresá un email válido";
+			if (!phone.trim()) return "Ingresá tu teléfono";
+			if (!city.trim()) return "Ingresá tu ciudad";
+			if (!country) return "Seleccioná tu país";
+			return null;
+		}
+		if (s === 2) {
+			if (!teamSize) return "Seleccioná el tamaño de tu equipo";
+			if (!timeline) return "Seleccioná para cuándo lo necesitás";
+			if (!budget) return "Seleccioná tu inversión esperada";
+			return null;
+		}
+		// s === 3 — pain required, message opcional
+		if (!pain) return "Seleccioná qué problema querés resolver";
+		return null;
+	}
+
+	function goNext() {
+		const err = validateStep(step);
+		if (err) {
+			setErrorMsg(err);
+			setStatus("error");
+			return;
+		}
+		setErrorMsg("");
+		setStatus("idle");
+		setStep((step + 1) as Step);
+	}
+
+	function goBack() {
+		setErrorMsg("");
+		setStatus("idle");
+		setStep(Math.max(1, step - 1) as Step);
+	}
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		// En mobile el submit del form sólo cuenta cuando estamos en el último
+		// paso. En desktop step queda en 1 pero todos los grupos están visibles
+		// y el HTML5 `required` cubre la validación.
+		const isMobile =
+			typeof window !== "undefined" &&
+			window.matchMedia("(max-width: 767px)").matches;
+		if (isMobile && step < TOTAL_STEPS) {
+			goNext();
+			return;
+		}
+
+		// Validamos manualmente toda la cadena de pasos en desktop también, así
+		// los mensajes son consistentes con los del wizard mobile.
+		for (const s of [1, 2, 3] as Step[]) {
+			const err = validateStep(s);
+			if (err) {
+				setErrorMsg(err);
+				setStatus("error");
+				return;
+			}
+		}
+
 		setStatus("submitting");
 		setErrorMsg("");
 
 		try {
-			// Get reCAPTCHA v3 token
 			let recaptchaToken = "";
 			try {
 				recaptchaToken = await new Promise<string>((resolve, reject) => {
@@ -72,6 +184,10 @@ export default function Contact() {
 					phone: phone.trim(),
 					city: city.trim(),
 					country: country.trim(),
+					teamSize: teamSize.trim(),
+					timeline: timeline.trim(),
+					budget: budget.trim(),
+					pain: pain.trim(),
 					message: message.trim(),
 					recaptchaToken,
 					eventId,
@@ -93,14 +209,34 @@ export default function Contact() {
 			setPhone("");
 			setCity("");
 			setCountry("");
+			setTeamSize("");
+			setTimeline("");
+			setBudget("");
+			setPain("");
 			setMessage("");
+			setStep(1);
 			window.trackMetaLead?.(eventId);
+			// Custom event para Estructura 3 (Ventas + custom event en lugar de
+			// Lead estándar). Mismo eventId — Meta deduplica por (event_name, id).
+			window.trackMetaCustomLead?.(eventId);
+			window.trackFormSubmit?.("contact", {
+				country: country.trim(),
+				city: city.trim(),
+				team_size: teamSize.trim(),
+				timeline: timeline.trim(),
+				budget: budget.trim(),
+				pain: pain.trim(),
+			});
 			window.history.pushState(null, "", "/?contact=true");
 		} catch {
 			setStatus("error");
 			setErrorMsg("Error de conexión. Por favor intentá de nuevo.");
 		}
 	};
+
+	// En mobile sólo el grupo del step activo es visible. En md+ siempre.
+	const stepClass = (s: Step) =>
+		step === s ? "block" : "hidden md:block";
 
 	return (
 		<section className="relative bg-black pt-24 pb-12" id="contacto">
@@ -111,7 +247,7 @@ export default function Contact() {
 					whileInView={{ opacity: 1, x: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.6 }}
-					className="max-w-xl"
+					className="hidden lg:block max-w-xl"
 				>
 					<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
 						¿Tu operación creció más rápido que el sistema que la gestiona?
@@ -195,144 +331,320 @@ export default function Contact() {
 								Hablemos de tu proyecto
 							</h3>
 
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-								<div>
-									<label
-										htmlFor="name"
-										className="block text-sm font-medium text-gray-400 mb-1.5"
-									>
-										Tu nombre
-									</label>
-									<input
-										type="text"
-										id="name"
-										name="name"
-										autoComplete="name"
-										required
-										value={name}
-										onChange={(e) => setName(e.target.value)}
-										placeholder="Ej. Juan Pérez"
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-									/>
+							{/* Wizard progress — mobile only */}
+							<div className="md:hidden">
+								<div className="flex items-center justify-between mb-2">
+									<span className="text-xs font-semibold uppercase tracking-wider text-primary">
+										Paso {step} de {TOTAL_STEPS}
+									</span>
+									<span className="text-xs text-gray-500">
+										{STEP_TITLES[step]}
+									</span>
 								</div>
-
-								<div>
-									<label
-										htmlFor="email"
-										className="block text-sm font-medium text-gray-400 mb-1.5"
-									>
-										Tu email
-									</label>
-									<input
-										type="email"
-										id="email"
-										name="email"
-										autoComplete="email"
-										required
-										value={email}
-										onChange={(e) => setEmail(e.target.value)}
-										placeholder="juan@empresa.com"
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-									/>
-								</div>
-
-								<div>
-									<label
-										htmlFor="phone"
-										className="block text-sm font-medium text-gray-400 mb-1.5"
-									>
-										Tu teléfono
-									</label>
-									<input
-										type="tel"
-										id="phone"
-										name="phone"
-										autoComplete="tel"
-										required
-										value={phone}
-										onChange={(e) => setPhone(e.target.value)}
-										placeholder="Ej. +54 11 1234-5678"
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-									/>
-								</div>
-
-								<div>
-									<label
-										htmlFor="city"
-										className="block text-sm font-medium text-gray-400 mb-1.5"
-									>
-										Tu ciudad
-									</label>
-									<input
-										type="text"
-										id="city"
-										name="city"
-										autoComplete="address-level2"
-										required
-										value={city}
-										onChange={(e) => setCity(e.target.value)}
-										placeholder="Ej. Buenos Aires"
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+								<div
+									role="progressbar"
+									aria-valuemin={1}
+									aria-valuemax={TOTAL_STEPS}
+									aria-valuenow={step}
+									className="h-1 w-full bg-white/10 rounded-full overflow-hidden"
+								>
+									<div
+										className="h-full bg-primary transition-all duration-300"
+										style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
 									/>
 								</div>
 							</div>
 
-							<div>
-								<label
-									htmlFor="country"
-									className="block text-sm font-medium text-gray-400 mb-1.5"
-								>
-									Tu país
-								</label>
-								<select
-									id="country"
-									name="country"
-									autoComplete="country"
-									required
-									value={country}
-									onChange={(e) => setCountry(e.target.value)}
-									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-								>
-									<option value="" disabled>
-										Seleccioná tu país
-									</option>
-									{CONTACT_COUNTRY_OPTIONS.map((option) => (
-										<option key={option.code} value={option.code}>
-											{option.label}
+							{/* Paso 1 — contacto */}
+							<div className={`${stepClass(1)} space-y-4`}>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+									<div>
+										<label
+											htmlFor="name"
+											className="block text-sm font-medium text-gray-400 mb-1.5"
+										>
+											Tu nombre
+										</label>
+										<input
+											type="text"
+											id="name"
+											name="name"
+											autoComplete="name"
+											required
+											value={name}
+											onChange={(e) => setName(e.target.value)}
+											placeholder="Ej. Juan Pérez"
+											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										/>
+									</div>
+
+									<div>
+										<label
+											htmlFor="email"
+											className="block text-sm font-medium text-gray-400 mb-1.5"
+										>
+											Tu email
+										</label>
+										<input
+											type="email"
+											id="email"
+											name="email"
+											autoComplete="email"
+											required
+											value={email}
+											onChange={(e) => setEmail(e.target.value)}
+											placeholder="juan@empresa.com"
+											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										/>
+									</div>
+
+									<div>
+										<label
+											htmlFor="phone"
+											className="block text-sm font-medium text-gray-400 mb-1.5"
+										>
+											Tu teléfono
+										</label>
+										<input
+											type="tel"
+											id="phone"
+											name="phone"
+											autoComplete="tel"
+											required
+											value={phone}
+											onChange={(e) => setPhone(e.target.value)}
+											placeholder="Ej. +54 11 1234-5678"
+											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										/>
+									</div>
+
+									<div>
+										<label
+											htmlFor="city"
+											className="block text-sm font-medium text-gray-400 mb-1.5"
+										>
+											Tu ciudad
+										</label>
+										<input
+											type="text"
+											id="city"
+											name="city"
+											autoComplete="address-level2"
+											required
+											value={city}
+											onChange={(e) => setCity(e.target.value)}
+											placeholder="Ej. Buenos Aires"
+											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										/>
+									</div>
+								</div>
+
+								<div>
+									<label
+										htmlFor="country"
+										className="block text-sm font-medium text-gray-400 mb-1.5"
+									>
+										Tu país
+									</label>
+									<select
+										id="country"
+										name="country"
+										autoComplete="country"
+										required
+										value={country}
+										onChange={(e) => setCountry(e.target.value)}
+										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+									>
+										<option value="" disabled>
+											Seleccioná tu país
 										</option>
-									))}
-								</select>
+										{CONTACT_COUNTRY_OPTIONS.map((option) => (
+											<option key={option.code} value={option.code}>
+												{option.label}
+											</option>
+										))}
+									</select>
+								</div>
 							</div>
 
-							<div>
-								<label
-									htmlFor="process"
-									className="block text-sm font-medium text-gray-400 mb-1.5"
-								>
-									¿Qué proceso necesitás automatizar o mejorar?
-								</label>
-								<textarea
-									id="process"
-									name="message"
-									rows={3}
-									required
-									value={message}
-									onChange={(e) => setMessage(e.target.value)}
-									placeholder="Ej. Necesito un sistema para gestionar inventario y conectar con mi tienda online..."
-									className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-								/>
+							{/* Paso 2 — empresa */}
+							<div className={`${stepClass(2)} space-y-4`}>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+									<div>
+										<label
+											htmlFor="teamSize"
+											className="block text-sm font-medium text-gray-400 mb-1.5"
+										>
+											Tamaño de tu equipo
+										</label>
+										<select
+											id="teamSize"
+											name="teamSize"
+											required
+											value={teamSize}
+											onChange={(e) => setTeamSize(e.target.value)}
+											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										>
+											<option value="" disabled>
+												Seleccioná un rango
+											</option>
+											{TEAM_SIZE_OPTIONS.map((option) => (
+												<option key={option.value} value={option.value}>
+													{option.label}
+												</option>
+											))}
+										</select>
+									</div>
+
+									<div>
+										<label
+											htmlFor="timeline"
+											className="block text-sm font-medium text-gray-400 mb-1.5"
+										>
+											¿Para cuándo lo necesitás?
+										</label>
+										<select
+											id="timeline"
+											name="timeline"
+											required
+											value={timeline}
+											onChange={(e) => setTimeline(e.target.value)}
+											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										>
+											<option value="" disabled>
+												Seleccioná un plazo
+											</option>
+											{TIMELINE_OPTIONS.map((option) => (
+												<option key={option.value} value={option.value}>
+													{option.label}
+												</option>
+											))}
+										</select>
+									</div>
+								</div>
+
+								<div>
+									<label
+										htmlFor="budget"
+										className="block text-sm font-medium text-gray-400 mb-1.5"
+									>
+										Inversión que estás considerando
+									</label>
+									<select
+										id="budget"
+										name="budget"
+										required
+										value={budget}
+										onChange={(e) => setBudget(e.target.value)}
+										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+									>
+										<option value="" disabled>
+											Seleccioná un rango
+										</option>
+										{BUDGET_OPTIONS.map((option) => (
+											<option key={option.value} value={option.value}>
+												{option.label}
+											</option>
+										))}
+									</select>
+								</div>
 							</div>
 
-							{status === "error" && (
+							{/* Paso 3 — proyecto */}
+							<div className={`${stepClass(3)} space-y-4`}>
+								<div>
+									<label
+										htmlFor="pain"
+										className="block text-sm font-medium text-gray-400 mb-1.5"
+									>
+										¿Qué problema te urge resolver?
+									</label>
+									<select
+										id="pain"
+										name="pain"
+										required
+										value={pain}
+										onChange={(e) => setPain(e.target.value)}
+										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+									>
+										<option value="" disabled>
+											Seleccioná el principal
+										</option>
+										{PAIN_OPTIONS.map((option) => (
+											<option key={option.value} value={option.value}>
+												{option.label}
+											</option>
+										))}
+									</select>
+								</div>
+
+								<div>
+									<label
+										htmlFor="process"
+										className="block text-sm font-medium text-gray-400 mb-1.5"
+									>
+										Detalles del proyecto{" "}
+										<span className="text-gray-600 font-normal">(opcional)</span>
+									</label>
+									<textarea
+										id="process"
+										name="message"
+										rows={3}
+										value={message}
+										onChange={(e) => setMessage(e.target.value)}
+										placeholder="Opcional. Contanos qué planillas o sistemas usás hoy o qué te traba puntualmente."
+										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+									/>
+								</div>
+							</div>
+
+							{status === "error" && errorMsg && (
 								<div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-sm">
 									{errorMsg}
 								</div>
 							)}
 
+							{/* Mobile wizard nav */}
+							<div className="md:hidden flex items-center gap-3">
+								{step > 1 && (
+									<button
+										type="button"
+										onClick={goBack}
+										className="px-4 py-3 rounded-lg border border-white/15 text-white/80 font-medium hover:bg-white/5 transition-colors"
+									>
+										<span className="material-icons text-base align-middle mr-1">
+											arrow_back
+										</span>
+										Atrás
+									</button>
+								)}
+								{step < TOTAL_STEPS ? (
+									<button
+										type="button"
+										onClick={goNext}
+										className="flex-1 bg-primary text-navy-dark font-bold py-3 rounded-lg active:scale-95 transition-transform"
+									>
+										Siguiente
+										<span className="material-icons text-base align-middle ml-1">
+											arrow_forward
+										</span>
+									</button>
+								) : (
+									<button
+										type="submit"
+										disabled={status === "submitting"}
+										className="flex-1 bg-primary text-navy-dark font-bold py-3 rounded-lg active:scale-95 transition-transform shadow-lg hover:shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed"
+									>
+										{status === "submitting" ? "Enviando…" : "Solicitar consultoría"}
+									</button>
+								)}
+							</div>
+
+							{/* Desktop submit (single page) */}
 							<button
 								type="submit"
 								disabled={status === "submitting"}
-								className="w-full bg-primary text-navy-dark font-bold text-base sm:text-lg py-3 rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 transform active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
+								className="hidden md:block w-full bg-primary text-navy-dark font-bold text-base sm:text-lg py-3 rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 transform active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
 							>
 								{status === "submitting" ? (
 									<span className="flex items-center justify-center gap-2">

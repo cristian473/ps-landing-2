@@ -9,6 +9,11 @@ interface MetaLeadEventInput {
 	fullName?: string;
 	city?: string;
 	country?: string;
+	/**
+	 * Datos no-PII a pasar como custom_data del evento. Sirven para optimización
+	 * de audiencias y reportes en Meta sin tocar matching (que va por user_data).
+	 */
+	customData?: Record<string, string | undefined>;
 }
 
 interface MetaUserData {
@@ -166,17 +171,43 @@ export async function sendMetaLeadEvent(
 		return { ok: false, skipped: true };
 	}
 
+	const eventTime = Math.floor(Date.now() / 1000);
+	const eventSourceUrl = resolveEventSourceUrl(input);
+	const eventIdValue = sanitizeEventId(input.eventId);
+	const userData = buildMetaUserData(input);
+
+	const customData: Record<string, string> = {};
+	if (input.customData) {
+		for (const [key, value] of Object.entries(input.customData)) {
+			if (typeof value === "string" && value.trim()) {
+				customData[key] = value.trim();
+			}
+		}
+	}
+	const hasCustomData = Object.keys(customData).length > 0;
+
+	// Mandamos dos eventos en paralelo:
+	// - "Lead" estándar → cubre reportes y reglas que dependen del evento canónico.
+	// - "ConsultoriaSolicitada" custom → es el evento de optimización para
+	//   campañas Estructura 3 (objetivo Ventas + custom event), que evita el
+	//   "rellenador serial de formularios" del Lead estándar.
+	// Mismo event_id para ambos: Meta deduplica por (event_name, event_id),
+	// así que cada uno se empareja con su contraparte browser sin chocar.
+	const buildEventData = (eventName: string): Record<string, unknown> => {
+		const ev: Record<string, unknown> = {
+			event_name: eventName,
+			event_time: eventTime,
+			action_source: "website",
+			event_source_url: eventSourceUrl,
+			event_id: eventIdValue,
+			user_data: userData,
+		};
+		if (hasCustomData) ev.custom_data = customData;
+		return ev;
+	};
+
 	const payload: Record<string, unknown> = {
-		data: [
-			{
-				event_name: "Lead",
-				event_time: Math.floor(Date.now() / 1000),
-				action_source: "website",
-				event_source_url: resolveEventSourceUrl(input),
-				event_id: sanitizeEventId(input.eventId),
-				user_data: buildMetaUserData(input),
-			},
-		],
+		data: [buildEventData("Lead"), buildEventData("ConsultoriaSolicitada")],
 	};
 
 	if (testEventCode?.trim()) {
