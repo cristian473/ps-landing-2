@@ -3,7 +3,7 @@ import HeroTestimonial from './HeroTestimonial';
 
 export default function Hero() {
   return (
-    <section className="relative pt-24 pb-12 md:pt-32 md:pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center">
+    <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy-dark to-black" />
 
@@ -37,7 +37,7 @@ export default function Hero() {
           className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Base ERP con IA · Adaptada a tu operación · Equipos 5+
+          Sistema de gestión · Adaptado a tu operación
         </motion.div>
 
         {/* Heading */}
@@ -45,7 +45,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6 leading-tight max-w-5xl mx-auto text-white"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 md:mb-6 leading-tight max-w-5xl mx-auto text-white"
         >
           Excel y WhatsApp ya no alcanzan. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">
@@ -58,13 +58,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-400 mb-10 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
         >
           <span className="md:hidden">
-            ERP con IA, adaptado a tu operación en 4 semanas. 100% tuyo, sin suscripción.
+            Tu sistema de gestión listo en 4 semanas, sin suscripción mensual. El sistema queda 100% tuyo.
           </span>
           <span className="hidden md:inline">
-            Tenemos una base ERP con IA lista. La adaptamos a tu operación en 4 semanas — no la construimos desde cero. Sin suscripción mensual, el sistema queda 100% tuyo.
+            Tu sistema de gestión listo en 4 semanas, pago único y 100% tuyo. Lo adaptamos a cómo ya trabajás — sin obligarte a cambiar tu operación por un SaaS genérico.
           </span>
         </motion.p>
 
@@ -100,16 +100,6 @@ export default function Hero() {
             Ver casos de éxito
             <span className="material-icons text-sm">arrow_downward</span>
           </a>
-        </motion.div>
-
-        {/* Testimoniales reales (RAZ + DentalCenter, autorizados). Va debajo
-            del CTA para reforzar trust antes del primer scroll. */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.0 }}
-        >
-          <HeroTestimonial />
         </motion.div>
       </div>
     </section>

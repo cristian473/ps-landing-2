@@ -116,6 +116,17 @@ const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID || '';
     }
   };
 
+  // Evento personalizado para optimizar campañas tipo "Estructura 3"
+  // (Ventas + custom event en lugar de Lead estándar). Se dispara con el
+  // mismo eventId que el Lead — Meta deduplica por (event_name, event_id),
+  // así que ambos eventos se emparejan con su contraparte CAPI sin chocar.
+  window.trackMetaCustomLead = function(eventId) {
+    if (!eventId) return;
+    if (typeof window.fbq === 'function') {
+      window.fbq('trackCustom', 'ConsultoriaSolicitada', {}, { eventID: eventId });
+    }
+  };
+
   // Wait for gtag to be available
   window.trackEvent = function(eventName, eventParams) {
     if (typeof window.gtag === 'function') {

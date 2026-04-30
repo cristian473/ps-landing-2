@@ -55,6 +55,8 @@ export default function HeroTestimonial() {
 			onMouseEnter={() => setPaused(true)}
 			onMouseLeave={() => setPaused(false)}
 			onTouchStart={() => setPaused(true)}
+			onTouchEnd={() => setPaused(false)}
+			onTouchCancel={() => setPaused(false)}
 			aria-label="Testimonios de clientes"
 		>
 			<div className="relative rounded-xl border border-white/10 bg-navy-surface/60 backdrop-blur-sm px-4 py-3 sm:px-5 sm:py-4 text-left">

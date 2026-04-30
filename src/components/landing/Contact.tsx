@@ -13,6 +13,7 @@ declare global {
 		};
 		generateEventId?: (prefix?: string) => string;
 		trackMetaLead?: (eventId: string) => void;
+		trackMetaCustomLead?: (eventId: string) => void;
 		trackFormSubmit?: (formName: string, formData?: Record<string, string>) => void;
 		trackCTAClick?: (ctaName: string, ctaLocation?: string) => void;
 		trackCaseStudyView?: (caseStudyName: string) => void;
@@ -215,6 +216,9 @@ export default function Contact() {
 			setMessage("");
 			setStep(1);
 			window.trackMetaLead?.(eventId);
+			// Custom event para Estructura 3 (Ventas + custom event en lugar de
+			// Lead estándar). Mismo eventId — Meta deduplica por (event_name, id).
+			window.trackMetaCustomLead?.(eventId);
 			window.trackFormSubmit?.("contact", {
 				country: country.trim(),
 				city: city.trim(),
@@ -243,7 +247,7 @@ export default function Contact() {
 					whileInView={{ opacity: 1, x: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.6 }}
-					className="max-w-xl"
+					className="hidden lg:block max-w-xl"
 				>
 					<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
 						¿Tu operación creció más rápido que el sistema que la gestiona?
