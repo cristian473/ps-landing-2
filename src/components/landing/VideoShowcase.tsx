@@ -1,5 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+
+declare global {
+	interface Window {
+		trackVideoEvent?: (
+			action: 'visible' | 'autoplay' | 'manual_play' | 'unmute' | 'ended',
+			videoId: string,
+			videoTitle?: string
+		) => void;
+	}
+}
 
 interface VideoShowcaseProps {
 	youtubeId: string;
@@ -31,9 +41,67 @@ export default function VideoShowcase({
 	id,
 }: VideoShowcaseProps) {
 	const [loaded, setLoaded] = useState(false);
+	// autoplay=true cuando el iframe se montó por scroll; false cuando fue por click.
+	// Lo usamos para incluir mute=1 sólo en autoplay (los browsers exigen muted),
+	// pero respetar el sonido cuando el usuario tocó play manualmente.
+	const [autoplay, setAutoplay] = useState(false);
+	// muted refleja el estado actual del audio. true mientras el video está
+	// en autoplay sin que el usuario haya tocado el botón de sonido.
+	const [muted, setMuted] = useState(true);
+	const sectionRef = useRef<HTMLElement>(null);
+	const iframeRef = useRef<HTMLIFrameElement>(null);
 	const thumbnailUrl = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
 
 	const sectionBg = bg === 'black' ? 'bg-black' : 'bg-navy-dark';
+
+	// Envía comandos al iframe de YT vía postMessage. Requiere que el embed
+	// tenga ?enablejsapi=1. No necesitamos cargar la API completa de YT —
+	// alcanza con el contrato de mensajes documentado.
+	const sendYTCommand = (func: string, args: number[] = []) => {
+		iframeRef.current?.contentWindow?.postMessage(
+			JSON.stringify({ event: 'command', func, args }),
+			'https://www.youtube.com'
+		);
+	};
+
+	// Carga el iframe al 60% de visibilidad la primera vez. Después, pausa
+	// cuando la sección sale del viewport (<10%) y reanuda al volver (>=60%).
+	// Esto evita que dos videos suenen/se reproduzcan a la vez en la landing.
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+		if (!('IntersectionObserver' in window)) return;
+		const el = sectionRef.current;
+		if (!el) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.intersectionRatio >= 0.6) {
+						if (!loaded) {
+							setAutoplay(true);
+							setLoaded(true);
+							window.trackVideoEvent?.('autoplay', youtubeId, title);
+						} else {
+							sendYTCommand('playVideo');
+						}
+					} else if (entry.intersectionRatio < 0.1 && loaded) {
+						sendYTCommand('pauseVideo');
+					}
+				}
+			},
+			{ threshold: [0.1, 0.6] }
+		);
+
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, [loaded, youtubeId, title]);
+
+	const handleUnmute = () => {
+		sendYTCommand('unMute');
+		sendYTCommand('setVolume', [100]);
+		setMuted(false);
+		window.trackVideoEvent?.('unmute', youtubeId, title);
+	};
 
 	// En mobile el título va arriba del video (orden invertido al JSX).
 	// En desktop respetamos el `align` que decide de qué lado va el video.
@@ -42,6 +110,7 @@ export default function VideoShowcase({
 
 	return (
 		<section
+			ref={sectionRef}
 			className={`${sectionBg} py-16 md:py-24 border-y border-white/5 relative overflow-hidden`}
 			id={id}
 		>
@@ -60,17 +129,36 @@ export default function VideoShowcase({
 					>
 						<div className="relative mx-auto max-w-[280px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,182,255,0.15)] bg-black">
 							{loaded ? (
-								<iframe
-									src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-									title={title}
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-									allowFullScreen
-									className="absolute inset-0 w-full h-full"
-								/>
+								<>
+									<iframe
+										ref={iframeRef}
+										src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&playsinline=1${autoplay ? '&mute=1' : ''}`}
+										title={title}
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowFullScreen
+										className="absolute inset-0 w-full h-full"
+									/>
+									{/* Unmute prompt — sólo cuando el video arrancó por autoplay
+									    (que obliga a empezar muted). Desaparece al primer click. */}
+									{autoplay && muted && (
+										<button
+											type="button"
+											onClick={handleUnmute}
+											aria-label="Activar sonido"
+											className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-3 py-2 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold hover:bg-black/85 active:scale-95 transition-all shadow-lg"
+										>
+											<span className="material-icons text-base">volume_off</span>
+											<span>Tocá para sonido</span>
+										</button>
+									)}
+								</>
 							) : (
 								<button
 									type="button"
-									onClick={() => setLoaded(true)}
+									onClick={() => {
+										setLoaded(true);
+										window.trackVideoEvent?.('manual_play', youtubeId, title);
+									}}
 									className="absolute inset-0 w-full h-full group"
 									aria-label={`Reproducir: ${title}`}
 								>

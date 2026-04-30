@@ -174,7 +174,33 @@ const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID || '';
     });
   };
 
-  // Auto-track external links
+  // Track multi-step form progression. action: view | complete | error | back
+  window.trackFormStep = function(action, step, formName, extra) {
+    window.trackEvent('form_step_' + action, Object.assign({
+      form_name: formName || 'contact',
+      step_number: step
+    }, extra || {}));
+  };
+
+  // Track section visibility (cuán abajo llegan los visitantes en la landing).
+  // sectionId proviene del id del <section> o de su posición (section-N) si no tiene.
+  window.trackSectionView = function(sectionId, sectionIndex) {
+    window.trackEvent('section_view', {
+      section_id: sectionId,
+      section_index: sectionIndex
+    });
+  };
+
+  // Track video lifecycle. action: visible | autoplay | manual_play | ended
+  window.trackVideoEvent = function(action, videoId, videoTitle) {
+    window.trackEvent('video_' + action, {
+      video_id: videoId,
+      video_title: videoTitle || '',
+      video_provider: 'youtube'
+    });
+  };
+
+  // Auto-track external links + section visibility
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="http"]').forEach(function(link) {
       if (!link.href.includes(window.location.hostname)) {
@@ -201,5 +227,29 @@ const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID || '';
     }
 
     window.addEventListener('scroll', checkScrollDepth, { passive: true });
+
+    // Section visibility — cada <section> dispara section_view la primera vez
+    // que el 50% queda en viewport. Permite ver hasta dónde llegan los usuarios
+    // en la landing más allá del scroll % bruto.
+    if ('IntersectionObserver' in window) {
+      var seen = {};
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          var idx = el.getAttribute('data-section-index') || '0';
+          var key = el.id || ('section-' + idx);
+          if (seen[key]) return;
+          seen[key] = true;
+          window.trackSectionView(key, parseInt(idx, 10));
+        });
+      }, { threshold: 0.5 });
+
+      var sections = document.querySelectorAll('main section');
+      sections.forEach(function(s, i) {
+        s.setAttribute('data-section-index', String(i + 1));
+        sectionObserver.observe(s);
+      });
+    }
   });
 </script>
