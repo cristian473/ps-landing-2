@@ -57,6 +57,15 @@ const PAIN_LABELS: Record<string, string> = {
 	otro: "Otro",
 };
 
+function normalizeBudgetValue(value: unknown): string {
+	if (typeof value !== "string") return "";
+
+	const trimmed = value.trim();
+	if (trimmed === "3k") return "<3k";
+
+	return trimmed;
+}
+
 export const POST: APIRoute = async ({ request }) => {
 	try {
 		const body = await request.json();
@@ -79,16 +88,10 @@ export const POST: APIRoute = async ({ request }) => {
 		const country = sanitizeInput(
 			typeof body.country === "string" ? body.country : ""
 		).toUpperCase();
-		const teamSize = sanitizeInput(
-			typeof body.teamSize === "string" ? body.teamSize : ""
-		);
-		const timeline = sanitizeInput(
-			typeof body.timeline === "string" ? body.timeline : ""
-		);
-		const budget = sanitizeInput(
-			typeof body.budget === "string" ? body.budget : ""
-		);
-		const pain = sanitizeInput(typeof body.pain === "string" ? body.pain : "");
+		const teamSize = typeof body.teamSize === "string" ? body.teamSize.trim() : "";
+		const timeline = typeof body.timeline === "string" ? body.timeline.trim() : "";
+		const budget = normalizeBudgetValue(body.budget);
+		const pain = typeof body.pain === "string" ? body.pain.trim() : "";
 		const message = sanitizeInput(body.message || "");
 		const eventId = sanitizeInput(
 			typeof body.eventId === "string" ? body.eventId : ""
