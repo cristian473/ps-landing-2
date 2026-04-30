@@ -64,7 +64,7 @@ export default function Hero() {
             Tu sistema de gestión listo en 4 semanas, sin suscripción mensual. El sistema queda 100% tuyo.
           </span>
           <span className="hidden md:inline">
-            Tu sistema de gestión listo en 4 semanas, pago único y 100% tuyo. Lo adaptamos a cómo ya trabajás — sin obligarte a cambiar tu operación por un SaaS genérico.
+            Tu sistema de gestión listo en 4 semanas, pago único y 100% tuyo. Lo adaptamos a cómo ya trabajás.
           </span>
         </motion.p>
 
