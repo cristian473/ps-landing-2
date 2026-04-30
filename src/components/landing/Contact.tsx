@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CONTACT_COUNTRY_OPTIONS } from "../../constants/contactCountries";
 
 declare global {
@@ -17,6 +17,12 @@ declare global {
 		trackFormSubmit?: (formName: string, formData?: Record<string, string>) => void;
 		trackCTAClick?: (ctaName: string, ctaLocation?: string) => void;
 		trackCaseStudyView?: (caseStudyName: string) => void;
+		trackFormStep?: (
+			action: "view" | "complete" | "error" | "back",
+			step: number,
+			formName?: string,
+			extra?: Record<string, unknown>
+		) => void;
 	}
 }
 
@@ -103,21 +109,34 @@ export default function Contact() {
 		return null;
 	}
 
+	// Cada vez que cambia el step en mobile, registramos form_step_view así
+	// vemos en GA hasta qué paso llega cada visitante. En desktop el wizard
+	// no aplica (todos los grupos son visibles).
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const isMobile = window.matchMedia("(max-width: 767px)").matches;
+		if (!isMobile) return;
+		window.trackFormStep?.("view", step);
+	}, [step]);
+
 	function goNext() {
 		const err = validateStep(step);
 		if (err) {
 			setErrorMsg(err);
 			setStatus("error");
+			window.trackFormStep?.("error", step, "contact", { error: err });
 			return;
 		}
 		setErrorMsg("");
 		setStatus("idle");
+		window.trackFormStep?.("complete", step);
 		setStep((step + 1) as Step);
 	}
 
 	function goBack() {
 		setErrorMsg("");
 		setStatus("idle");
+		window.trackFormStep?.("back", step);
 		setStep(Math.max(1, step - 1) as Step);
 	}
 
