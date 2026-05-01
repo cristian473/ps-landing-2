@@ -3,24 +3,29 @@ import { motion } from 'framer-motion';
 export default function Benefits() {
   const benefits = [
     {
-      title: 'Pagás una vez el desarrollo y listo',
+      title: 'Implementación inicial incluida',
       icon: 'savings',
       delay: 0
     },
     {
-      title: 'Sin limites de usuarios, sin costos extras',
-      icon: 'trending_up',
+      title: 'Preparado para integrar otros sistemas e inteligencia artificial en tu operación',
+      icon: 'hub',
       delay: 0.1
     },
     {
-      title: 'Pedidos, stock, equipo, clientes. Todo en un mismo lugar',
-      icon: 'dashboard',
+      title: 'Sin límites de usuarios',
+      icon: 'trending_up',
       delay: 0.2
     },
     {
-      title: 'Tus procesos dejan de depender de personas clave, todo queda documentado',
-      icon: 'verified',
+      title: 'Pedidos, stock, caja, clientes y equipo en un mismo lugar',
+      icon: 'dashboard',
       delay: 0.3
+    },
+    {
+      title: 'Soporte, mejoras y evolución para que el sistema acompañe tu operación',
+      icon: 'verified',
+      delay: 0.4
     }
   ];
 
@@ -34,7 +39,7 @@ export default function Benefits() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">¿Por qué invertir en software propio?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">¿Por qué elegir nuestro sistema?</h2>
           <div className="h-1 w-20 bg-primary rounded" />
         </motion.div>
 

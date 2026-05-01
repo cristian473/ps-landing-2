@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import HeroTestimonial from './HeroTestimonial';
 
 export default function Hero() {
   return (
@@ -61,10 +60,10 @@ export default function Hero() {
           className="text-base sm:text-lg md:text-xl text-gray-400 mb-10 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
         >
           <span className="md:hidden">
-            Tu sistema de gestión listo en 4 semanas, sin suscripción mensual. El sistema queda 100% tuyo.
+            Tu sistema de gestión listo en 4 semanas, lo adaptamos a cómo ya trabajás.
           </span>
           <span className="hidden md:inline">
-            Tu sistema de gestión listo en 4 semanas, pago único y 100% tuyo. Lo adaptamos a cómo ya trabajás.
+            Tu sistema de gestión listo en 4 semanas, lo adaptamos a cómo ya trabajás.
           </span>
         </motion.p>
 
@@ -76,11 +75,11 @@ export default function Hero() {
           className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
         >
           <a
-            href="#contacto"
-            onClick={() => window.trackCTAClick?.('hero_consultoria_gratuita', 'hero')}
+            href="#demo-plataforma"
+            onClick={() => window.trackCTAClick?.('hero_ver_sistema', 'hero')}
             className="bg-primary text-navy-dark px-6 sm:px-8 py-4 rounded font-bold text-base sm:text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105 inline-flex items-center justify-center gap-2"
           >
-            Quiero una consultoría gratuita
+            Quiero ver como funciona
             <span className="material-icons">arrow_forward</span>
           </a>
         </motion.div>

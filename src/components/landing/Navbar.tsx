@@ -15,9 +15,9 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Casos de Éxito', href: '#casos' },
+    { name: 'Precios', href: '#precios' },
     { name: 'Beneficios', href: '#beneficios' },
-    { name: 'Soluciones', href: '#soluciones' },
-    { name: 'Cómo trabajamos', href: '#proceso' },
+    { name: 'FAQ', href: '#faq' },
   ];
 
   return (

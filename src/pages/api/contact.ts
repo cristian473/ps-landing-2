@@ -7,8 +7,7 @@ import {
 	validateCity,
 	validateCountryCode,
 	validateMessage,
-	validateBudget,
-	validatePain,
+	validateInterest,
 	sanitizeInput,
 } from "../../utils/validation";
 import { verifyRecaptcha } from "../../lib/recaptcha";
@@ -17,14 +16,10 @@ import { sendMetaLeadEvent } from "../../lib/meta-conversions";
 import { submitLeadToPanel } from "../../lib/panel-api";
 
 const TEAM_SIZE_VALUES = new Set(["1-5", "5-15", "15-50", "50+"]);
-const TIMELINE_VALUES = new Set(["4w", "1-3m", "3m+", "exploring"]);
-const BUDGET_VALUES = new Set(["<3k", "4-8k", "8-20k", "20k+", "not_sure"]);
-const PAIN_VALUES = new Set([
-	"sistema_no_se_adapta",
-	"planillas",
-	"multiple_saas",
-	"desde_cero",
-	"otro",
+const INTEREST_VALUES = new Set([
+	"sistema_gestion",
+	"sistema_medida",
+	"pack_horas",
 ]);
 
 const TEAM_SIZE_LABELS: Record<string, string> = {
@@ -34,37 +29,11 @@ const TEAM_SIZE_LABELS: Record<string, string> = {
 	"50+": "Más de 50 personas",
 };
 
-const TIMELINE_LABELS: Record<string, string> = {
-	"4w": "Necesita el primer módulo en 4 semanas",
-	"1-3m": "En 1 a 3 meses",
-	"3m+": "Más de 3 meses / sin urgencia",
-	exploring: "Solo está explorando",
+const INTEREST_LABELS: Record<string, string> = {
+	sistema_gestion: "Sistema de gestión",
+	sistema_medida: "Sistema a medida",
+	pack_horas: "Pack mensual de horas",
 };
-
-const BUDGET_LABELS: Record<string, string> = {
-	"<3k": "Menos de USD 3.000",
-	"4-8k": "USD 4.000 – 8.000",
-	"8-20k": "USD 8.000 – 20.000",
-	"20k+": "Más de USD 20.000",
-	not_sure: "Todavía no tengo claro",
-};
-
-const PAIN_LABELS: Record<string, string> = {
-	sistema_no_se_adapta: "Mi sistema actual no se adapta más",
-	planillas: "Estoy con planillas y necesito profesionalizar",
-	multiple_saas: "Pago varios SaaS y no se hablan entre sí",
-	desde_cero: "Quiero un sistema único de cero",
-	otro: "Otro",
-};
-
-function normalizeBudgetValue(value: unknown): string {
-	if (typeof value !== "string") return "";
-
-	const trimmed = value.trim();
-	if (trimmed === "3k") return "<3k";
-
-	return trimmed;
-}
 
 export const POST: APIRoute = async ({ request }) => {
 	try {
@@ -88,10 +57,8 @@ export const POST: APIRoute = async ({ request }) => {
 		const country = sanitizeInput(
 			typeof body.country === "string" ? body.country : ""
 		).toUpperCase();
+		const interest = typeof body.interest === "string" ? body.interest.trim() : "";
 		const teamSize = typeof body.teamSize === "string" ? body.teamSize.trim() : "";
-		const timeline = typeof body.timeline === "string" ? body.timeline.trim() : "";
-		const budget = normalizeBudgetValue(body.budget);
-		const pain = typeof body.pain === "string" ? body.pain.trim() : "";
 		const message = sanitizeInput(body.message || "");
 		const eventId = sanitizeInput(
 			typeof body.eventId === "string" ? body.eventId : ""
@@ -117,25 +84,15 @@ export const POST: APIRoute = async ({ request }) => {
 		const messageResult = validateMessage(message);
 		if (!messageResult.isValid) return jsonResponse(400, { success: false, error: messageResult.error });
 
+		const interestResult = validateInterest(interest, INTEREST_VALUES);
+		if (!interestResult.isValid) return jsonResponse(400, { success: false, error: interestResult.error });
+
 		if (!TEAM_SIZE_VALUES.has(teamSize)) {
 			return jsonResponse(400, {
 				success: false,
 				error: "Seleccioná el tamaño de tu equipo.",
 			});
 		}
-
-		if (!TIMELINE_VALUES.has(timeline)) {
-			return jsonResponse(400, {
-				success: false,
-				error: "Seleccioná cuándo necesitás resolver esto.",
-			});
-		}
-
-		const budgetResult = validateBudget(budget, BUDGET_VALUES);
-		if (!budgetResult.isValid) return jsonResponse(400, { success: false, error: budgetResult.error });
-
-		const painResult = validatePain(pain, PAIN_VALUES);
-		if (!painResult.isValid) return jsonResponse(400, { success: false, error: painResult.error });
 
 		// 1) Registrar el lead en panel-api. Si esto falla, no mandamos confirmación
 		//    ni notificación — el lead no quedó persistido y el flujo de WhatsApp
@@ -148,10 +105,8 @@ export const POST: APIRoute = async ({ request }) => {
 				email,
 				city,
 				country,
+				interest,
 				teamSize,
-				timeline,
-				budget,
-				pain,
 				message,
 				eventSourceUrl,
 				eventId,
@@ -188,10 +143,8 @@ export const POST: APIRoute = async ({ request }) => {
 						phone,
 						city,
 						country,
+						interest,
 						teamSize,
-						timeline,
-						budget,
-						pain,
 						message,
 					}),
 				})
@@ -210,8 +163,8 @@ export const POST: APIRoute = async ({ request }) => {
 		}
 
 		if(process.env.NODE_ENV === "production") {
-			// 3) Meta CAPI (best-effort). Pasamos budget+pain como custom_data
-			//    para mejorar matching/optimización de audiencias en Meta.
+			// 3) Meta CAPI (best-effort). Pasamos interés + tamaño de equipo
+			//    como custom_data para mejorar matching/optimización.
 			await sendMetaLeadEvent({
 				request,
 				eventId,
@@ -222,10 +175,8 @@ export const POST: APIRoute = async ({ request }) => {
 				city,
 				country,
 				customData: {
-					budget,
-					pain,
+					interest,
 					team_size: teamSize,
-					timeline,
 				},
 			}).catch((error) => console.warn("Meta CAPI contact lead event failed", { error }));
 		}
@@ -258,16 +209,12 @@ function renderOwnerEmail(v: {
 	phone: string;
 	city: string;
 	country: string;
+	interest: string;
 	teamSize: string;
-	timeline: string;
-	budget: string;
-	pain: string;
 	message: string;
 }): string {
+	const interestLabel = INTEREST_LABELS[v.interest] ?? v.interest;
 	const teamSizeLabel = TEAM_SIZE_LABELS[v.teamSize] ?? v.teamSize;
-	const timelineLabel = TIMELINE_LABELS[v.timeline] ?? v.timeline;
-	const budgetLabel = BUDGET_LABELS[v.budget] ?? v.budget;
-	const painLabel = PAIN_LABELS[v.pain] ?? v.pain;
 	const messageRow = v.message
 		? `<tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9; vertical-align: top;">Mensaje</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0; white-space: pre-wrap;">${v.message}</td></tr>`
 		: "";
@@ -283,9 +230,7 @@ function renderOwnerEmail(v: {
         <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Ciudad</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${v.city}</td></tr>
         <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">País</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${v.country}</td></tr>
         <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Equipo</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${teamSizeLabel}</td></tr>
-        <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Plazo</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${timelineLabel}</td></tr>
-        <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Inversión</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${budgetLabel}</td></tr>
-        <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Dolor</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${painLabel}</td></tr>
+        <tr><td style="padding: 10px 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f9f9f9;">Me interesa</td><td style="padding: 10px 12px; border: 1px solid #e0e0e0;">${interestLabel}</td></tr>
         ${messageRow}
       </table>
       <p style="margin-top: 20px; color: #666; font-size: 13px;">

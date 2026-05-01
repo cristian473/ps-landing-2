@@ -13,6 +13,7 @@ export interface PanelLeadPayload {
   email?: string;
   city?: string;
   country?: string;
+  interest?: string;
   teamSize?: string;
   timeline?: string;
   budget?: string;
