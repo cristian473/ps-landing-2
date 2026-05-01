@@ -3,24 +3,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
   {
-    q: '¿Cómo entregan en 4 semanas si es a medida?',
+    q: '¿Cómo entregan rápido si es a medida?',
     a: 'Porque no empezamos de cero. Tenemos una base de ERP probada que ya cubre el 80% de la operación común: pedidos, stock, clientes, facturación, reportes, integraciones. Las 4 semanas las usamos para adaptarla a tu lógica de negocio, no para construir lo que ya está hecho.',
   },
   {
-    q: '¿En cuánto tiempo lo tengo funcionando?',
-    a: 'El primer módulo en producción a las 4 semanas. El sistema completo entre 2 y 3 meses según el alcance. Si no cumplimos con la entrega del primer módulo, esa fase no se cobra.',
+    q: '¿Qué incluye el mantenimiento mensual?',
+    a: 'Según el plan, puede incluir hosting, soporte técnico, actualizaciones y evolución continua. Lo definimos desde el arranque para que sepas qué está cubierto y qué implicaría sumar nuevos módulos o integraciones.',
   },
   {
-    q: '¿Qué pasa si no funciona o no me gusta?',
-    a: 'Tenés garantía sobre el primer módulo: si en 4 semanas no está en producción, no lo pagás. Después acompañamos con soporte e iteración continua hasta que el sistema haga lo que necesitás.',
+    q: '¿Qué pasa después de la implementación?',
+    a: 'No te soltamos después de entregar. Podés seguir con mantenimiento y soporte mensual para operar, corregir, mejorar y seguir evolucionando el sistema sin tener que empezar otro proyecto cada vez.',
   },
   {
-    q: '¿Quién mantiene el sistema después?',
-    a: 'Tenés dos opciones: contratás soporte mensual con nosotros (desde USD 200/mes) o pasás el código a tu equipo interno. El sistema es 100% tuyo, sin lock-in.',
-  },
-  {
-    q: '¿Por qué no usar un SaaS existente?',
-    a: 'Si encontrás un SaaS que se adapta a tu operación al 100%, usalo. La gente nos llama cuando ya pagaron 2 o 3 SaaS distintos y ninguno hace exactamente lo que necesitan, o cuando el costo mensual ya supera lo que cuesta tener un sistema propio.',
+    q: '¿Cuándo conviene arrancar con sistema de gestión y cuándo con sistema a medida?',
+    a: 'Si tu operación entra bastante bien en una base estándar, conviene arrancar por ahí y acelerar la salida. Si necesitás lógica propia, integraciones o módulos específicos de tu rubro, conviene ir directo al desarrollo a medida. En la primera llamada te decimos qué camino te conviene.',
   },
   {
     q: '¿Para qué tipo de empresa NO es?',

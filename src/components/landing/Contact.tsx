@@ -24,6 +24,9 @@ declare global {
 			extra?: Record<string, unknown>
 		) => void;
 	}
+	interface WindowEventMap {
+		"contact:prefill": CustomEvent<{ interest?: string }>;
+	}
 }
 
 const RECAPTCHA_SITE_KEY = "6Lc7qIssAAAAAPyUuyTGPS-WJ9DyCqkiJa5R4CXZ";
@@ -35,36 +38,18 @@ const TEAM_SIZE_OPTIONS = [
 	{ value: "50+", label: "Más de 50 personas" },
 ] as const;
 
-const TIMELINE_OPTIONS = [
-	{ value: "4w", label: "Necesito el primer módulo en 4 semanas" },
-	{ value: "1-3m", label: "En 1 a 3 meses" },
-	{ value: "3m+", label: "Más de 3 meses / sin urgencia" },
-	{ value: "exploring", label: "Solo estoy explorando" },
-] as const;
-
-const BUDGET_OPTIONS = [
-	{ value: "<3k", label: "Menos de USD 3.000" },
-	{ value: "4-8k", label: "USD 4.000 – 8.000" },
-	{ value: "8-20k", label: "USD 8.000 – 20.000" },
-	{ value: "20k+", label: "Más de USD 20.000" },
-	{ value: "not_sure", label: "Todavía no tengo claro" },
-] as const;
-
-const PAIN_OPTIONS = [
-	{ value: "sistema_no_se_adapta", label: "Mi sistema actual no se adapta más" },
-	{ value: "planillas", label: "Estoy con planillas y necesito profesionalizar" },
-	{ value: "multiple_saas", label: "Pago varios SaaS y no se hablan entre sí" },
-	{ value: "desde_cero", label: "Quiero un sistema único de cero" },
-	{ value: "otro", label: "Otro" },
+const INTEREST_OPTIONS = [
+	{ value: "sistema_gestion", label: "Sistema de gestión" },
+	{ value: "sistema_medida", label: "Sistema a medida" },
+	{ value: "pack_horas", label: "Pack mensual de horas" },
 ] as const;
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
-type Step = 1 | 2 | 3;
-const TOTAL_STEPS = 3;
+type Step = 1 | 2;
+const TOTAL_STEPS = 2;
 const STEP_TITLES: Record<Step, string> = {
 	1: "Tu contacto",
-	2: "Tu empresa",
-	3: "Tu proyecto",
+	2: "Tu operación",
 };
 
 export default function Contact() {
@@ -74,16 +59,16 @@ export default function Contact() {
 	const [city, setCity] = useState("");
 	const [country, setCountry] = useState("");
 	const [teamSize, setTeamSize] = useState("");
-	const [timeline, setTimeline] = useState("");
-	const [budget, setBudget] = useState("");
-	const [pain, setPain] = useState("");
+	const [interest, setInterest] = useState("");
 	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState<FormStatus>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
 	const submittingRef = useRef(false);
+	const lastStepAdvanceAtRef = useRef(0);
+	const nameInputRef = useRef<HTMLInputElement | null>(null);
 	// Wizard state — sólo se usa en mobile (md:hidden), en desktop el form
-	// se renderiza completo (md:block sobre cada grupo). step nunca llega a 4
-	// en mobile; el "submit" del paso 3 dispara el fetch.
+	// se renderiza completo (md:block sobre cada grupo). En mobile el submit del
+	// paso 2 dispara el fetch.
 	const [step, setStep] = useState<Step>(1);
 
 	// Valida los campos del paso actual antes de avanzar. Devuelve mensaje
@@ -100,12 +85,9 @@ export default function Contact() {
 		}
 		if (s === 2) {
 			if (!teamSize) return "Seleccioná el tamaño de tu equipo";
-			if (!timeline) return "Seleccioná para cuándo lo necesitás";
-			if (!budget) return "Seleccioná tu inversión esperada";
+			if (!interest) return "Seleccioná qué te interesa";
 			return null;
 		}
-		// s === 3 — pain required, message opcional
-		if (!pain) return "Seleccioná qué problema querés resolver";
 		return null;
 	}
 
@@ -119,6 +101,21 @@ export default function Contact() {
 		window.trackFormStep?.("view", step);
 	}, [step]);
 
+	useEffect(() => {
+		const handlePrefill = (event: WindowEventMap["contact:prefill"]) => {
+			if (event.detail?.interest) {
+				setInterest(event.detail.interest);
+			}
+
+			setTimeout(() => {
+				nameInputRef.current?.focus({ preventScroll: true });
+			}, 50);
+		};
+
+		window.addEventListener("contact:prefill", handlePrefill);
+		return () => window.removeEventListener("contact:prefill", handlePrefill);
+	}, []);
+
 	function goNext() {
 		const err = validateStep(step);
 		if (err) {
@@ -130,6 +127,7 @@ export default function Contact() {
 		setErrorMsg("");
 		setStatus("idle");
 		window.trackFormStep?.("complete", step);
+		lastStepAdvanceAtRef.current = Date.now();
 		setStep((step + 1) as Step);
 	}
 
@@ -155,9 +153,13 @@ export default function Contact() {
 			return;
 		}
 
+		if (isMobile && Date.now() - lastStepAdvanceAtRef.current < 400) {
+			return;
+		}
+
 		// Validamos manualmente toda la cadena de pasos en desktop también, así
 		// los mensajes son consistentes con los del wizard mobile.
-		for (const s of [1, 2, 3] as Step[]) {
+		for (const s of [1, 2] as Step[]) {
 			const err = validateStep(s);
 			if (err) {
 				setErrorMsg(err);
@@ -206,10 +208,8 @@ export default function Contact() {
 					phone: phone.trim(),
 					city: city.trim(),
 					country: country.trim(),
+					interest: interest.trim(),
 					teamSize: teamSize.trim(),
-					timeline: timeline.trim(),
-					budget: budget.trim(),
-					pain: pain.trim(),
 					message: message.trim(),
 					recaptchaToken,
 					eventId,
@@ -231,10 +231,8 @@ export default function Contact() {
 			setPhone("");
 			setCity("");
 			setCountry("");
+			setInterest("");
 			setTeamSize("");
-			setTimeline("");
-			setBudget("");
-			setPain("");
 			setMessage("");
 			setStep(1);
 			window.trackMetaLead?.(eventId);
@@ -244,10 +242,8 @@ export default function Contact() {
 			window.trackFormSubmit?.("contact", {
 				country: country.trim(),
 				city: city.trim(),
+				interest: interest.trim(),
 				team_size: teamSize.trim(),
-				timeline: timeline.trim(),
-				budget: budget.trim(),
-				pain: pain.trim(),
 			});
 			window.history.pushState(null, "", "/?contact=true");
 		} catch {
@@ -277,9 +273,9 @@ export default function Contact() {
 						¿Tu operación creció más rápido que el sistema que la gestiona?
 					</h2>
 					<p className="text-base md:text-lg text-gray-400 mb-6 leading-relaxed">
-						La primera consultoría es gratuita. Analizamos tu situación y te
-						decimos honestamente si el software es la solución — y qué
-						implicaría construirlo.
+						La primera consultoría es gratuita. Vemos si te conviene arrancar
+						con una base lista para implementar, con un sistema a medida o con
+						un pack mensual para evolucionar lo que ya tenés.
 					</p>
 
 					<div className="flex flex-col gap-4">
@@ -289,11 +285,11 @@ export default function Contact() {
 							</div>
 							<div>
 								<h4 className="font-semibold text-white text-base">
-									Diagnóstico honesto
+									Camino recomendado
 								</h4>
 								<p className="text-sm text-gray-500 leading-relaxed">
-									Si no es el momento o no es el problema correcto, te lo
-									decimos. Sin vender por vender.
+									Te decimos si conviene sistema de gestión, desarrollo a medida o
+									simplemente seguir con mejoras mensuales.
 								</p>
 							</div>
 						</div>
@@ -304,10 +300,11 @@ export default function Contact() {
 							</div>
 							<div>
 								<h4 className="font-semibold text-white text-base">
-									Presupuesto claro
+									Implementación clara
 								</h4>
 								<p className="text-sm text-gray-500 leading-relaxed">
-									Sin costos ocultos, sin letra chica, sin sorpresas al final.
+									Alcance, mantenimiento y próximos pasos definidos desde el
+									principio.
 								</p>
 							</div>
 						</div>
@@ -352,8 +349,12 @@ export default function Contact() {
 					) : (
 						<form className="space-y-4" onSubmit={handleSubmit}>
 							<h3 className="text-xl sm:text-2xl font-bold mb-3 text-white">
-								Hablemos de tu proyecto
+								Contanos qué necesitás
 							</h3>
+							<p className="text-sm text-gray-400 -mt-1 mb-2">
+								Dejanos tus datos, elegí qué te interesa y explicanos brevemente
+								tu operación o el problema que querés resolver.
+							</p>
 
 							{/* Wizard progress — mobile only */}
 							<div className="md:hidden">
@@ -379,7 +380,7 @@ export default function Contact() {
 								</div>
 							</div>
 
-							<div className="min-h-[30rem] sm:min-h-[22rem] md:min-h-0">
+							<div className={`relative transition-all duration-300 md:min-h-0 ${step === 1 ? "min-h-[26rem] sm:min-h-[20rem]" : "min-h-[18rem] sm:min-h-[14rem]"}`}>
 								{/* Paso 1 — contacto */}
 								<div className={`${stepClass(1)} space-y-4`}>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -394,6 +395,7 @@ export default function Contact() {
 											type="text"
 											id="name"
 											name="name"
+											ref={nameInputRef}
 											autoComplete="name"
 											required
 											value={name}
@@ -492,7 +494,7 @@ export default function Contact() {
 								</div>
 								</div>
 
-								{/* Paso 2 — empresa */}
+								{/* Paso 2 — operación */}
 								<div className={`${stepClass(2)} space-y-4`}>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 									<div>
@@ -523,23 +525,23 @@ export default function Contact() {
 
 									<div>
 										<label
-											htmlFor="timeline"
+											htmlFor="interest"
 											className="block text-sm font-medium text-gray-400 mb-1.5"
 										>
-											¿Para cuándo lo necesitás?
+											¿Qué te interesa?
 										</label>
 										<select
-											id="timeline"
-											name="timeline"
+											id="interest"
+											name="interest"
 											required
-											value={timeline}
-											onChange={(e) => setTimeline(e.target.value)}
+											value={interest}
+											onChange={(e) => setInterest(e.target.value)}
 											className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
 										>
 											<option value="" disabled>
-												Seleccioná un plazo
+												Seleccioná una opción
 											</option>
-											{TIMELINE_OPTIONS.map((option) => (
+											{INTEREST_OPTIONS.map((option) => (
 												<option key={option.value} value={option.value}>
 													{option.label}
 												</option>
@@ -550,75 +552,20 @@ export default function Contact() {
 
 								<div>
 									<label
-										htmlFor="budget"
-										className="block text-sm font-medium text-gray-400 mb-1.5"
-									>
-										Inversión que estás considerando
-									</label>
-									<select
-										id="budget"
-										name="budget"
-										required
-										value={budget}
-										onChange={(e) => setBudget(e.target.value)}
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-									>
-										<option value="" disabled>
-											Seleccioná un rango
-										</option>
-										{BUDGET_OPTIONS.map((option) => (
-											<option key={option.value} value={option.value}>
-												{option.label}
-											</option>
-										))}
-									</select>
-								</div>
-								</div>
-
-								{/* Paso 3 — proyecto */}
-								<div className={`${stepClass(3)} space-y-4`}>
-								<div>
-									<label
-										htmlFor="pain"
-										className="block text-sm font-medium text-gray-400 mb-1.5"
-									>
-										¿Qué problema te urge resolver?
-									</label>
-									<select
-										id="pain"
-										name="pain"
-										required
-										value={pain}
-										onChange={(e) => setPain(e.target.value)}
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-									>
-										<option value="" disabled>
-											Seleccioná el principal
-										</option>
-										{PAIN_OPTIONS.map((option) => (
-											<option key={option.value} value={option.value}>
-												{option.label}
-											</option>
-										))}
-									</select>
-								</div>
-
-								<div>
-									<label
 										htmlFor="process"
 										className="block text-sm font-medium text-gray-400 mb-1.5"
 									>
-										Detalles del proyecto{" "}
+										Contanos tu negocio o el problema que querés resolver{" "}
 										<span className="text-gray-600 font-normal">(opcional)</span>
 									</label>
 									<textarea
 										id="process"
 										name="message"
-										rows={3}
+										rows={4}
 										value={message}
 										onChange={(e) => setMessage(e.target.value)}
-										placeholder="Opcional. Contanos qué planillas o sistemas usás hoy o qué te traba puntualmente."
-										className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+										placeholder="Ej. Vendemos por WhatsApp y Excel, tenemos stock en dos depósitos y necesitamos ordenar pedidos, caja y seguimiento comercial."
+										className="min-h-[120px] w-full resize-y bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:min-h-[104px]"
 									/>
 								</div>
 								</div>
@@ -647,7 +594,10 @@ export default function Contact() {
 								{step < TOTAL_STEPS ? (
 									<button
 										type="button"
-										onClick={goNext}
+										onClick={(e) => {
+											e.preventDefault();
+											goNext();
+										}}
 										className="flex-1 bg-primary text-navy-dark font-bold py-3 rounded-lg active:scale-95 transition-transform"
 									>
 										Siguiente
@@ -661,7 +611,7 @@ export default function Contact() {
 										disabled={status === "submitting"}
 										className="flex-1 bg-primary text-navy-dark font-bold py-3 rounded-lg active:scale-95 transition-transform shadow-lg hover:shadow-primary/25 disabled:opacity-60 disabled:cursor-not-allowed"
 									>
-										{status === "submitting" ? "Enviando…" : "Solicitar consultoría"}
+										{status === "submitting" ? "Enviando…" : "Enviar consulta"}
 									</button>
 								)}
 							</div>
@@ -696,7 +646,7 @@ export default function Contact() {
 										Enviando...
 									</span>
 								) : (
-									"Solicitar consultoría gratuita"
+									"Enviar consulta"
 								)}
 							</button>
 

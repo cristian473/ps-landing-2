@@ -67,30 +67,14 @@ export function validateMessage(message: string): ValidationResult {
 /**
  * Validates the lead's expected investment range (allowlist).
  */
-export function validateBudget(
-	budget: string,
+export function validateInterest(
+	interest: string,
 	allowedValues: ReadonlySet<string>
 ): ValidationResult {
-	if (!budget || budget.trim() === "") {
-		return { isValid: false, error: "Seleccioná tu inversión esperada" };
+	if (!interest || interest.trim() === "") {
+		return { isValid: false, error: "Seleccioná qué te interesa" };
 	}
-	if (!allowedValues.has(budget.trim())) {
-		return { isValid: false, error: "El rango de inversión seleccionado no es válido" };
-	}
-	return { isValid: true };
-}
-
-/**
- * Validates the lead's pain category (allowlist).
- */
-export function validatePain(
-	pain: string,
-	allowedValues: ReadonlySet<string>
-): ValidationResult {
-	if (!pain || pain.trim() === "") {
-		return { isValid: false, error: "Seleccioná qué problema querés resolver" };
-	}
-	if (!allowedValues.has(pain.trim())) {
+	if (!allowedValues.has(interest.trim())) {
 		return { isValid: false, error: "La opción seleccionada no es válida" };
 	}
 	return { isValid: true };
