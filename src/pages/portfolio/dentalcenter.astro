@@ -1,0 +1,53 @@
+---
+export const prerender = true;
+
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/landing/Navbar";
+import CaseStudyPage from "../../components/case-study/CaseStudyPage";
+import StickyCTA from "../../components/landing/StickyCTA";
+import Footer from "../../components/landing/Footer";
+import { caseStudy } from "../../data/portfolio/dentalcenter";
+import { SITE } from "../../config/site.mjs";
+
+const canonical = new URL(`/portfolio/${caseStudy.slug}`, SITE.url).href;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: caseStudy.seo.title,
+  description: caseStudy.seo.description,
+  inLanguage: "es",
+  author: { "@type": "Organization", name: "Puro Software", url: SITE.url },
+  publisher: {
+    "@type": "Organization",
+    name: "Puro Software",
+    logo: { "@type": "ImageObject", url: new URL("/purosoftware-logo.png", SITE.url).href },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+  about: [caseStudy.sector, caseStudy.client],
+};
+---
+
+<Layout
+  title={caseStudy.seo.title}
+  description={caseStudy.seo.description}
+  canonicalURL={canonical}
+  keywords={caseStudy.seo.keywords}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleSchema)} />
+
+  <Navbar client:load />
+  <main>
+    <CaseStudyPage client:load caseStudy={caseStudy} />
+    <Footer />
+  </main>
+  <StickyCTA client:idle />
+</Layout>
+
+<script define:vars={{ slug: caseStudy.slug }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof window.trackCaseStudyView === "function") {
+      window.trackCaseStudyView(slug);
+    }
+  });
+</script>

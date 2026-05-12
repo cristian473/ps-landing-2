@@ -1,5 +1,61 @@
 import { motion } from 'framer-motion';
-import PricingCard from './PricingCard';
+
+type PlanFeature = string;
+
+type Plan = {
+  badge?: string;
+  highlighted?: boolean;
+  icon: string;
+  title: string;
+  description: string;
+  features: PlanFeature[];
+  ctaText: string;
+  ctaTracking: string;
+  ctaLocation: string;
+  ctaInterest: string;
+  footnote: string;
+};
+
+const PLANS: Plan[] = [
+  {
+    badge: 'Más elegido',
+    highlighted: true,
+    icon: 'assignment_turned_in',
+    title: 'Proyecto cerrado',
+    description:
+      'Cotización por alcance, con fecha de entrega definida. Ideal para construir una pieza nueva — web app, integración, app móvil o un MVP — sabiendo desde el día uno qué incluye.',
+    features: [
+      'Descubrimiento técnico antes de cotizar',
+      'Cotización clara: qué incluye, qué no, en cuánto tiempo',
+      'Sprints con demos periódicas — sin sorpresas al final',
+      'Mantenimiento y soporte post-entrega disponibles',
+      'El código y la documentación quedan del cliente',
+    ],
+    ctaText: 'Cotizar mi proyecto',
+    ctaTracking: 'pricing_proyecto_cerrado',
+    ctaLocation: 'pricing_plan_1',
+    ctaInterest: 'proyecto_cerrado',
+    footnote: 'Te respondemos para coordinar una llamada de descubrimiento.',
+  },
+  {
+    icon: 'schedule',
+    title: 'Pack mensual de horas',
+    description:
+      'Para clientes que ya tienen su sistema y lo evolucionan mes a mes: features nuevos, integraciones, mantenimiento. Equipo dedicado con horas mínimas por mes.',
+    features: [
+      'Slack / WhatsApp directo con el equipo',
+      'Reporte mensual de horas consumidas',
+      'Mismo equipo todos los meses',
+      'Soporte de producción incluido en las horas',
+      'Sin permanencia obligatoria',
+    ],
+    ctaText: 'Consultar pack',
+    ctaTracking: 'pricing_pack_horas',
+    ctaLocation: 'pricing_plan_2',
+    ctaInterest: 'pack_horas',
+    footnote: 'Pedinos una llamada y armamos un pack a la medida de tu operación.',
+  },
+];
 
 export default function Pricing() {
   return (
@@ -13,163 +69,99 @@ export default function Pricing() {
           className="mb-14 text-center"
         >
           <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            Planes y precios
+            Cómo trabajamos
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Elegí cómo arrancar
+            Dos modalidades, una sola promesa
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Sin abonos eternos, sin paquetes de horas raros, sin sorpresas. Implementación incluida.
+          <p className="text-gray-300 max-w-2xl mx-auto">
+            Cotización clara, cero abonos eternos. Trabajamos por proyecto cerrado o con un pack mensual de horas de desarrollo — según lo que tu negocio necesite.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch">
-          {/* Plan 1 — Sistema de gestión */}
-          <PricingCard
-            highlighted
-            badge="Recomendado"
-            icon="rocket_launch"
-            title="Sistema de gestión"
-            description="Plataforma estándar de gestión + IA, con módulos básicos listos para usar. Configuración inicial adaptada a tu negocio, sin desarrollos a medida."
-            features={[
-              {
-                title: 'Módulos incluidos',
-                items: [
-                  'Clientes, contactos y cuentas corrientes',
-                  'Productos, catálogo y listas de precios',
-                  'Stock e inventario multi-depósito',
-                  'Ventas, pedidos y comprobantes internos',
-                  'Caja, cobranzas y pagos',
-                  'Compras y proveedores',
-                  'Reportes y dashboard de gestión',
-                  'Usuarios, roles y permisos',
-                  'Multi-sucursal',
-                  'Agente IA por WhatsApp para consultar datos',
-                  'Facturación electrónica con AFIP / ARCA',
-                ],
-              },
-              {
-                title: 'Lo que incluye el servicio',
-                items: [
-                  'Configuración inicial adaptada a tu negocio',
-                  'Importación de tus datos desde Excel',
-                  'Capacitación del equipo',
-                  'Hosting y servidor administrado',
-                  'Actualizaciones permanentes',
-                  'Soporte técnico continuo',
-                  'Sin límite de usuarios',
-                ],
-              },
-            ]}
-            closingNote="Sin desarrollos a medida ni integraciones externas. ¿Necesitás más? Mirá el Plan 2."
-            modalitiesLabel="Precios:"
-            modalities={[
-              {
-                label: 'Anual',
-                price: 'USD 89/mes',
-                arsReference: '≈ AR$ 120.000',
-                commitment: 'Pago único anual: USD 1.068',
-                highlighted: true,
-              },
-              {
-                label: 'Mes a mes',
-                price: 'USD 129/mes',
-                arsReference: '≈ AR$ 175.000',
-                commitment: 'Sin compromiso',
-              },
-            ]}
-            footnote="+ IVA · Facturado en pesos al cambio del día"
-            guarantee="30 días de garantía en el plan anual. Si no te funciona el primer mes, te devolvemos todo."
-            ctaText="Solicitar implementación"
-            ctaHref="#contacto"
-            ctaInterestValue="sistema_gestion"
-            ctaTrackingName="pricing_sistema_gestion"
-            ctaTrackingLocation="pricing_plan_1"
-            ctaVariant="primary"
-          />
+          {PLANS.map((plan, idx) => (
+            <motion.article
+              key={plan.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className={`relative rounded-3xl border p-6 sm:p-8 flex flex-col h-full transition-colors ${
+                plan.highlighted
+                  ? 'bg-gradient-to-br from-primary/10 via-navy-surface to-navy-surface border-primary/40 shadow-[0_0_60px_rgba(56,182,255,0.12)]'
+                  : 'bg-navy-surface border-white/10 hover:border-white/20'
+              }`}
+            >
+              {plan.badge && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center rounded-full bg-primary px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-navy-dark shadow-lg">
+                    {plan.badge}
+                  </span>
+                </div>
+              )}
 
-          {/* Plan 2 — Sistema a medida */}
-          <PricingCard
-            icon="settings_suggest"
-            title="Sistema a medida"
-            description="Todo lo del Plan 1 + módulos custom, integraciones y apps propias. Adaptación completa a tu negocio. Cotización personalizada según alcance."
-            features={[
-              {
-                title: 'Desarrollos personalizados como por ejemplo:',
-                listStyle: 'bullet',
-                items: [
-                  'Trazabilidad avanzada por lote o número de serie',
-                  'POS retail con scanner / lector de códigos',
-                  'Conciliación bancaria automática',
-                  'Integraciones: Tienda Nube, Shopify, MercadoLibre, WhatsApp, pasarelas de pago',
-                  'App nativa de vendedores en ruta',
-                  'Apps de picking, reparto y portal de repartidores',
-                  'Módulo de producción con trazabilidad por lote',
-                  'Reclamos, garantías y postventa',
-                  'Módulos custom según tu rubro',
-                  'Funcionalidades y aplicaciones extras a pedido',
-                ],
-              },
-            ]}
-            setupLabel="Implementación desde"
-            priceValue="USD 1.000"
-            priceSubtext="+ mantenimiento desde USD 169/mes (≈ AR$ 230.000)"
-            footnote="+ IVA · Cotización personalizada según alcance"
-            ctaText="Cotizar mi proyecto"
-            ctaHref="#contacto"
-            ctaInterestValue="sistema_medida"
-            ctaTrackingName="pricing_sistema_medida"
-            ctaTrackingLocation="pricing_plan_2"
-            ctaVariant="primary"
-            delay={0.1}
-          />
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
+                    plan.highlighted ? 'bg-primary text-navy-dark' : 'bg-white/5 text-primary'
+                  }`}
+                >
+                  <span className="material-icons text-2xl">{plan.icon}</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white">{plan.title}</h3>
+              </div>
+
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+                {plan.description}
+              </p>
+
+              <ul className="space-y-3 mb-8 flex-1">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span
+                      className={`material-icons text-base mt-0.5 shrink-0 ${
+                        plan.highlighted ? 'text-primary' : 'text-primary/70'
+                      }`}
+                    >
+                      check_circle
+                    </span>
+                    <span className="text-gray-200 text-sm sm:text-base leading-snug">
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#contacto"
+                onClick={() => {
+                  window.trackCTAClick?.(plan.ctaTracking, plan.ctaLocation);
+                  window.dispatchEvent(
+                    new CustomEvent('contact:prefill', {
+                      detail: { interest: plan.ctaInterest },
+                    }),
+                  );
+                }}
+                className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm sm:text-base font-bold transition-all ${
+                  plan.highlighted
+                    ? 'bg-primary text-navy-dark hover:bg-primary/90 shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)]'
+                    : 'border border-white/15 text-white hover:bg-white/5 hover:border-primary/40'
+                }`}
+              >
+                {plan.ctaText}
+                <span className="material-icons text-base">arrow_forward</span>
+              </a>
+
+              <p className="text-xs text-gray-400 mt-4 text-center leading-relaxed">
+                {plan.footnote}
+              </p>
+            </motion.article>
+          ))}
         </div>
 
-        {/* Modalidad para sistemas propios */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="max-w-5xl mx-auto mt-10 p-6 sm:p-8 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/12 via-white/[0.04] to-white/[0.02] shadow-[0_0_60px_rgba(56,182,255,0.14)] flex flex-col md:flex-row md:items-center gap-6 relative overflow-hidden"
-        >
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(56,182,255,0.16),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.08),transparent_32%)]" />
-          <div className="relative z-10 w-14 h-14 bg-primary text-black rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
-            <span className="material-icons text-3xl">schedule</span>
-          </div>
-          <div className="relative z-10 flex-1">
-            <div className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-3">
-              Pack mensual de horas
-            </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white">¿Tenés tu propio sistema?</h3>
-            <p className="text-gray-300 text-sm md:text-base mt-2 leading-relaxed max-w-2xl">
-              Podés contratar un pack mensual de horas, con mínimo 10 hs, ideal para equipos que evolucionan la plataforma todos los meses.
-            </p>
-          </div>
-          <div className="relative z-10 flex w-full md:w-auto flex-col items-stretch md:items-end gap-3 shrink-0">
-            <div className="hidden md:block text-left md:text-right">
-              <p className="text-xs uppercase tracking-wider text-gray-400">Desde</p>
-              <p className="text-2xl font-extrabold text-white">10 hs/mes</p>
-            </div>
-            <a
-              href="#contacto"
-              onClick={() => {
-                window.trackCTAClick?.('pricing_pack_horas', 'pricing_consultiva');
-                window.dispatchEvent(
-                  new CustomEvent('contact:prefill', {
-                    detail: { interest: 'pack_horas' },
-                  }),
-                );
-              }}
-              className="inline-flex w-full md:w-auto items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-bold text-black hover:bg-primary/90 transition"
-            >
-              Consultar →
-            </a>
-          </div>
-        </motion.div>
-
-        <p className="text-center text-xs text-gray-500 mt-8 max-w-2xl mx-auto">
-          Precios en USD facturados en pesos al cambio del día. IVA no incluido. Sin permanencia obligatoria en el pack mensual de horas.
+        <p className="text-center text-xs text-gray-400 mt-10 max-w-2xl mx-auto">
+          Facturamos en pesos argentinos (ARS), Factura A o B. NDA disponible si tu proyecto lo requiere.
         </p>
       </div>
     </section>

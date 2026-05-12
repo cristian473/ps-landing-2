@@ -36,38 +36,32 @@ export default function Hero() {
           className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Sistema de gestión · Adaptado a tu operación
+          Software factory · Argentina
         </motion.div>
 
-        {/* Heading */}
+        {/* Heading — color sólido, sin gradient text (anti AI slop).
+            Una palabra clave en text-primary para énfasis sin tropos visuales. */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 md:mb-6 leading-tight max-w-5xl mx-auto text-white"
         >
-          Excel y WhatsApp ya no alcanzan. <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">
-            Te damos el sistema que sí.
-          </span>
+          Construimos el <span className="text-primary">software</span> <br className="hidden sm:block" />
+          que tu negocio necesita.
         </motion.h1>
 
-        {/* Subtitle — más corto en mobile (sin sacrificar el desktop) para que el CTA quede above-fold */}
+        {/* Subtitle — describe el alcance de la agencia */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-base sm:text-lg md:text-xl text-gray-400 mb-10 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          <span className="md:hidden">
-            Tu sistema de gestión listo en 4 semanas, lo adaptamos a cómo ya trabajás.
-          </span>
-          <span className="hidden md:inline">
-            Tu sistema de gestión listo en 4 semanas, lo adaptamos a cómo ya trabajás.
-          </span>
+          Web apps, agentes con IA, integraciones y apps móviles. Cotizamos por proyecto o pack mensual de horas.
         </motion.p>
 
-        {/* CTA único — primario full-width en mobile, centrado en desktop */}
+        {/* CTAs — primario "Cotizar mi proyecto" + secundario "Ver portfolio" */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -75,29 +69,20 @@ export default function Hero() {
           className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
         >
           <a
-            href="#demo-plataforma"
-            onClick={() => window.trackCTAClick?.('hero_ver_sistema', 'hero')}
+            href="#contacto"
+            onClick={() => window.trackCTAClick?.('hero_cotizar', 'hero')}
             className="bg-primary text-navy-dark px-6 sm:px-8 py-4 rounded font-bold text-base sm:text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105 inline-flex items-center justify-center gap-2"
           >
-            Quiero ver como funciona
+            Cotizar mi proyecto
             <span className="material-icons">arrow_forward</span>
           </a>
-        </motion.div>
-
-        {/* "Ver casos" — desktop only. En mobile el scroll natural cubre eso. */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="hidden md:block mt-4"
-        >
           <a
-            href="#casos"
-            onClick={() => window.trackCTAClick?.('hero_ver_casos', 'hero_secondary')}
-            className="text-gray-400 hover:text-primary text-sm transition-colors inline-flex items-center gap-1"
+            href="#portfolio"
+            onClick={() => window.trackCTAClick?.('hero_portfolio', 'hero_secondary')}
+            className="border border-white/15 text-white px-6 sm:px-8 py-4 rounded font-semibold text-base sm:text-lg hover:bg-white/5 hover:border-primary/40 transition-all inline-flex items-center justify-center gap-2"
           >
-            Ver casos de éxito
-            <span className="material-icons text-sm">arrow_downward</span>
+            Ver portfolio
+            <span className="material-icons text-base">arrow_downward</span>
           </a>
         </motion.div>
       </div>

@@ -1,0 +1,129 @@
+---
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/landing/Navbar";
+import HeroErp from "../components/landing/HeroErp";
+import VideoShowcase from "../components/landing/VideoShowcase";
+import PreBuiltERP from "../components/landing/PreBuiltERP";
+import ErpCTA from "../components/landing/ErpCTA";
+import FAQ from "../components/landing/FAQ";
+import Footer from "../components/landing/Footer";
+import StickyCTA from "../components/landing/StickyCTA";
+import { SITE } from "../config/site.mjs";
+
+const ERP_DESCRIPTION =
+  "Puro ERP: sistema de gestión para negocios argentinos. Ventas, stock, caja, compras, facturación AFIP. Listo para usar, sin esperar meses de desarrollo.";
+
+const erpFaqs = [
+  {
+    q: "¿Mis datos están seguros? ¿Otra empresa puede ver mi información?",
+    a: "Cada cuenta vive en su propio espacio aislado. Tus datos, usuarios y configuración nunca se cruzan con los de otra empresa que use el sistema.",
+  },
+  {
+    q: "¿Factura en AFIP de verdad? ¿Qué tipos de comprobantes emite?",
+    a: "Sí, está integrado con AFIP / ARCA para emitir comprobantes electrónicos reales: Facturas A y B, notas de crédito y débito, recibos.",
+  },
+  {
+    q: "¿Puedo importar mis productos, clientes y proveedores desde Excel?",
+    a: "Sí. Podés importar productos, clientes y proveedores desde planillas Excel al arrancar. Si venís de otro sistema, te ayudamos con la migración inicial.",
+  },
+  {
+    q: "¿Cuántos usuarios puedo tener en mi cuenta?",
+    a: "Sin límite de usuarios. Cada uno con su acceso, rol y permisos según lo que necesites.",
+  },
+  {
+    q: "¿Hay capacitación incluida?",
+    a: "Sí. Hacemos onboarding asistido: configuración inicial adaptada a tu negocio, importación de tus datos y capacitación de tu equipo para que arranquen operando.",
+  },
+  {
+    q: "¿Tiene app móvil?",
+    a: "La operación se hace desde la web, optimizada para escritorio y celular. Si tu equipo necesita una app dedicada — vendedores en calle, picking, repartidores, técnicos — la desarrollamos a medida con el mismo equipo.",
+  },
+  {
+    q: "¿Qué pasa si dejo de pagar? ¿Pierdo mis datos?",
+    a: "Tus datos son tuyos. Si decidís dejar de usar el sistema, podés exportarlos antes en formato Excel para llevártelos sin pérdida.",
+  },
+  {
+    q: "¿Hacen integraciones o desarrollos a medida si necesito algo distinto?",
+    a: "Sí. Si el sistema base no cubre algo específico de tu rubro, lo desarrollamos a medida — somos la misma agencia que construye el producto, así que las integraciones y módulos custom los hacemos con el mismo equipo.",
+  },
+  {
+    q: "¿Cuánto sale? ¿Cómo se factura?",
+    a: "Conversamos el precio en una primera llamada según el tamaño y las necesidades de tu negocio. Facturamos en pesos argentinos (ARS), Factura A o B, sin contrato anual obligatorio.",
+  },
+];
+
+const erpCanonical = new URL("/erp", SITE.url).href;
+
+const softwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Puro ERP",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description: ERP_DESCRIPTION,
+  url: erpCanonical,
+  provider: {
+    "@type": "Organization",
+    name: "Puro Software",
+    url: SITE.url,
+  },
+  inLanguage: "es",
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "ARS",
+    availability: "https://schema.org/InStock",
+  },
+};
+---
+
+<Layout
+  title="Puro ERP — Sistema de gestión para negocios argentinos"
+  description={ERP_DESCRIPTION}
+  canonicalURL={erpCanonical}
+  keywords="ERP SaaS, sistema de gestión negocios Argentina, sistema de gestión PyMEs, facturación AFIP, stock multi-sucursal, POS, ventas, caja, cobranzas"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(softwareApplicationSchema)} />
+
+  <Navbar client:load />
+  <main>
+    <HeroErp client:load />
+
+    <VideoShowcase
+      client:visible
+      youtubeId="MRjUQdJKYFc"
+      eyebrow="El producto"
+      title="Mirá la plataforma funcionando"
+      description="Tour por los módulos principales — clientes, pedidos, stock, facturación, dashboards. Es el sistema real que adaptamos a tu operación, no una maqueta."
+      align="left"
+      bg="navy"
+      id="demo-plataforma"
+    />
+
+    <PreBuiltERP client:visible />
+
+    <VideoShowcase
+      client:visible
+      youtubeId="DkeLTPPICg0"
+      eyebrow="IA en acción"
+      title="Inteligencia artificial en tu sistema de gestión"
+      description="Tu propio asistente de IA conectado con la plataforma: puede consultar datos en tiempo real, hacer operaciones automáticas, cargar registros y entender mensajes, audios, imágenes, PDFs o lo que necesites."
+      align="right"
+      bg="black"
+      id="demo-ia"
+    />
+
+    <ErpCTA client:visible />
+
+    <FAQ
+      client:visible
+      items={erpFaqs}
+      eyebrow="Preguntas frecuentes"
+      title="Lo que querés saber antes de probar Puro ERP"
+    />
+
+    <Footer />
+  </main>
+  <StickyCTA client:idle />
+</Layout>

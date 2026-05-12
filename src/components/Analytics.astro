@@ -228,9 +228,14 @@ const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID || '';
 
     window.addEventListener('scroll', checkScrollDepth, { passive: true });
 
-    // Section visibility — cada <section> dispara section_view la primera vez
-    // que el 50% queda en viewport. Permite ver hasta dónde llegan los usuarios
-    // en la landing más allá del scroll % bruto.
+  });
+
+  // Section visibility — cada <section> dispara section_view la primera vez
+  // que el 50% queda en viewport. Se ejecuta en `load` (no `DOMContentLoaded`)
+  // para que setAttribute('data-section-index', ...) corra después de que las
+  // islands Astro/React terminen de hidratar — si no, React reporta hydration
+  // mismatch porque el atributo no estaba en el HTML server-renderizado.
+  window.addEventListener('load', function() {
     if ('IntersectionObserver' in window) {
       var seen = {};
       var sectionObserver = new IntersectionObserver(function(entries) {
