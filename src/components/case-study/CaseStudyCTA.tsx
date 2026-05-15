@@ -38,7 +38,7 @@ export default function CaseStudyCTA({ cta, externalLink }: Props) {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <a
-                href="/#contacto"
+                href={`/?interest=${encodeURIComponent(cta.interest)}#contacto`}
                 onClick={handleCotizar}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-base font-bold text-navy-dark hover:bg-primary/90 transition-colors shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)]"
               >

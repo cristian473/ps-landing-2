@@ -117,6 +117,15 @@ export default function Contact() {
 		return () => window.removeEventListener("contact:prefill", handlePrefill);
 	}, []);
 
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+
+		const interestParam = new URLSearchParams(window.location.search).get("interest");
+		if (interestParam && INTEREST_OPTIONS.some((option) => option.value === interestParam)) {
+			setInterest(interestParam);
+		}
+	}, []);
+
 	function goNext() {
 		const err = validateStep(step);
 		if (err) {

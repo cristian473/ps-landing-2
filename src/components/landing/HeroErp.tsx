@@ -68,7 +68,7 @@ export default function HeroErp() {
           className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
         >
           <a
-            href="/#contacto?interest=erp_saas"
+            href="/?interest=erp_saas#contacto"
             onClick={() => {
               window.trackCTAClick?.('erp_hero_demo', 'erp_hero');
               window.dispatchEvent(

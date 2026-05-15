@@ -14,10 +14,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'Servicios', href: '#servicios' },
+    { name: 'Portfolio', href: '/#portfolio' },
+    { name: 'Servicios', href: '/#servicios' },
     { name: 'ERP', href: '/erp' },
-    { name: 'Contacto', href: '#contacto' },
+    { name: 'Contacto', href: '/#contacto' },
   ];
 
   return (
@@ -48,7 +48,7 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#contacto"
+              href="/#contacto"
               onClick={() => window.trackCTAClick?.('navbar_cotizar', 'navbar_desktop')}
               className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105 flex items-center gap-1"
             >
@@ -92,7 +92,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contacto"
+                href="/#contacto"
                 onClick={() => {
                   window.trackCTAClick?.('navbar_cotizar', 'navbar_mobile');
                   setIsMobileMenuOpen(false);

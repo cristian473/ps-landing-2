@@ -31,7 +31,7 @@ export default function ErpCTA() {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <a
-                href="/#contacto?interest=erp_saas"
+                href="/?interest=erp_saas#contacto"
                 onClick={() => {
                   window.trackCTAClick?.('erp_cta_demo', 'erp_cta');
                   window.dispatchEvent(

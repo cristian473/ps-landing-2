@@ -133,7 +133,7 @@ export default function Pricing() {
               </ul>
 
               <a
-                href="#contacto"
+                href={`/?interest=${encodeURIComponent(plan.ctaInterest)}#contacto`}
                 onClick={() => {
                   window.trackCTAClick?.(plan.ctaTracking, plan.ctaLocation);
                   window.dispatchEvent(

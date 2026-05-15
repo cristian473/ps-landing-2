@@ -231,28 +231,27 @@ const clarityProjectId = import.meta.env.PUBLIC_CLARITY_PROJECT_ID || '';
   });
 
   // Section visibility — cada <section> dispara section_view la primera vez
-  // que el 50% queda en viewport. Se ejecuta en `load` (no `DOMContentLoaded`)
-  // para que setAttribute('data-section-index', ...) corra después de que las
-  // islands Astro/React terminen de hidratar — si no, React reporta hydration
-  // mismatch porque el atributo no estaba en el HTML server-renderizado.
+  // que el 50% queda en viewport. No mutamos atributos del DOM, porque algunas
+  // islands React hidratan tarde (client:visible) y eso genera hydration mismatch.
   window.addEventListener('load', function() {
     if ('IntersectionObserver' in window) {
       var seen = {};
+      var sectionIndexes = new WeakMap();
       var sectionObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (!entry.isIntersecting) return;
           var el = entry.target;
-          var idx = el.getAttribute('data-section-index') || '0';
+          var idx = sectionIndexes.get(el) || 0;
           var key = el.id || ('section-' + idx);
           if (seen[key]) return;
           seen[key] = true;
-          window.trackSectionView(key, parseInt(idx, 10));
+          window.trackSectionView(key, idx);
         });
       }, { threshold: 0.5 });
 
       var sections = document.querySelectorAll('main section');
       sections.forEach(function(s, i) {
-        s.setAttribute('data-section-index', String(i + 1));
+        sectionIndexes.set(s, i + 1);
         sectionObserver.observe(s);
       });
     }

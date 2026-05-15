@@ -6,6 +6,7 @@ type Service = {
   title: string;
   description: string;
   bullets: string[];
+  ctaInterest: string;
 };
 
 const SERVICES: Service[] = [
@@ -20,6 +21,7 @@ const SERVICES: Service[] = [
       'Portales web para clientes, afiliados o proveedores',
       'Productos SaaS con dominio propio, multi-usuario y planes',
     ],
+    ctaInterest: 'proyecto_cerrado',
   },
   {
     id: 'ia',
@@ -32,6 +34,7 @@ const SERVICES: Service[] = [
       'Asistentes para cargar productos, redactar descripciones o responder consultas',
       'Procesamiento de mensajes, audios, imágenes y PDFs',
     ],
+    ctaInterest: 'proyecto_cerrado',
   },
   {
     id: 'integraciones',
@@ -44,6 +47,7 @@ const SERVICES: Service[] = [
       'Facturación electrónica con AFIP / ARCA',
       'Pasarelas de pago, ERPs externos y servicios de envío',
     ],
+    ctaInterest: 'proyecto_cerrado',
   },
   {
     id: 'apps_moviles',
@@ -56,6 +60,7 @@ const SERVICES: Service[] = [
       'Modo offline con sincronización automática',
       'Lectura de códigos de barras, GPS, foto de entrega y firma del cliente',
     ],
+    ctaInterest: 'proyecto_cerrado',
   },
 ];
 
@@ -81,7 +86,7 @@ export default function Services() {
             Nuestro software se adapta a lo que tu negocio necesita
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Estas son las cuatro areas en las cuales trabajamos:
+            Estas son las cuatro áreas en las que trabajamos:
           </p>
         </motion.div>
 
@@ -89,12 +94,12 @@ export default function Services() {
           {SERVICES.map((service, idx) => (
             <motion.a
               key={service.id}
-              href="#contacto"
+              href={`/?interest=${encodeURIComponent(service.ctaInterest)}#contacto`}
               onClick={() => {
                 trackCardClick(service.id);
                 window.dispatchEvent(
                   new CustomEvent('contact:prefill', {
-                    detail: { interest: 'consulta_general' },
+                    detail: { interest: service.ctaInterest },
                   }),
                 );
               }}
