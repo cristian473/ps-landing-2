@@ -17,9 +17,14 @@ import { submitLeadToPanel } from "../../lib/panel-api";
 
 const TEAM_SIZE_VALUES = new Set(["1-5", "5-15", "15-50", "50+"]);
 const INTEREST_VALUES = new Set([
+	// Valores actuales (rebrand agencia 2026-05).
+	"proyecto_cerrado",
+	"pack_horas",
+	"erp_saas",
+	"consulta_general",
+	// Legacy: tolerados mientras existan formularios cacheados.
 	"sistema_gestion",
 	"sistema_medida",
-	"pack_horas",
 ]);
 
 const TEAM_SIZE_LABELS: Record<string, string> = {
@@ -30,9 +35,13 @@ const TEAM_SIZE_LABELS: Record<string, string> = {
 };
 
 const INTEREST_LABELS: Record<string, string> = {
+	proyecto_cerrado: "Proyecto a medida (cotización cerrada)",
+	pack_horas: "Pack mensual de horas de desarrollo",
+	erp_saas: "Puro ERP (sistema SaaS)",
+	consulta_general: "Consulta general",
+	// Legacy.
 	sistema_gestion: "Sistema de gestión",
 	sistema_medida: "Sistema a medida",
-	pack_horas: "Pack mensual de horas",
 };
 
 export const POST: APIRoute = async ({ request }) => {

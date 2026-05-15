@@ -1,0 +1,221 @@
+---
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/landing/Navbar";
+import VideoShowcase from "../components/landing/VideoShowcase";
+import FAQ from "../components/landing/FAQ";
+import Footer from "../components/landing/Footer";
+import StickyCTA from "../components/landing/StickyCTA";
+import { SITE } from "../config/site.mjs";
+import { erpSeoLandings } from "../data/erpSeoLandings";
+
+export function getStaticPaths() {
+  return erpSeoLandings.map((landing) => ({
+    params: { slug: landing.slug },
+    props: { landing },
+  }));
+}
+
+const { landing } = Astro.props;
+const canonical = new URL(`/${landing.slug}`, SITE.url).href;
+const primaryCtaHref = "/#contacto";
+const demoHref = "#demo-plataforma";
+
+const softwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Puro ERP",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description: landing.description,
+  url: canonical,
+  provider: {
+    "@type": "Organization",
+    name: "Puro Software",
+    url: SITE.url,
+  },
+  inLanguage: "es-AR",
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "ARS",
+    availability: "https://schema.org/InStock",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: landing.faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.a,
+    },
+  })),
+};
+---
+
+<Layout
+  title={landing.title}
+  description={landing.description}
+  canonicalURL={canonical}
+  keywords={landing.keywords.join(", ")}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(softwareApplicationSchema)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqSchema)} />
+
+  <Navbar client:load />
+  <main>
+    <section class="relative overflow-hidden bg-navy-dark pt-32 pb-20 md:pt-40 md:pb-28 border-b border-white/10">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[760px] h-[760px] rounded-full bg-primary/10 blur-3xl"></div>
+        <div class="absolute -bottom-40 -right-20 w-[420px] h-[420px] rounded-full bg-blue-500/10 blur-3xl"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="max-w-4xl">
+          <p class="text-primary font-bold tracking-wider uppercase text-sm mb-4">{landing.eyebrow}</p>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+            {landing.h1}
+          </h1>
+          <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mb-8">
+            {landing.intro}
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a
+              href={primaryCtaHref}
+              class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-navy-dark px-6 py-4 rounded-lg font-bold transition-all hover:scale-[1.02]"
+            >
+              Agendar una llamada
+              <span class="material-icons text-xl">arrow_forward</span>
+            </a>
+            <a
+              href={demoHref}
+              class="inline-flex items-center justify-center gap-2 border border-white/20 hover:border-primary/60 text-white px-6 py-4 rounded-lg font-semibold transition-colors bg-white/5 hover:bg-white/10"
+            >
+              Ver demo
+              <span class="material-icons text-xl">play_circle</span>
+            </a>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-2">
+            {landing.keywords.slice(0, 4).map((keyword) => (
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-300">
+                {keyword}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-black py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+        <div>
+          <p class="text-primary font-bold tracking-wider uppercase text-sm mb-3">Problema</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-5">{landing.painTitle}</h2>
+          <p class="text-gray-300 leading-relaxed text-lg">
+            Si la información queda repartida entre planillas, chats y personas, el negocio sigue funcionando, pero con más esfuerzo del necesario.
+          </p>
+        </div>
+        <div class="grid gap-4">
+          {landing.painPoints.map((point) => (
+            <div class="rounded-2xl border border-white/10 bg-navy-surface/80 p-5 flex gap-4">
+              <span class="material-icons text-primary shrink-0 mt-0.5">warning_amber</span>
+              <p class="text-gray-200 leading-relaxed">{point}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-navy-dark py-16 md:py-24 border-y border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <p class="text-primary font-bold tracking-wider uppercase text-sm mb-3">Qué ordena</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-5">{landing.organizeTitle}</h2>
+          <p class="text-gray-300 leading-relaxed text-lg">{landing.organizeIntro}</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {landing.modules.map((module) => (
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <span class="material-icons text-primary mb-4">check_circle</span>
+              <h3 class="text-white font-semibold text-lg">{module}</h3>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <VideoShowcase
+      client:visible
+      youtubeId="MRjUQdJKYFc"
+      eyebrow="El producto"
+      title="Mirá Puro ERP funcionando"
+      description="Un recorrido por la plataforma base: clientes, pedidos, stock, facturación y reportes. Es el mismo software que usamos como punto de partida para adaptar la gestión a tu operación."
+      align="left"
+      bg="navy"
+      id="demo-plataforma"
+    />
+
+    <section class="bg-black py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center mb-10">
+          <p class="text-primary font-bold tracking-wider uppercase text-sm mb-3">Beneficios</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-5">{landing.benefitsTitle}</h2>
+          <p class="text-gray-300 leading-relaxed text-lg">
+            La mejora principal no es tener “más pantallas”. Es que el equipo encuentre lo que necesita, reduzca errores y tome decisiones con información más clara.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {landing.benefits.map((benefit) => (
+            <div class="rounded-2xl border border-primary/20 bg-primary/[0.06] p-6 flex gap-4">
+              <span class="material-icons text-primary shrink-0 mt-0.5">trending_up</span>
+              <p class="text-gray-100 leading-relaxed text-lg">{benefit}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <VideoShowcase
+      client:visible
+      youtubeId="DkeLTPPICg0"
+      eyebrow="IA aplicada"
+      title={landing.aiTitle}
+      description={landing.aiDescription}
+      align="right"
+      bg="black"
+      id="demo-ia"
+    />
+
+    <section class="bg-navy-dark py-16 md:py-24 border-y border-white/5">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary font-bold tracking-wider uppercase text-sm mb-3">Próximo paso</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-5">
+          Veamos si Puro ERP encaja con tu operación
+        </h2>
+        <p class="text-gray-300 leading-relaxed text-lg mb-8">
+          En una llamada corta revisamos cómo vendés, cómo controlás stock, dónde se pierden datos y qué conviene ordenar primero.
+        </p>
+        <a
+          href={primaryCtaHref}
+          class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-navy-dark px-7 py-4 rounded-lg font-bold transition-all hover:scale-[1.02]"
+        >
+          Agendar una llamada
+          <span class="material-icons text-xl">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+
+    <FAQ
+      client:visible
+      items={landing.faqs}
+      eyebrow="Preguntas frecuentes"
+      title={`Preguntas sobre ${landing.keyword}`}
+    />
+
+    <Footer />
+  </main>
+  <StickyCTA client:idle />
+</Layout>

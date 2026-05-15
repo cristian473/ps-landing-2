@@ -38,7 +38,7 @@ export default function StickyCTA() {
 	}, []);
 
 	const handleClick = () => {
-		window.trackCTAClick?.("sticky_cta_consultoria", "sticky_mobile");
+		window.trackCTAClick?.("sticky_cta_cotizar", "sticky_mobile");
 	};
 
 	return (
@@ -54,7 +54,7 @@ export default function StickyCTA() {
 					onClick={handleClick}
 					className="block w-full bg-primary text-navy-dark text-center font-bold py-3.5 rounded-lg shadow-[0_0_20px_rgba(56,182,255,0.35)] active:scale-95 transition-transform"
 				>
-					Solicitar consultoría gratuita
+					Cotizar mi proyecto
 				</a>
 			</div>
 		</div>

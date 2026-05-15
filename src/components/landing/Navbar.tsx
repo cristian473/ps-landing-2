@@ -14,10 +14,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Casos de Éxito', href: '#casos' },
-    { name: 'Precios', href: '#precios' },
-    { name: 'Beneficios', href: '#beneficios' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'Portfolio', href: '/#portfolio' },
+    { name: 'Servicios', href: '/#servicios' },
+    { name: 'ERP', href: '/erp' },
+    { name: 'Contacto', href: '/#contacto' },
   ];
 
   return (
@@ -48,11 +48,11 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#contacto"
-              onClick={() => window.trackCTAClick?.('navbar_hablar_especialista', 'navbar_desktop')}
+              href="/#contacto"
+              onClick={() => window.trackCTAClick?.('navbar_cotizar', 'navbar_desktop')}
               className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105 flex items-center gap-1"
             >
-              Hablar con un especialista
+              Cotizar mi proyecto
               <span className="material-icons text-lg">arrow_forward</span>
             </a>
           </div>
@@ -92,14 +92,14 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contacto"
+                href="/#contacto"
                 onClick={() => {
-                  window.trackCTAClick?.('navbar_hablar_especialista', 'navbar_mobile');
+                  window.trackCTAClick?.('navbar_cotizar', 'navbar_mobile');
                   setIsMobileMenuOpen(false);
                 }}
                 className="flex items-center justify-center gap-1 w-full bg-primary text-navy-dark px-5 py-3 rounded font-bold mt-4 hover:bg-primary/90 transition-colors"
               >
-                Hablar con un especialista
+                Cotizar mi proyecto
                 <span className="material-icons text-lg">arrow_forward</span>
               </a>
             </div>

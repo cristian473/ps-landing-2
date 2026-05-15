@@ -4,20 +4,20 @@ export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
-import LogoTicker from "../components/landing/LogoTicker";
-import Benefits from "../components/landing/Benefits";
-// import PreBuiltERP from "../components/landing/PreBuiltERP";
-import CaseStudiesCards from "../components/landing/CaseStudiesCards";
-// import Experience from "../components/landing/Experience";
-// import Solutions from "../components/landing/Solutions";
-import VideoShowcase from "../components/landing/VideoShowcase";
+import ClientLogos from "../components/landing/ClientLogos";
+import Services from "../components/landing/Services";
+import Portfolio from "../components/landing/Portfolio";
+import HeroTestimonial from "../components/landing/HeroTestimonial";
+import ErpCTABanner from "../components/landing/ErpCTABanner";
 import Pricing from "../components/landing/Pricing";
 import FAQ from "../components/landing/FAQ";
 import Contact from "../components/landing/Contact";
 import StickyCTA from "../components/landing/StickyCTA";
 import Footer from "../components/landing/Footer";
-import HeroTestimonial from '../components/landing/HeroTestimonial';
 import { SITE } from "../config/site.mjs";
+
+const HOME_DESCRIPTION =
+  "Software factory para negocios y empresas. Construimos web apps a medida, automatizaciones con IA, integraciones y apps móviles. Cotización por proyecto o pack mensual de horas de desarrollo.";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -25,12 +25,12 @@ const organizationSchema = {
   name: "Puro Software",
   url: SITE.url,
   logo: new URL("/purosoftware-logo.png", SITE.url).href,
-  description: "Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo.",
+  description: HOME_DESCRIPTION,
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
     url: `${SITE.url}/#contacto`,
-    availableLanguage: "es",
+    availableLanguage: ["es", "en"],
   },
   sameAs: [
     "https://www.linkedin.com/company/puro-software",
@@ -42,7 +42,7 @@ const websiteSchema = {
   "@type": "WebSite",
   name: "Puro Software",
   url: SITE.url,
-  description: "Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo.",
+  description: HOME_DESCRIPTION,
   inLanguage: "es",
   publisher: {
     "@type": "Organization",
@@ -53,10 +53,10 @@ const websiteSchema = {
 ---
 
 <Layout
-  title="Puro Software - Desarrollo de Software a Medida"
-  description="Software a medida para líderes. Automatización inteligente y desarrollo a medida para empresas que quieren escalar sin caos operativo."
+  title="Puro Software — Software factory para negocios"
+  description={HOME_DESCRIPTION}
   canonicalURL={SITE.url}
-  keywords="software a medida, desarrollo de software, automatización de procesos, software para empresas, desarrollo web, aplicaciones a medida, software para PyMEs"
+  keywords="software factory, desarrollo de software a medida, web apps, automatización con IA, integraciones, apps móviles, software para negocios, software para PyMEs, agencia de desarrollo Argentina"
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(organizationSchema)} />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(websiteSchema)} />
@@ -64,36 +64,24 @@ const websiteSchema = {
   <Navbar client:load />
   <main>
     <Hero client:load />
-    {/* <PreBuiltERP client:visible /> */}
-    <VideoShowcase
-      client:visible
-      youtubeId="MRjUQdJKYFc"
-      eyebrow="El producto"
-      title="Mirá la plataforma funcionando"
-      description="Tour por los módulos principales de la base ERP — clientes, pedidos, stock, facturación, dashboards. Es el sistema real que adaptamos a tu operación, no una maqueta."
-      align="left"
-      bg="navy"
-      id="demo-plataforma"
-    />
-    <LogoTicker client:load />
+    <ClientLogos client:load />
+    <Portfolio client:visible />
+    <Services client:visible />
+
     {/* Testimoniales reales (RAZ + DentalCenter, autorizados).
-        Refuerza trust antes del primer scroll. */}
-    <HeroTestimonial client:load />
-    <CaseStudiesCards client:visible />
-    {/* <Experience client:visible /> */}
-    {/* <Solutions client:visible /> */}
-    <VideoShowcase
-      client:visible
-      youtubeId="DkeLTPPICg0"
-      eyebrow="IA en acción"
-      title="Inteligencia artificial en tu sistema de gestión"
-      description="Tu propio asistente de IA conectado con la plataforma: puede consultar datos en tiempo real, hacer operaciones automáticas, cargar registros y entender mensajes, audios, imágenes, PDFs o lo que necesites."
-      align="right"
-      bg="black"
-      id="demo-ia"
-    />
+        Envuelto en <section id="testimonios"> para que el auto-tracker
+        de Analytics.astro lo registre como section_view. */}
+    <section id="testimonios" class="bg-black py-16 md:py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="text-primary font-bold tracking-wider uppercase text-xs mb-2 block">
+          Lo que dicen nuestros clientes
+        </span>
+        <HeroTestimonial client:visible />
+      </div>
+    </section>
+
+    <ErpCTABanner client:visible />
     <Pricing client:visible />
-    <Benefits client:visible />
     <FAQ client:visible />
     <Contact client:visible />
     <Footer />

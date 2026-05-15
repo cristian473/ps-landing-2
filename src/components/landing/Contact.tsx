@@ -39,9 +39,10 @@ const TEAM_SIZE_OPTIONS = [
 ] as const;
 
 const INTEREST_OPTIONS = [
-	{ value: "sistema_gestion", label: "Sistema de gestión" },
-	{ value: "sistema_medida", label: "Sistema a medida" },
-	{ value: "pack_horas", label: "Pack mensual de horas" },
+	{ value: "proyecto_cerrado", label: "Proyecto a medida (cotización cerrada)" },
+	{ value: "pack_horas", label: "Pack mensual de horas de desarrollo" },
+	{ value: "erp_saas", label: "Puro ERP (sistema SaaS)" },
+	{ value: "consulta_general", label: "Consulta general" },
 ] as const;
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
@@ -114,6 +115,15 @@ export default function Contact() {
 
 		window.addEventListener("contact:prefill", handlePrefill);
 		return () => window.removeEventListener("contact:prefill", handlePrefill);
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+
+		const interestParam = new URLSearchParams(window.location.search).get("interest");
+		if (interestParam && INTEREST_OPTIONS.some((option) => option.value === interestParam)) {
+			setInterest(interestParam);
+		}
 	}, []);
 
 	function goNext() {
@@ -270,12 +280,10 @@ export default function Contact() {
 					className="hidden lg:block max-w-xl"
 				>
 					<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
-						¿Tu operación creció más rápido que el sistema que la gestiona?
+						¿Tu negocio creció más rápido que el software que lo sostiene?
 					</h2>
 					<p className="text-base md:text-lg text-gray-400 mb-6 leading-relaxed">
-						La primera consultoría es gratuita. Vemos si te conviene arrancar
-						con una base lista para implementar, con un sistema a medida o con
-						un pack mensual para evolucionar lo que ya tenés.
+						La primera llamada es gratuita. Vemos qué te conviene: un proyecto cerrado, pack mensual de horas o nuestro ERP listo.
 					</p>
 
 					<div className="flex flex-col gap-4">

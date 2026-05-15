@@ -1,30 +1,57 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const faqs = [
+export type FAQItem = {
+  q: string;
+  a: string;
+};
+
+const DEFAULT_FAQS: FAQItem[] = [
   {
-    q: '¿Cómo entregan rápido si es a medida?',
-    a: 'Porque no empezamos de cero. Tenemos una base de ERP probada que ya cubre el 80% de la operación común: pedidos, stock, clientes, facturación, reportes, integraciones. Las 4 semanas las usamos para adaptarla a tu lógica de negocio, no para construir lo que ya está hecho.',
+    q: '¿Cómo cobran? ¿Es proyecto fijo o por horas?',
+    a: 'Las dos. Si tu proyecto tiene alcance definido, cotizamos cerrado: precio fijo, fecha de entrega y qué incluye. Si necesitás evolucionar tu sistema mes a mes, armamos un pack de horas con equipo dedicado. En la primera llamada vemos cuál te conviene.',
   },
   {
-    q: '¿Qué incluye el mantenimiento mensual?',
-    a: 'Según el plan, puede incluir hosting, soporte técnico, actualizaciones y evolución continua. Lo definimos desde el arranque para que sepas qué está cubierto y qué implicaría sumar nuevos módulos o integraciones.',
+    q: '¿Cuánto tarda un proyecto típico?',
+    a: 'Un proyecto típico tarda entre 2 y 3 meses, desde el descubrimiento hasta la entrega en producción. Proyectos más chicos — integraciones puntuales, módulos específicos, automatizaciones — pueden cerrarse antes.',
   },
   {
-    q: '¿Qué pasa después de la implementación?',
-    a: 'No te soltamos después de entregar. Podés seguir con mantenimiento y soporte mensual para operar, corregir, mejorar y seguir evolucionando el sistema sin tener que empezar otro proyecto cada vez.',
+    q: '¿Quién es dueño del código al final?',
+    a: 'El cliente. Código fuente, documentación y accesos quedan a tu nombre al cierre del proyecto. Sin licencias raras ni candados.',
   },
   {
-    q: '¿Cuándo conviene arrancar con sistema de gestión y cuándo con sistema a medida?',
-    a: 'Si tu operación entra bastante bien en una base estándar, conviene arrancar por ahí y acelerar la salida. Si necesitás lógica propia, integraciones o módulos específicos de tu rubro, conviene ir directo al desarrollo a medida. En la primera llamada te decimos qué camino te conviene.',
+    q: '¿Tienen NDA / pueden firmar confidencialidad?',
+    a: 'Sí, firmamos acuerdo de confidencialidad antes de empezar si lo necesitás. Trabajamos con datos sensibles de clientes desde 2020.',
   },
   {
-    q: '¿Para qué tipo de empresa NO es?',
-    a: 'Si tenés menos de 5 personas operando o todavía estás validando el modelo de negocio, probablemente no necesitás un sistema propio. Te lo decimos en la primera llamada sin venderte nada.',
+    q: '¿Dónde se hostea? ¿Quién paga el servidor?',
+    a: 'Recomendamos servidor propio en AWS (opcional). Lo pagás vos directo al proveedor — mantenés control total de tu infraestructura y datos. Te ayudamos con el setup inicial.',
+  },
+  {
+    q: '¿Hacen mantenimiento post-entrega?',
+    a: 'Sí. Después de la entrega podés contratar mantenimiento y soporte como pack mensual de horas. Es la modalidad que usan los clientes que evolucionan su plataforma todos los meses.',
+  },
+  {
+    q: '¿Trabajan con clientes fuera de Argentina?',
+    a: 'Sí. Trabajamos con clientes en toda la región y en Estados Unidos. Operamos remoto desde Argentina con reuniones en español o inglés.',
+  },
+  {
+    q: '¿Facturan A o B? ¿En USD o ARS?',
+    a: 'Facturamos Factura A y B en pesos argentinos (ARS).',
   },
 ];
 
-export default function FAQ() {
+type FAQProps = {
+  items?: FAQItem[];
+  eyebrow?: string;
+  title?: string;
+};
+
+export default function FAQ({
+  items = DEFAULT_FAQS,
+  eyebrow = 'Preguntas frecuentes',
+  title = 'Lo que querés saber antes de la llamada',
+}: FAQProps) {
   // En desktop arrancamos con la primera pregunta abierta como demo. En mobile
   // (≤768px) arrancamos todas cerradas para no empujar contenido fuera del fold.
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -46,15 +73,15 @@ export default function FAQ() {
           className="mb-12 text-center"
         >
           <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            Preguntas frecuentes
+            {eyebrow}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Lo que querés saber antes de la llamada
+            {title}
           </h2>
         </motion.div>
 
         <div className="space-y-3">
-          {faqs.map((faq, idx) => {
+          {items.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <motion.div
@@ -94,7 +121,7 @@ export default function FAQ() {
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <p className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-400 text-sm sm:text-base leading-relaxed">
+                      <p className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-300 text-sm sm:text-base leading-relaxed">
                         {faq.a}
                       </p>
                     </motion.div>

@@ -30,6 +30,14 @@
 		}
 	}
 }
+
+/* Prevent horizontal overflow caused by absolute decorative elements
+   (Hero halos, recaptcha badge fixed) on narrow viewports. */
+html,
+body {
+	overflow-x: hidden;
+}
+
 /* Accessibility: Skip to content link */
 .sr-only {
 	position: absolute;
