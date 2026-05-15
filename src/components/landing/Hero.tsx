@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center">
+    <section className="relative pt-32 pb-8 md:pt-36 md:pb-14 lg:pt-48 lg:pb-24 overflow-hidden flex items-center">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy-dark to-black" />
 
@@ -45,7 +45,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 md:mb-6 leading-tight max-w-5xl mx-auto text-white"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 sm:mb-10 md:mb-12 leading-tight max-w-5xl mx-auto text-white"
         >
           Construimos el <span className="text-primary">software</span> <br className="hidden sm:block" />
           que tu negocio necesita.
@@ -56,9 +56,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-10 max-w-2xl mx-auto font-light leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 md:mb-16 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          Web apps, agentes con IA, integraciones y apps móviles. Cotizamos por proyecto o pack mensual de horas.
+          Plataformas web, agentes con IA, apps móviles y más.
         </motion.p>
 
         {/* CTAs — primario "Cotizar mi proyecto" + secundario "Ver portfolio" */}
@@ -66,7 +66,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
+          className="flex flex-col sm:flex-row justify-center gap-4"
         >
           <a
             href="#contacto"

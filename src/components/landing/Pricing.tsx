@@ -13,7 +13,7 @@ type Plan = {
   ctaTracking: string;
   ctaLocation: string;
   ctaInterest: string;
-  footnote: string;
+  footnote?: string;
 };
 
 const PLANS: Plan[] = [
@@ -23,28 +23,27 @@ const PLANS: Plan[] = [
     icon: 'assignment_turned_in',
     title: 'Proyecto cerrado',
     description:
-      'Cotización por alcance, con fecha de entrega definida. Ideal para construir una pieza nueva — web app, integración, app móvil o un MVP — sabiendo desde el día uno qué incluye.',
+      'Ideal si querés construir algo nuevo — web app, integración, app móvil o MVP — sabiendo desde el día uno qué incluye. Cotización con fecha de entrega definida.',
     features: [
-      'Descubrimiento técnico antes de cotizar',
+      'Análisis técnico antes de cotizar',
       'Cotización clara: qué incluye, qué no, en cuánto tiempo',
-      'Sprints con demos periódicas — sin sorpresas al final',
+      'Sprints con demos periódicas',
       'Mantenimiento y soporte post-entrega disponibles',
-      'El código y la documentación quedan del cliente',
+      'El código y la documentación quedan del lado del cliente',
     ],
     ctaText: 'Cotizar mi proyecto',
     ctaTracking: 'pricing_proyecto_cerrado',
     ctaLocation: 'pricing_plan_1',
     ctaInterest: 'proyecto_cerrado',
-    footnote: 'Te respondemos para coordinar una llamada de descubrimiento.',
   },
   {
     icon: 'schedule',
     title: 'Pack mensual de horas',
     description:
-      'Para clientes que ya tienen su sistema y lo evolucionan mes a mes: features nuevos, integraciones, mantenimiento. Equipo dedicado con horas mínimas por mes.',
+      'Para clientes que ya tienen su sistema y lo evolucionan mes a mes: funcionalidades nuevas, integraciones, mantenimiento.',
     features: [
       'Slack / WhatsApp directo con el equipo',
-      'Reporte mensual de horas consumidas',
+      'Reporte mensual de horas',
       'Mismo equipo todos los meses',
       'Soporte de producción incluido en las horas',
       'Sin permanencia obligatoria',
@@ -75,7 +74,7 @@ export default function Pricing() {
             Dos modalidades, una sola promesa
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Cotización clara, cero abonos eternos. Trabajamos por proyecto cerrado o con un pack mensual de horas de desarrollo — según lo que tu negocio necesite.
+            Trabajamos por proyecto cerrado o con un pack mensual de horas de desarrollo — según lo que tu negocio necesite.
           </p>
         </motion.div>
 
@@ -153,9 +152,11 @@ export default function Pricing() {
                 <span className="material-icons text-base">arrow_forward</span>
               </a>
 
-              <p className="text-xs text-gray-400 mt-4 text-center leading-relaxed">
-                {plan.footnote}
-              </p>
+              {plan.footnote && (
+                <p className="text-xs text-gray-400 mt-4 text-center leading-relaxed">
+                  {plan.footnote}
+                </p>
+              )}
             </motion.article>
           ))}
         </div>

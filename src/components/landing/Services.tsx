@@ -14,7 +14,7 @@ const SERVICES: Service[] = [
     icon: 'dashboard',
     title: 'Web apps a medida',
     description:
-      'Sistemas internos, portales y plataformas a medida. Desde un backoffice que reemplaza Excel hasta una plataforma multi-tenant — adaptado a cómo trabajás, no al revés.',
+      'Realizamos sistemas, portales y plataformas a medida. Desde un backoffice que reemplaza Excel hasta una plataforma adaptada a cómo trabajás.',
     bullets: [
       'Plataformas de gestión y backoffices para reemplazar planillas',
       'Portales web para clientes, afiliados o proveedores',
@@ -26,7 +26,7 @@ const SERVICES: Service[] = [
     icon: 'auto_awesome',
     title: 'Automatización con IA',
     description:
-      'Agentes de WhatsApp, asistentes que cargan datos por vos, automatizaciones que entienden audios y PDFs. Solo donde te ahorra tiempo y plata.',
+      'Agentes de WhatsApp, asistentes que cargan datos por vos, automatizaciones que entienden audios y PDFs.',
     bullets: [
       'Agentes de WhatsApp que consultan tus datos y operan tu sistema',
       'Asistentes para cargar productos, redactar descripciones o responder consultas',
@@ -38,7 +38,7 @@ const SERVICES: Service[] = [
     icon: 'hub',
     title: 'Integraciones',
     description:
-      'Conectamos tu sistema con lo que ya usás: Mercado Libre, Tienda Nube, AFIP, pasarelas de pago, ERPs externos, WhatsApp. La plomería invisible que evita cargar dos veces lo mismo.',
+      'Conectamos tu sistema con lo que ya usás: Mercado Libre, Tienda Nube, AFIP, pasarelas de pago, ERPs externos, WhatsApp.',
     bullets: [
       'Mercado Libre, Tienda Nube y otros marketplaces',
       'Facturación electrónica con AFIP / ARCA',
@@ -50,7 +50,7 @@ const SERVICES: Service[] = [
     icon: 'phone_iphone',
     title: 'Apps móviles',
     description:
-      'Apps iOS y Android para equipos que trabajan fuera de la oficina: vendedores, depósito, repartidores, técnicos. Funcionan sin internet y se actualizan sin pasar por la tienda.',
+      'Apps iOS y Android para equipos que trabajan fuera de la oficina: vendedores, depósito, repartidores, técnicos.',
     bullets: [
       'Apps para vendedores, repartidores, picking y técnicos en campo',
       'Modo offline con sincronización automática',
@@ -78,10 +78,10 @@ export default function Services() {
             Qué hacemos
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
-            Software para todo lo que tu negocio necesita
+            Nuestro software se adapta a lo que tu negocio necesita
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Cuatro áreas. Combinamos las que apliquen a tu caso, sin paquetes cerrados.
+            Estas son las cuatro areas en las cuales trabajamos:
           </p>
         </motion.div>
 

@@ -13,25 +13,27 @@ type PortfolioCase = {
   // Captura representativa del caso (landing pública o panel del cliente).
   // Si no hay, la card cae al placeholder con gradient + icono Material.
   image?: string;
+  logo?: string;
 };
 
 const CASES: PortfolioCase[] = [
   {
     slug: 'raz-y-cia',
     client: 'Raz y Cía',
-    sector: 'Logística y distribución mayorista · Capital Federal',
-    title: 'Una de las distribuidoras más grandes de Capital, sin papeles',
-    body: 'Una de las distribuidoras mayoristas más grandes de Capital. Cambiamos papel, planillas y WhatsApp suelto por una plataforma central + 6 apps móviles, una por cada rol de la operación.',
+    sector: 'Logística y distribución mayorista · Buenos Aires',
+    title: 'Una de las distribuidoras más grandes de CABA',
+    body: 'Realizamos una plataforma central + 6 apps móviles, una por cada rol de la operación, para que puedan dejar de usar planillas físicas y mensajes de WhatsApp sueltos.',
     chips: ['Plataforma web', 'Apps móviles', 'Portal mayorista', 'Geolocalización'],
     icon: 'local_shipping',
     gradient: 'from-amber-500/30 to-orange-700/30',
+    logo: '/clients/raz.png',
   },
   {
     slug: 'cio-landings',
     client: 'CIO Landings',
     sector: 'Ciberseguridad para empresas · Chicago, Estados Unidos',
-    title: 'Agentes con IA que encuentran clientes potenciales todos los días, solos',
-    body: 'Consultora de ciberseguridad en Chicago. Antes investigaban clientes potenciales a mano. Ahora un equipo de agentes con IA descubre empresas a diario, las califica y arma el reporte comercial listo para enviar.',
+    title: 'Agentes con IA que encuentran clientes potenciales todos los días',
+    body: 'Consultora de ciberseguridad en Chicago. Antes investigaban clientes potenciales a mano. Ahora un equipo de agentes con IA descubre empresas todos los días, las califica y arma el reporte comercial listo para enviar.',
     chips: ['Agentes con IA', 'Plataforma web', 'Cliente internacional', 'Reportes automáticos'],
     icon: 'shield',
     gradient: 'from-emerald-500/30 to-cyan-700/30',
@@ -41,8 +43,8 @@ const CASES: PortfolioCase[] = [
     slug: 'maklab',
     client: 'Maklab',
     sector: 'Distribuidora mayorista · Equipamiento de laboratorio',
-    title: 'Catálogo digital con 256 productos y dominio propio',
-    body: 'Distribuidora argentina de equipamiento de laboratorio. 256 productos en 20 categorías sobre maklab.com.ar, con cierre de venta directo por WhatsApp y sin pagar comisiones.',
+    title: 'Catálogo digital con 256 productos y sin comisiones',
+    body: 'Distribuidora argentina de equipamiento de laboratorio. 256 productos en 20 categorías, con cierre de venta directo por WhatsApp y sin pagar comisiones.',
     chips: ['Producto propio', 'Dominio del cliente', 'WhatsApp', 'Sin comisiones'],
     icon: 'biotech',
     gradient: 'from-purple-500/30 to-fuchsia-700/30',
@@ -53,7 +55,7 @@ const CASES: PortfolioCase[] = [
     client: 'DentalCenter',
     sector: 'Salud · Red de consultorios odontológicos',
     title: 'Una cadena de odontología, ordenada y con cartilla online para sus afiliados',
-    body: 'Red de consultorios dentales. Un panel para que el equipo coordine profesionales, afiliados y obras sociales, más un portal público con mapa para que los afiliados encuentren prestadores cerca.',
+    body: 'Realizamos un panel para que el equipo coordine profesionales, afiliados y obras sociales, junto con un portal público con mapa para que los afiliados encuentren prestadores cerca.',
     chips: ['Plataforma web', 'Portal de afiliados', 'Cartilla con mapa'],
     icon: 'medical_services',
     gradient: 'from-sky-500/30 to-blue-700/30',
@@ -63,8 +65,8 @@ const CASES: PortfolioCase[] = [
     slug: 'pauldeco',
     client: 'Pauldeco',
     sector: 'Decoración del hogar · Tienda online',
-    title: 'Una tienda online de decoración con identidad propia sobre Tienda Nube',
-    body: 'Tienda argentina de decoración del hogar. Personalizamos su Tienda Nube para que el branding premium se respire en cada pantalla, con experiencia pensada para celular y panel propio para gestionar productos.',
+    title: 'Una tienda online de decoración con identidad propia en Tienda Nube',
+    body: 'Personalizamos su Tienda Nube para que el branding premium se respire en cada pantalla, con experiencia pensada para celular y panel propio para gestionar productos.',
     chips: ['Tienda Nube', 'Diseño a medida', 'Mobile-first', 'Marca propia'],
     icon: 'chair',
     gradient: 'from-rose-400/30 to-amber-600/30',
@@ -75,7 +77,7 @@ const CASES: PortfolioCase[] = [
     client: 'Soy Financieramente',
     sector: 'Marca personal · Psicología y finanzas conductuales',
     title: 'La voz online de una psicóloga referente en finanzas conductuales',
-    body: 'Psicóloga especialista en finanzas conductuales. Le construimos una web con narrativa progresiva y un blog con panel propio para que publique sin depender de un desarrollador.',
+    body: 'Construimos su web con narrativa progresiva y un blog con panel propio para que publique sin depender de un desarrollador.',
     chips: ['Landing institucional', 'Blog con panel propio', 'Marca personal'],
     icon: 'psychology',
     gradient: 'from-rose-500/30 to-pink-700/30',
@@ -133,7 +135,7 @@ export default function Portfolio() {
             Portfolio
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Cinco proyectos en producción. Logística, ciberseguridad, salud, plataformas online y marcas personales.
+            Estos son algunos de los proyectos en los que trabajamos:
           </p>
         </motion.div>
 
@@ -170,6 +172,18 @@ export default function Portfolio() {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                  </>
+                ) : caseData.logo ? (
+                  <>
+                    <div className="absolute inset-0 bg-slate-100" />
+                    <img
+                      src={caseData.logo}
+                      alt={`Logo de ${caseData.client}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="relative z-10 max-h-20 w-auto max-w-[70%] object-contain transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 z-20 bg-black/10 pointer-events-none" />
                   </>
                 ) : (
                   <>
@@ -220,9 +234,6 @@ export default function Portfolio() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-center mt-12 md:mt-16"
         >
-          <p className="text-gray-300 text-base md:text-lg mb-4">
-            Trabajamos con negocios en proyectos de un par de semanas hasta operaciones digitales completas.
-          </p>
           <a
             href="#contacto"
             onClick={() =>

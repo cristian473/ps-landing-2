@@ -5,6 +5,18 @@ export default function ErpCTABanner() {
     <section className="bg-black py-12 md:py-16 relative" id="erp-banner">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 text-center"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            Conocé nuestro producto propio
+          </h2>
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -26,7 +38,7 @@ export default function ErpCTABanner() {
                 ¿Buscás un ERP que ya esté funcionando?
               </h3>
               <p className="text-gray-200 text-sm md:text-base leading-relaxed max-w-2xl">
-                Sistema de gestión para negocios argentinos: ventas, stock, caja, facturación AFIP. Sin desarrollo a medida.
+                Sistema de gestión para negocios argentinos: ventas, stock, caja, facturación AFIP.
               </p>
             </div>
 
