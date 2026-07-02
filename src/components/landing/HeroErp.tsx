@@ -58,7 +58,7 @@ export default function HeroErp() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          Ventas, stock, caja, compras y facturación AFIP en una sola plataforma. Listo para usar, sin esperar meses de desarrollo.
+          Ventas, stock, caja y facturación AFIP, listo para usar desde el primer día. Con un asistente de IA adentro, y módulos a medida si tu negocio necesita algo propio.
         </motion.p>
 
         <motion.div

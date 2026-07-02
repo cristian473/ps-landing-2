@@ -97,7 +97,7 @@ export const caseStudy: CaseStudyData = {
     },
   ],
   quote: {
-    text: "Confiando siempre en Cristian y su equipo de trabajo, atentos y siempre optimizando nuestra empresa. Gracias.",
+    text: "Confiamos plenamente en Cristian y su equipo, siempre atentos y optimizando nuestra empresa. Gracias.",
     author: "Equipo DentalCenter",
     role: "Cliente",
     company: "DentalCenter",

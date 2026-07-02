@@ -21,7 +21,7 @@ const CASES: PortfolioCase[] = [
     slug: 'raz-y-cia',
     client: 'Raz y Cía',
     sector: 'Logística y distribución mayorista · Buenos Aires',
-    title: 'Una de las distribuidoras más grandes de CABA',
+    title: 'Una de las distribuidoras más grandes de CABA, operando sin papeles ni planillas',
     body: 'Realizamos una plataforma central + 6 apps móviles, una por cada rol de la operación, para que puedan dejar de usar planillas físicas y mensajes de WhatsApp sueltos.',
     chips: ['Plataforma web', 'Apps móviles', 'Portal mayorista', 'Geolocalización'],
     icon: 'local_shipping',

@@ -283,7 +283,7 @@ export default function Contact() {
 						¿Tu negocio creció más rápido que el software que lo sostiene?
 					</h2>
 					<p className="text-base md:text-lg text-gray-400 mb-6 leading-relaxed">
-						La primera llamada es gratuita. Vemos qué te conviene: un proyecto cerrado, pack mensual de horas o nuestro ERP listo.
+						La primera llamada es gratuita. Vemos qué te conviene: un proyecto cerrado, pack mensual de horas o nuestro ERP listo para usar.
 					</p>
 
 					<div className="flex flex-col gap-4">
@@ -316,7 +316,35 @@ export default function Contact() {
 								</p>
 							</div>
 						</div>
+
+						<div className="flex items-start gap-3">
+							<div className="w-10 h-10 rounded-full bg-navy-surface flex items-center justify-center border border-white/10 shrink-0 mt-0.5">
+								<span className="material-icons text-primary">check</span>
+							</div>
+							<div>
+								<h4 className="font-semibold text-white text-base">
+									Respuesta en menos de 24 hs
+								</h4>
+								<p className="text-sm text-gray-500 leading-relaxed">
+									Sin compromiso. Contanos tu caso y te decimos si podemos
+									ayudarte.
+								</p>
+							</div>
+						</div>
 					</div>
+
+					<figure className="mt-8 rounded-2xl border border-white/10 bg-navy-surface/60 p-5">
+						<blockquote>
+							<p className="text-sm text-gray-300 leading-relaxed italic">
+								"Cristian y su equipo desarrollaron un sistema excepcional que
+								mejoró significativamente nuestras operaciones."
+							</p>
+						</blockquote>
+						<figcaption className="mt-3 text-xs text-gray-400">
+							<span className="font-semibold text-gray-200">Equipo RAZ</span> ·
+							Logística
+						</figcaption>
+					</figure>
 				</motion.div>
 
 				{/* Contact Form */}
@@ -344,7 +372,7 @@ export default function Contact() {
 								<strong className="text-white">{email || "tu correo"}</strong>.
 							</p>
 							<p className="text-gray-400 mb-6">
-								Nos comunicamos en menos de 24hs.
+								Nos comunicamos en menos de 24 hs.
 							</p>
 							<button
 								type="button"
@@ -658,10 +686,10 @@ export default function Contact() {
 								)}
 							</button>
 
-							<p className="text-[11px] text-center text-gray-500 mt-2">
-								Sin compromisos. Respondemos en menos de 24hs.
+							<p className="text-xs text-center text-gray-400 mt-2">
+								Sin compromisos. Respondemos en menos de 24 hs.
 							</p>
-							<p className="text-[10px] text-center text-gray-600 leading-relaxed">
+							<p className="text-[11px] text-center text-gray-500 leading-relaxed">
 								Protegido por reCAPTCHA de Google.{" "}
 								<a
 									href="https://policies.google.com/privacy"
