@@ -58,7 +58,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 md:mb-16 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          Plataformas web, agentes con IA, apps móviles y más.
+          Plataformas web, agentes con IA y apps móviles para tu operación.
         </motion.p>
 
         {/* CTAs — primario "Cotizar mi proyecto" + secundario "Ver portfolio" */}

@@ -98,7 +98,7 @@ export const caseStudy: CaseStudyData = {
     },
   ],
   quote: {
-    text: "En la industria logística, el seguimiento y la gestión eficientes son cruciales. Cris y su equipo desarrolló un sistema excepcional que mejoró significativamente nuestras operaciones.",
+    text: "En la industria logística, el seguimiento y la gestión eficientes son cruciales. Cristian y su equipo desarrollaron un sistema excepcional que mejoró significativamente nuestras operaciones.",
     author: "Equipo Raz y Cía",
     role: "Cliente",
     company: "Raz y Cía",

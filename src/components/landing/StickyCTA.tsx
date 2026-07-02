@@ -7,8 +7,21 @@ import { useEffect, useState } from "react";
  * basado en el viewport) y se oculta al llegar al form de contacto para
  * no taparlo. 90% del tráfico es móvil — este patrón sirve para mantener
  * el CTA primario siempre a un tap de distancia.
+ *
+ * Configurable por props para que cada página lleve a su conversión:
+ * la home cotiza proyectos (default), /erp manda a la demo del producto.
  */
-export default function StickyCTA() {
+type StickyCTAProps = {
+	label?: string;
+	href?: string;
+	event?: string;
+};
+
+export default function StickyCTA({
+	label = "Cotizar mi proyecto",
+	href = "#contacto",
+	event = "sticky_cta_cotizar",
+}: StickyCTAProps) {
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
@@ -38,7 +51,7 @@ export default function StickyCTA() {
 	}, []);
 
 	const handleClick = () => {
-		window.trackCTAClick?.("sticky_cta_cotizar", "sticky_mobile");
+		window.trackCTAClick?.(event, "sticky_mobile");
 	};
 
 	return (
@@ -50,11 +63,11 @@ export default function StickyCTA() {
 		>
 			<div className="bg-gradient-to-t from-navy-dark via-navy-dark/95 to-transparent pt-6 pb-4 px-4">
 				<a
-					href="#contacto"
+					href={href}
 					onClick={handleClick}
 					className="block w-full bg-primary text-navy-dark text-center font-bold py-3.5 rounded-lg shadow-[0_0_20px_rgba(56,182,255,0.35)] active:scale-95 transition-transform"
 				>
-					Cotizar mi proyecto
+					{label}
 				</a>
 			</div>
 		</div>

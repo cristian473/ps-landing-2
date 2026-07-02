@@ -71,7 +71,7 @@ export default function Pricing() {
             Cómo trabajamos
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Dos modalidades, una sola promesa
+            Dos modalidades de trabajo
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
             Trabajamos por proyecto cerrado o con un pack mensual de horas de desarrollo — según lo que tu negocio necesite.
@@ -161,7 +161,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-10 max-w-2xl mx-auto">
+        <p className="text-center text-sm text-gray-300 mt-10 max-w-2xl mx-auto">
           Facturamos en pesos argentinos (ARS), Factura A o B. NDA disponible si tu proyecto lo requiere.
         </p>
       </div>
