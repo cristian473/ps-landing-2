@@ -35,7 +35,7 @@ const DIFFERENTIATORS: Differentiator[] = [
       'Decinos tu rubro y la IA te arma una cuenta de prueba con productos, clientes y ventas ya cargados.',
     cta: {
       label: 'Quiero probar la demo',
-      href: '/#contacto?interest=erp_saas',
+      href: 'https://demo.puroerp.com/demo',
       event: 'erp_modules_demo',
     },
   },
@@ -127,11 +127,6 @@ export default function PreBuiltERP() {
                   href={d.cta.href}
                   onClick={() => {
                     window.trackCTAClick?.(d.cta!.event, 'erp_modules');
-                    window.dispatchEvent(
-                      new CustomEvent('contact:prefill', {
-                        detail: { interest: 'erp_saas' },
-                      }),
-                    );
                   }}
                   className="mt-4 inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all"
                 >
