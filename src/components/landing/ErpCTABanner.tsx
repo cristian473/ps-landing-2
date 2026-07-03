@@ -35,10 +35,10 @@ export default function ErpCTABanner() {
                 Puro ERP
               </span>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                ¿Buscás un ERP listo para usar?
+                ¿Buscás un ERP moderno y listo para usar?
               </h3>
               <p className="text-gray-200 text-sm md:text-base leading-relaxed max-w-2xl">
-                Sistema de gestión para negocios argentinos: ventas, stock, caja, facturación AFIP.
+                Sistema de gestión con IA para negocios argentinos: ventas, stock, caja, facturación AFIP.
               </p>
             </div>
 
