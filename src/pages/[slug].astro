@@ -20,7 +20,7 @@ export function getStaticPaths() {
 const { landing } = Astro.props;
 const canonical = new URL(`/${landing.slug}`, SITE.url).href;
 const primaryCtaHref = "/#contacto";
-const demoHref = "#demo-plataforma";
+const demoHref = "https://demo.puroerp.com/demo";
 
 const softwareApplicationSchema = {
   "@context": "https://schema.org",
@@ -92,6 +92,7 @@ const faqSchema = {
             </a>
             <a
               href={demoHref}
+              onclick="window.trackCTAClick && window.trackCTAClick('erp_slug_demo_link', 'erp_slug_hero')"
               class="inline-flex items-center justify-center gap-2 border border-white/20 hover:border-primary/60 text-white px-6 py-4 rounded-lg font-semibold transition-colors bg-white/5 hover:bg-white/10"
             >
               Ver demo
