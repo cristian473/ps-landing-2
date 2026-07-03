@@ -80,15 +80,14 @@ export default function HeroErp() {
             className="bg-primary text-navy-dark px-6 sm:px-8 py-4 rounded font-bold text-base sm:text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105 inline-flex items-center justify-center gap-2"
           >
             Agendar una llamada
-            <span className="material-icons">arrow_forward</span>
           </a>
           <a
             href="https://demo.puroerp.com/demo"
             onClick={() => window.trackCTAClick?.('erp_hero_demo_link', 'erp_hero_secondary')}
             className="border border-white/15 text-white px-6 sm:px-8 py-4 rounded font-semibold text-base sm:text-lg hover:bg-white/5 hover:border-primary/40 transition-all inline-flex items-center justify-center gap-2"
           >
-            Ver demo
-            <span className="material-icons text-base">play_circle</span>
+            Probar gratis
+            <span className="material-icons">arrow_forward</span>
           </a>
         </motion.div>
       </div>
