@@ -87,8 +87,7 @@ export default function HeroErp() {
             onClick={() => window.trackCTAClick?.('erp_hero_demo_link', 'erp_hero_secondary')}
             className="border border-white/15 text-white px-6 sm:px-8 py-4 rounded font-semibold text-base sm:text-lg hover:bg-white/5 hover:border-primary/40 transition-all inline-flex items-center justify-center gap-2"
           >
-            Ver demo
-            <span className="material-icons text-base">play_circle</span>
+            Probar gratis
           </a>
         </motion.div>
       </div>
