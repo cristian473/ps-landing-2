@@ -280,9 +280,9 @@ export default function Contact() {
 					className="hidden lg:block max-w-xl"
 				>
 					<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
-						¿Tu negocio creció más rápido que el software que lo sostiene?
+						Hablemos de tu proyecto
 					</h2>
-					<p className="text-base md:text-lg text-gray-400 mb-6 leading-relaxed">
+					<p className="text-base md:text-lg text-gray-300 mb-6 leading-relaxed">
 						La primera llamada es gratuita. Vemos qué te conviene: un proyecto cerrado, pack mensual de horas o nuestro ERP listo para usar.
 					</p>
 
@@ -295,7 +295,7 @@ export default function Contact() {
 								<h4 className="font-semibold text-white text-base">
 									Camino recomendado
 								</h4>
-								<p className="text-sm text-gray-500 leading-relaxed">
+								<p className="text-sm text-gray-400 leading-relaxed">
 									Te decimos si conviene sistema de gestión, desarrollo a medida o
 									simplemente seguir con mejoras mensuales.
 								</p>
@@ -310,7 +310,7 @@ export default function Contact() {
 								<h4 className="font-semibold text-white text-base">
 									Implementación clara
 								</h4>
-								<p className="text-sm text-gray-500 leading-relaxed">
+								<p className="text-sm text-gray-400 leading-relaxed">
 									Alcance, mantenimiento y próximos pasos definidos desde el
 									principio.
 								</p>
@@ -325,7 +325,7 @@ export default function Contact() {
 								<h4 className="font-semibold text-white text-base">
 									Respuesta en menos de 24 hs
 								</h4>
-								<p className="text-sm text-gray-500 leading-relaxed">
+								<p className="text-sm text-gray-400 leading-relaxed">
 									Sin compromiso. Contanos tu caso y te decimos si podemos
 									ayudarte.
 								</p>
@@ -353,10 +353,8 @@ export default function Contact() {
 					whileInView={{ opacity: 1, x: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.6, delay: 0.2 }}
-					className="bg-navy-surface p-5 sm:p-6 rounded-2xl border border-white/10 shadow-2xl relative"
+					className="bg-navy-surface p-5 sm:p-6 rounded-2xl border border-white/10 relative"
 				>
-					<div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 blur-2xl rounded-full pointer-events-none" />
-
 					{status === "success" ? (
 						<div className="text-center py-8">
 							<div className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">

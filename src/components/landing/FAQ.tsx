@@ -13,11 +13,11 @@ const DEFAULT_FAQS: FAQItem[] = [
   },
   {
     q: '¿Cuánto tarda un proyecto típico?',
-    a: 'Un proyecto típico tarda entre 2 y 3 meses, desde el descubrimiento hasta la entrega en producción. Proyectos más chicos — integraciones puntuales, módulos específicos, automatizaciones — pueden cerrarse antes.',
+    a: 'Un proyecto típico tarda entre 2 y 3 meses, desde el descubrimiento hasta la entrega en producción. Los proyectos más chicos, como integraciones puntuales, módulos específicos o automatizaciones, pueden cerrarse antes.',
   },
   {
     q: '¿Quién es dueño del código al final?',
-    a: 'El cliente. Código fuente, documentación y accesos quedan a tu nombre al cierre del proyecto. Sin licencias raras ni candados.',
+    a: 'El cliente. Código fuente, documentación y accesos quedan a tu nombre al cierre del proyecto.',
   },
   {
     q: '¿Tienen NDA / pueden firmar confidencialidad?',
@@ -43,14 +43,12 @@ const DEFAULT_FAQS: FAQItem[] = [
 
 type FAQProps = {
   items?: FAQItem[];
-  eyebrow?: string;
   title?: string;
 };
 
 export default function FAQ({
   items = DEFAULT_FAQS,
-  eyebrow = 'Preguntas frecuentes',
-  title = 'Lo que querés saber antes de la llamada',
+  title = 'Preguntas frecuentes',
 }: FAQProps) {
   // En desktop arrancamos con la primera pregunta abierta como demo. En mobile
   // (≤768px) arrancamos todas cerradas para no empujar contenido fuera del fold.
@@ -70,11 +68,8 @@ export default function FAQ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
+          className="mb-12"
         >
-          <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            {eyebrow}
-          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {title}
           </h2>

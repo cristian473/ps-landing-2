@@ -50,7 +50,7 @@ export default function Navbar() {
             <a
               href="/#contacto"
               onClick={() => window.trackCTAClick?.('navbar_cotizar', 'navbar_desktop')}
-              className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-all transform hover:scale-105 flex items-center gap-1"
+              className="bg-primary hover:bg-primary/90 text-navy-dark px-5 py-2 rounded font-semibold transition-colors flex items-center gap-1"
             >
               Cotizar mi proyecto
               <span className="material-icons text-lg">arrow_forward</span>
@@ -61,6 +61,8 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={isMobileMenuOpen}
               className="text-white hover:text-primary transition-colors"
             >
               <span className="material-icons">

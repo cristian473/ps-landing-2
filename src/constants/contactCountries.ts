@@ -5,7 +5,6 @@ export const CONTACT_COUNTRY_OPTIONS = [
 	{ code: "CL", label: "Chile" },
 	{ code: "CO", label: "Colombia" },
 	{ code: "CR", label: "Costa Rica" },
-	{ code: "CU", label: "Cuba" },
 	{ code: "DO", label: "República Dominicana" },
 	{ code: "EC", label: "Ecuador" },
 	{ code: "SV", label: "El Salvador" },
