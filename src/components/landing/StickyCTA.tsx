@@ -61,11 +61,11 @@ export default function StickyCTA({
 			}`}
 			aria-hidden={!visible}
 		>
-			<div className="bg-gradient-to-t from-navy-dark via-navy-dark/95 to-transparent pt-6 pb-4 px-4">
+			<div className="bg-navy-dark border-t border-white/10 pt-3 pb-4 px-4">
 				<a
 					href={href}
 					onClick={handleClick}
-					className="block w-full bg-primary text-navy-dark text-center font-bold py-3.5 rounded-lg shadow-[0_0_20px_rgba(56,182,255,0.35)] active:scale-95 transition-transform"
+					className="block w-full bg-primary text-navy-dark text-center font-bold py-3.5 rounded-lg active:bg-primary/80 transition-colors"
 				>
 					{label}
 				</a>

@@ -5,7 +5,6 @@ type PlanFeature = string;
 type Plan = {
   badge?: string;
   highlighted?: boolean;
-  icon: string;
   title: string;
   description: string;
   features: PlanFeature[];
@@ -18,12 +17,10 @@ type Plan = {
 
 const PLANS: Plan[] = [
   {
-    badge: 'Más elegido',
     highlighted: true,
-    icon: 'assignment_turned_in',
     title: 'Proyecto cerrado',
     description:
-      'Ideal si querés construir algo nuevo — web app, integración, app móvil o MVP — sabiendo desde el día uno qué incluye. Cotización con fecha de entrega definida.',
+      'Para construir algo nuevo (web app, integración, app móvil o MVP) sabiendo desde el día uno qué incluye. Cotización con fecha de entrega definida.',
     features: [
       'Análisis técnico antes de cotizar',
       'Cotización clara: qué incluye, qué no, en cuánto tiempo',
@@ -37,7 +34,6 @@ const PLANS: Plan[] = [
     ctaInterest: 'proyecto_cerrado',
   },
   {
-    icon: 'schedule',
     title: 'Pack mensual de horas',
     description:
       'Para clientes que ya tienen su sistema y lo evolucionan mes a mes: funcionalidades nuevas, integraciones, mantenimiento.',
@@ -65,16 +61,13 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 text-center"
+          className="mb-14 max-w-6xl mx-auto"
         >
-          <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            Cómo trabajamos
-          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Dos modalidades de trabajo
+            Cómo trabajamos
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Trabajamos por proyecto cerrado o con un pack mensual de horas de desarrollo — según lo que tu negocio necesite.
+          <p className="text-gray-300 max-w-2xl">
+            Trabajamos por proyecto cerrado o con un pack mensual de horas de desarrollo.
           </p>
         </motion.div>
 
@@ -86,9 +79,9 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`relative rounded-3xl border p-6 sm:p-8 flex flex-col h-full transition-colors ${
+              className={`relative rounded-2xl border p-6 sm:p-8 flex flex-col h-full transition-colors ${
                 plan.highlighted
-                  ? 'bg-gradient-to-br from-primary/10 via-navy-surface to-navy-surface border-primary/40 shadow-[0_0_60px_rgba(56,182,255,0.12)]'
+                  ? 'bg-navy-surface border-primary/50'
                   : 'bg-navy-surface border-white/10 hover:border-white/20'
               }`}
             >
@@ -100,16 +93,7 @@ export default function Pricing() {
                 </div>
               )}
 
-              <div className="flex items-center gap-3 mb-4">
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
-                    plan.highlighted ? 'bg-primary text-navy-dark' : 'bg-white/5 text-primary'
-                  }`}
-                >
-                  <span className="material-icons text-2xl">{plan.icon}</span>
-                </div>
-                <h3 className="text-2xl font-bold text-white">{plan.title}</h3>
-              </div>
+              <h3 className="text-2xl font-bold text-white mb-4">{plan.title}</h3>
 
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
                 {plan.description}
@@ -142,9 +126,9 @@ export default function Pricing() {
                     }),
                   );
                 }}
-                className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm sm:text-base font-bold transition-all ${
+                className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm sm:text-base font-bold transition-colors ${
                   plan.highlighted
-                    ? 'bg-primary text-navy-dark hover:bg-primary/90 shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)]'
+                    ? 'bg-primary text-navy-dark hover:bg-primary/90'
                     : 'border border-white/15 text-white hover:bg-white/5 hover:border-primary/40'
                 }`}
               >

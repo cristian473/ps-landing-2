@@ -9,7 +9,7 @@ export default function Hero() {
       {/* Abstract Background Image — desktop-only (en mobile no aporta y suma carga),
           servida localmente como AVIF/WebP en vez del CDN externo de Google.
           AVIF 18K vs PNG remoto 394K, sin pegada al LCP. Decorativa: aria-hidden. */}
-      <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none select-none">
+      <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none select-none">
         <picture>
           <source type="image/avif" srcSet="/hero/abstract-data.avif" />
           <source type="image/webp" srcSet="/hero/abstract-data.webp" />
@@ -21,7 +21,7 @@ export default function Hero() {
             height={512}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover mix-blend-screen"
+            className="w-full h-full object-cover"
           />
         </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-navy-dark to-transparent" />
@@ -71,7 +71,7 @@ export default function Hero() {
           <a
             href="#contacto"
             onClick={() => window.trackCTAClick?.('hero_cotizar', 'hero')}
-            className="bg-primary text-navy-dark px-6 sm:px-8 py-4 rounded font-bold text-base sm:text-lg hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(56,182,255,0.3)] hover:shadow-[0_0_30px_rgba(56,182,255,0.5)] transform hover:scale-105 inline-flex items-center justify-center gap-2"
+            className="bg-primary text-navy-dark px-6 sm:px-8 py-4 rounded font-bold text-base sm:text-lg hover:bg-primary/90 transition-colors inline-flex items-center justify-center gap-2"
           >
             Cotizar mi proyecto
             <span className="material-icons">arrow_forward</span>

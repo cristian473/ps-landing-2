@@ -9,9 +9,8 @@ type PortfolioCase = {
   body: string;
   chips: string[];
   icon: string;
-  gradient: string;
   // Captura representativa del caso (landing pública o panel del cliente).
-  // Si no hay, la card cae al placeholder con gradient + icono Material.
+  // Si no hay, la card cae al placeholder con fondo sólido + icono Material.
   image?: string;
   logo?: string;
 };
@@ -25,7 +24,6 @@ const CASES: PortfolioCase[] = [
     body: 'Realizamos una plataforma central + 6 apps móviles, una por cada rol de la operación, para que puedan dejar de usar planillas físicas y mensajes de WhatsApp sueltos.',
     chips: ['Plataforma web', 'Apps móviles', 'Portal mayorista', 'Geolocalización'],
     icon: 'local_shipping',
-    gradient: 'from-amber-500/30 to-orange-700/30',
     logo: '/clients/raz.png',
   },
   {
@@ -36,7 +34,6 @@ const CASES: PortfolioCase[] = [
     body: 'Consultora de ciberseguridad en Chicago. Antes investigaban clientes potenciales a mano. Ahora un equipo de agentes con IA descubre empresas todos los días, las califica y arma el reporte comercial listo para enviar.',
     chips: ['Agentes con IA', 'Plataforma web', 'Cliente internacional', 'Reportes automáticos'],
     icon: 'shield',
-    gradient: 'from-emerald-500/30 to-cyan-700/30',
     image: '/portfolio/ciolanding/03-plataforma-dashboard.jpeg',
   },
   {
@@ -47,7 +44,6 @@ const CASES: PortfolioCase[] = [
     body: 'Distribuidora argentina de equipamiento de laboratorio. 256 productos en 20 categorías, con cierre de venta directo por WhatsApp y sin pagar comisiones.',
     chips: ['Producto propio', 'Dominio del cliente', 'WhatsApp', 'Sin comisiones'],
     icon: 'biotech',
-    gradient: 'from-purple-500/30 to-fuchsia-700/30',
     image: '/portfolio/maklab/02-landing-fold.jpeg',
   },
   {
@@ -58,18 +54,16 @@ const CASES: PortfolioCase[] = [
     body: 'Realizamos un panel para que el equipo coordine profesionales, afiliados y obras sociales, junto con un portal público con mapa para que los afiliados encuentren prestadores cerca.',
     chips: ['Plataforma web', 'Portal de afiliados', 'Cartilla con mapa'],
     icon: 'medical_services',
-    gradient: 'from-sky-500/30 to-blue-700/30',
     image: '/portfolio/dentalcenter/02-landing-fold.jpeg',
   },
   {
     slug: 'pauldeco',
     client: 'Pauldeco',
     sector: 'Decoración del hogar · Tienda online',
-    title: 'Una tienda online de decoración con identidad propia en Tienda Nube',
-    body: 'Personalizamos su Tienda Nube para que el branding premium se respire en cada pantalla, con experiencia pensada para celular y panel propio para gestionar productos.',
+    title: 'Tienda online de decoración con identidad propia en Tienda Nube',
+    body: 'Personalizamos su Tienda Nube con identidad de marca propia, una experiencia pensada para celular y un panel para gestionar productos.',
     chips: ['Tienda Nube', 'Diseño a medida', 'Mobile-first', 'Marca propia'],
     icon: 'chair',
-    gradient: 'from-rose-400/30 to-amber-600/30',
     image: '/portfolio/pauldeco/01-landing-fold.jpeg',
   },
   {
@@ -80,7 +74,6 @@ const CASES: PortfolioCase[] = [
     body: 'Construimos su web con narrativa progresiva y un blog con panel propio para que publique sin depender de un desarrollador.',
     chips: ['Landing institucional', 'Blog con panel propio', 'Marca personal'],
     icon: 'psychology',
-    gradient: 'from-rose-500/30 to-pink-700/30',
     image: '/portfolio/soyfinancieramente/01-landing-fold.jpeg',
   },
 ];
@@ -126,16 +119,13 @@ export default function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          className="mb-12 md:mb-16 max-w-6xl mx-auto"
         >
-          <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            Casos reales
-          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
             Portfolio
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Estos son algunos de los proyectos en los que trabajamos:
+          <p className="text-gray-300 max-w-2xl text-base md:text-lg leading-relaxed">
+            Algunos de los proyectos que desarrollamos.
           </p>
         </motion.div>
 
@@ -153,14 +143,14 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="group bg-navy-surface border border-white/10 hover:border-primary/40 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(56,182,255,0.1)] flex flex-col cursor-pointer"
+              className="group bg-navy-surface border border-white/10 hover:border-primary/40 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col cursor-pointer"
               aria-label={`Ver caso ${caseData.client}`}
             >
               {/* Visual de la card. Si el caso tiene una captura representativa,
                   se renderea con object-cover + overlay sutil para legibilidad.
-                  Si no, cae al placeholder con gradient + icono Material. */}
+                  Si no, cae al placeholder con fondo sólido + icono Material. */}
               <div
-                className={`relative h-44 md:h-52 bg-gradient-to-br ${caseData.gradient} flex items-center justify-center overflow-hidden`}
+                className="relative h-44 md:h-52 bg-navy-dark flex items-center justify-center overflow-hidden"
               >
                 {caseData.image ? (
                   <>
@@ -169,9 +159,8 @@ export default function Portfolio() {
                       alt={`Captura del proyecto de ${caseData.client}`}
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
                   </>
                 ) : caseData.logo ? (
                   <>
@@ -181,14 +170,13 @@ export default function Portfolio() {
                       alt={`Logo de ${caseData.client}`}
                       loading="lazy"
                       decoding="async"
-                      className="relative z-10 max-h-20 w-auto max-w-[70%] object-contain transition-transform duration-500 group-hover:scale-105"
+                      className="relative z-10 max-h-20 w-auto max-w-[70%] object-contain"
                     />
                     <div className="absolute inset-0 z-20 bg-black/10 pointer-events-none" />
                   </>
                 ) : (
                   <>
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.06),transparent_50%)]" />
-                    <span className="material-icons text-white/30 text-7xl md:text-8xl relative z-10 transition-transform duration-500 group-hover:scale-110">
+                    <span className="material-icons text-white/30 text-7xl md:text-8xl relative z-10">
                       {caseData.icon}
                     </span>
                   </>
@@ -196,12 +184,12 @@ export default function Portfolio() {
               </div>
 
               <div className="p-5 md:p-7 flex flex-col flex-1">
-                <span className="text-primary text-xs font-semibold uppercase tracking-wider mb-2">
+                <span className="text-gray-400 text-sm mb-2">
                   {caseData.sector}
                 </span>
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
                   <span className="text-primary/90">{caseData.client}</span>
-                  <span className="text-white"> — {caseData.title}</span>
+                  <span className="text-white">: {caseData.title}</span>
                 </h3>
                 <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-4 flex-1">
                   {caseData.body}
@@ -211,7 +199,7 @@ export default function Portfolio() {
                   {caseData.chips.map((chip) => (
                     <span
                       key={chip}
-                      className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-[11px] font-medium text-gray-200"
+                      className="inline-flex items-center rounded-md bg-white/5 px-2 py-1 text-xs font-medium text-gray-200"
                     >
                       {chip}
                     </span>

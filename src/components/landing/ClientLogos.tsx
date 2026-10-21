@@ -82,7 +82,7 @@ function ClientLogoItem({ client, decorative = false }: { client: ClientLogo; de
       alt={decorative ? '' : client.name}
       loading="eager"
       decoding="async"
-      className={`${client.sizeClass ?? DEFAULT_SIZE} ${client.imageClass ?? ''} h-auto w-auto object-contain grayscale brightness-150 opacity-80 drop-shadow-[0_14px_28px_rgba(0,0,0,0.35)] transition-all duration-300 group-hover/logo:opacity-95`}
+      className={`${client.sizeClass ?? DEFAULT_SIZE} ${client.imageClass ?? ''} h-auto w-auto object-contain grayscale brightness-150 opacity-80 transition-all duration-300 group-hover/logo:opacity-95`}
     />
   );
 
@@ -128,12 +128,9 @@ export default function ClientLogos() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <span className="text-primary font-bold tracking-wider uppercase text-xs mb-2 block">
-            Ellos confían en nosotros
-          </span>
-          <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto">
-            Construimos software para negocios que mueven operaciones reales.
-          </p>
+          <h2 className="text-gray-300 text-base md:text-lg max-w-xl mx-auto font-medium">
+            Clientes con los que trabajamos
+          </h2>
         </motion.div>
 
         <div
